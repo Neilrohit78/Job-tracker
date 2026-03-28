@@ -268,7 +268,7 @@
 
             if (!newJob.Company) return alert("Missing Company Name");
             
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
+            await fetch(https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
             
             document.querySelectorAll('#add-job-form input').forEach(i => i.value = "");
             btn.innerText = originalText;
