@@ -1,27 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Tracker — Neil</title>
     <style>
-        body { font-family: sans-serif; background: #0f1117; color: #e8e9f0; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        input, select, button { padding: 10px; margin: 5px; border-radius: 4px; border: 1px solid #35384e; background: #161820; color: white; }
-        button { background: #6c5ce7; cursor: pointer; font-weight: bold; border: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
-        th, td { border: 1px solid #252840; padding: 12px; text-align: left; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .status-applied { color: #81ecec; }
-        .status-rejected { color: #ff7675; }
-        #status-msg { color: #9294a8; font-weight: bold; margin: 10px 0; }
+        :root {
+            --bg: #0f111a;
+            --card-bg: #161925;
+            --primary: #6c5ce7;
+            --text: #e8e9f0;
+            --border: #2d3142;
+            --applied: #81ecec;
+            --interview: #fdcb6e;
+            --offer: #55efc4;
+            --rejected: #ff7675;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 20px; 
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 30px; color: white; }
+
+        /* Modern Form & Control Cards */
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        input, select {
+            background: #1e2235;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2); }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #8275f0; transform: translateY(-1px); }
+
+        .btn-clear { background: #2d3142; color: #a2a8c2; }
+        .btn-clear:hover { background: #3d4259; color: white; }
+
+        #status-msg { font-size: 12px; color: #9294a8; margin: -10px 0 20px 5px; font-weight: 500; }
+
+        /* Professional Table Styling */
+        .table-wrapper { border-radius: 12px; border: 1px solid var(--border); overflow: hidden; background: var(--card-bg); }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th { background: #1c2030; color: #9294a8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; padding: 15px 12px; }
+        td { padding: 14px 12px; border-top: 1px solid var(--border); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Column Widths */
+        th:nth-child(1) { width: 100px; } /* Date */
+        th:nth-child(2) { width: 180px; } /* Company */
+        th:nth-child(3) { width: 200px; } /* Position */
+        th:nth-child(4) { width: 140px; } /* Location */
+        th:nth-child(5) { width: 130px; } /* Status */
+        th:nth-child(6) { width: 110px; } /* Actions */
+
+        /* Status Pills */
+        .pill { 
+            padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; 
+            display: inline-block; background: rgba(255,255,255,0.05);
+        }
+        .status-applied { color: var(--applied); border: 1px solid var(--applied); }
+        .status-interviewing { color: var(--interview); border: 1px solid var(--interview); }
+        .status-offer { color: var(--offer); border: 1px solid var(--offer); background: rgba(85, 239, 196, 0.1); }
+        .status-rejected { color: var(--rejected); border: 1px solid var(--rejected); opacity: 0.6; }
+
+        .btn-edit { background: transparent; color: #9294a8; border: 1px solid #4b4d61; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
+        .btn-edit:hover { color: white; border-color: white; }
+        .btn-link { color: var(--primary); font-size: 18px; margin-left: 8px; text-decoration: none; vertical-align: middle; }
+
+        @media (max-width: 768px) {
+            .card { flex-direction: column; align-items: stretch; }
+            th:nth-child(4), td:nth-child(4) { display: none; } /* Hide location on mobile */
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Job Tracker</h1>
+        <h1>Career Hub</h1>
         
-        <div id="form">
-            <input type="text" id="company" placeholder="Company">
-            <input type="text" id="position" placeholder="Position">
+        <div class="card" id="add-job-form">
+            <input type="text" id="company" placeholder="Company Name" style="flex: 2;">
+            <input type="text" id="position" placeholder="Role" style="flex: 2;">
             <input type="text" id="location" placeholder="Location">
             <input type="text" id="source" placeholder="Link (URL)">
             <select id="status">
@@ -30,71 +124,139 @@
                 <option value="Offer">Offer</option>
                 <option value="Rejected">Rejected</option>
             </select>
-            <button onclick="handleAddJob()">Save Job</button>
+            <button class="btn-primary" onclick="handleAddJob()" id="save-btn">Save Application</button>
         </div>
 
-        <div id="status-msg">App Status: Loading Script...</div>
+        <div id="status-msg">App Status: Initializing...</div>
 
-        <div id="filters">
-            <input type="text" id="search" placeholder="Filter Company..." oninput="renderTable(allJobs)">
+        <div class="card">
+            <input type="text" id="search-box" placeholder="🔍 Search companies..." oninput="applyFilter()" style="flex: 2;">
+            
+            <select id="filter-status" onchange="applyFilter()">
+                <option value="All">All Statuses</option>
+                <option value="Applied">Applied</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+
+            <select id="filter-month" onchange="applyFilter()">
+                <option value="All">All Months</option>
+                <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option>
+                <option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option>
+                <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option>
+                <option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
+            </select>
+
+            <select id="filter-year" onchange="applyFilter()">
+                <option value="All">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+
+            <button class="btn-clear" onclick="clearFilters()">Clear</button>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 100px;">Date</th>
-                    <th>Company</th>
-                    <th>Position</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th style="width: 80px;">Link</th>
-                </tr>
-            </thead>
-            <tbody id="job-table-body"></tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Company</th>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="job-table-body"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        // ALERT TO TEST IF SCRIPT IS RUNNING
-        console.log("Script Started");
-        
         const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec";
         let allJobs = [];
 
+        window.onload = loadJobs;
+
         async function loadJobs() {
             const msg = document.getElementById('status-msg');
-            msg.innerText = "App Status: Fetching data from Google...";
+            msg.innerText = "App Status: Fetching updates...";
             try {
-                const res = await fetch(G_SCRIPT_URL);
-                allJobs = await res.json();
-                renderTable(allJobs);
-                msg.innerText = "App Status: ✓ Connected (" + allJobs.length + " jobs)";
-            } catch (e) {
-                msg.innerText = "App Status: ❌ Connection Error. Check Script URL.";
-                console.error(e);
+                const response = await fetch(G_SCRIPT_URL);
+                allJobs = await response.json();
+                applyFilter();
+                msg.innerText = "App Status: ✓ Sync Complete (" + allJobs.length + " entries)";
+            } catch (e) { 
+                msg.innerText = "App Status: ❌ Offline Mode"; 
             }
         }
 
         function renderTable(data) {
-            const search = document.getElementById('search').value.toLowerCase();
             const tbody = document.getElementById('job-table-body');
-            const filtered = data.filter(j => j.Company.toLowerCase().includes(search));
-            
-            tbody.innerHTML = filtered.map(j => `
+            tbody.innerHTML = data.map((job) => `
                 <tr>
-                    <td>${j.Date ? new Date(j.Date).toLocaleDateString('en-GB') : ''}</td>
-                    <td>${j.Company}</td>
-                    <td>${j.Position}</td>
-                    <td>${j.Location}</td>
-                    <td class="status-${(j.Status || '').toLowerCase()}">${j.Status}</td>
-                    <td>${j.Source ? `<a href="${j.Source}" target="_blank" style="color:#6c5ce7">🔗</a>` : ''}</td>
+                    <td>${formatDate(job.Date)}</td>
+                    <td title="${job.Company}"><strong>${job.Company}</strong></td>
+                    <td title="${job.Position}">${job.Position}</td>
+                    <td>${job.Location || '—'}</td>
+                    <td><span class="pill status-${(job.Status || '').toLowerCase()}">${job.Status || 'Applied'}</span></td>
+                    <td>
+                        <button class="btn-edit" onclick="startEdit('${job.Company}', '${job.Position}', '${job.Status}', '${job.Location || ''}', '${job.Source || ''}')">Edit</button>
+                        ${job.Source ? `<a class="btn-link" href="${job.Source}" target="_blank">🔗</a>` : ''}
+                    </td>
                 </tr>
             `).join('');
         }
 
+        function applyFilter() {
+            const searchVal = document.getElementById('search-box').value.toLowerCase();
+            const statusVal = document.getElementById('filter-status').value;
+            const monthVal = document.getElementById('filter-month').value;
+            const yearVal = document.getElementById('filter-year').value;
+            
+            const filtered = allJobs.filter(j => {
+                const d = new Date(j.Date);
+                const matchSearch = (j.Company.toLowerCase().includes(searchVal) || j.Position.toLowerCase().includes(searchVal));
+                const matchStatus = (statusVal === "All" || j.Status === statusVal);
+                const matchMonth = (monthVal === "All" || d.getMonth().toString() === monthVal);
+                const matchYear = (yearVal === "All" || d.getFullYear().toString() === yearVal);
+                return matchSearch && matchStatus && matchMonth && matchYear;
+            });
+            renderTable(filtered);
+        }
+
+        function clearFilters() {
+            document.getElementById('search-box').value = "";
+            document.getElementById('filter-status').value = "All";
+            document.getElementById('filter-month').value = "All";
+            document.getElementById('filter-year').value = "All";
+            applyFilter();
+        }
+
+        function startEdit(company, position, status, location, source) {
+            document.getElementById('company').value = company;
+            document.getElementById('position').value = position;
+            document.getElementById('status').value = status;
+            document.getElementById('location').value = location;
+            document.getElementById('source').value = source;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('status-msg').innerText = "Editing: " + company;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return "";
+            const d = new Date(dateStr);
+            if (isNaN(d)) return dateStr;
+            return d.getDate().toString().padStart(2,'0') + '/' + (d.getMonth()+1).toString().padStart(2,'0') + '/' + d.getFullYear().slice(-2);
+        }
+
         async function handleAddJob() {
-            const btn = document.querySelector('button');
-            btn.innerText = "Saving...";
+            const btn = document.getElementById('save-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "Syncing...";
             const newJob = {
                 Date: new Date().toISOString(),
                 Company: document.getElementById('company').value,
@@ -103,13 +265,15 @@
                 Status: document.getElementById('status').value,
                 Source: document.getElementById('source').value
             };
+
+            if (!newJob.Company) return alert("Missing Company Name");
             
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            btn.innerText = "Save Job";
+            
+            document.querySelectorAll('#add-job-form input').forEach(i => i.value = "");
+            btn.innerText = originalText;
             loadJobs();
         }
-
-        window.onload = loadJobs;
     </script>
 </body>
 </html>
