@@ -4,161 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Tracker — Neil</title>
-<style>
-    body { font-family: 'Inter', system-ui, sans-serif; background: #0f1117; color: #e8e9f0; padding: 20px; margin: 0; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    
-    /* Strict Column Control */
-    table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 15px; background: #161820; }
-    th, td { border: 1px solid #252840; padding: 10px; text-align: left; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #0f1117; color: #e8e9f0; padding: 20px; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        h1 { color: #6c5ce7; margin-bottom: 20px; }
 
-    /* Defined Widths for Browser */
-    th:nth-child(1) { width: 90px; }  /* Date */
-    th:nth-child(2) { width: 150px; } /* Company */
-    th:nth-child(3) { width: 180px; } /* Position */
-    th:nth-child(4) { width: 120px; } /* Location */
-    th:nth-child(5) { width: 110px; } /* Status */
-    th:nth-child(6) { width: 80px; }  /* Actions */
+        /* Form & Controls Styling */
+        .controls, #add-job-form { 
+            background: #161820; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+            align-items: center;
+        }
+        
+        input, select { 
+            padding: 8px 12px; 
+            background: #1e2030; 
+            border: 1px solid #35384e; 
+            color: white; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            flex-grow: 1;
+        }
 
-    .btn-edit { background: #4b4d61; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; color: white; border: none; }
-    .btn-link { color: #6c5ce7; text-decoration: none; font-weight: bold; }
-    
-    .status-applied { color: #81ecec; }
-    .status-interviewing { color: #fdcb6e; }
-    .status-offer { color: #55efc4; }
-    .status-rejected { color: #ff7675; opacity: 0.6; }
-</style>
+        button { 
+            padding: 8px 16px; 
+            background: #6c5ce7; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold;
+        }
+
+        button:hover { background: #a29bfe; }
+
+        /* Status Message */
+        #status-msg { margin: 10px 0; font-size: 0.9em; color: #9294a8; font-style: italic; }
+
+        /* Table Styling */
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #161820; border-radius: 8px; overflow: hidden; }
+        th, td { border: 1px solid #252840; padding: 12px; text-align: left; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* Explicit Column Widths for Desktop */
+        th:nth-child(1) { width: 100px; } /* Date */
+        th:nth-child(2) { width: 180px; } /* Company */
+        th:nth-child(3) { width: 200px; } /* Position */
+        th:nth-child(4) { width: 150px; } /* Location */
+        th:nth-child(5) { width: 120px; } /* Status */
+        th:nth-child(6) { width: 100px; } /* Actions */
+
+        /* Buttons & Links */
+        .btn-edit { background: #4b4d61; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; color: white; border: none; }
+        .btn-link { color: #6c5ce7; text-decoration: none; font-size: 18px; margin-left: 10px; vertical-align: middle; }
+        
+        /* Status Colors */
+        .status-applied { color: #81ecec; }
+        .status-interviewing { color: #fdcb6e; }
+        .status-offer { color: #55efc4; font-weight: bold; }
+        .status-rejected { color: #ff7675; opacity: 0.6; }
+    </style>
 </head>
 <body>
 
-    <h1>Job Tracker</h1>
-    
-    <div id="add-job-form"><input type="text" id="source" placeholder="Job Link (URL)">
-        <input type="text" id="company" placeholder="Company">
-        <input type="text" id="position" placeholder="Position">
-        <input type="text" id="location" placeholder="Location">
-        <select id="status">
-            <option value="Applied">Applied</option>
-            <option value="Interviewing">Interviewing</option>
-            <option value="Offer">Offer</option>
-            <option value="Rejected">Rejected</option>
-        </select>
-        <button onclick="handleAddJob()">Add Job</button>
-    </div>
+    <div class="container">
+        <h1>Job Tracker</h1>
+        
+        <div id="add-job-form">
+            <input type="text" id="company" placeholder="Company Name">
+            <input type="text" id="position" placeholder="Role/Position">
+            <input type="text" id="location" placeholder="Location">
+            <input type="text" id="source" placeholder="Link to Job (URL)">
+            <select id="status">
+                <option value="Applied">Applied</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <button onclick="handleAddJob()">Save Job</button>
+        </div>
 
-    <div id="status-msg">Connecting to Google Sheets...</div>
-<div class="controls">
-    <input type="text" id="search-company" placeholder="Search Company..." oninput="applyFilter()">
-    
-    <select id="filter-status" onchange="applyFilter()">
-        <option value="All">All Statuses</option>
-        <option value="Applied">Applied</option>
-        <option value="Interviewing">Interviewing</option>
-        <option value="Offer">Offer</option>
-        <option value="Rejected">Rejected</option>
-    </select>
+        <div id="status-msg">Initializing connection...</div>
 
-    <select id="filter-month" onchange="applyFilter()">
-        <option value="All">All Months</option>
-        <option value="0">January</option><option value="1">February</option>
-        <option value="2">March</option><option value="3">April</option>
-        <option value="4">May</option><option value="5">June</option>
-        <option value="6">July</option><option value="7">August</option>
-        <option value="8">September</option><option value="9">October</option>
-        <option value="10">November</option><option value="11">December</option>
-    </select>
+        <div class="controls">
+            <input type="text" id="search-company" placeholder="🔍 Search company or role..." oninput="applyFilter()">
+            
+            <select id="filter-status" onchange="applyFilter()">
+                <option value="All">All Statuses</option>
+                <option value="Applied">Applied</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
 
-    <select id="filter-year" onchange="applyFilter()">
-        <option value="All">All Years</option>
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-        <option value="2026">2026</option>
-    </select>
-</div>
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Company</th>
-                <th>Position</th>
-                <th>Location</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="job-table-body">
-            </tbody>
-    </table>
-const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec";
-let allJobs = [];
+            <select id="filter-month" onchange="applyFilter()">
+                <option value="All">All Months</option>
+                <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option>
+                <option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option>
+                <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option>
+                <option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
+            </select>
 
-window.onload = loadJobs;
+            <select id="filter-year" onchange="applyFilter()">
+                <option value="All">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+        </div>
 
-async function loadJobs() {
-    document.getElementById('status-msg').innerText = "Syncing...";
-    try {
-        const response = await fetch(G_SCRIPT_URL);
-        allJobs = await response.json();
-        applyFilter();
-        document.getElementById('status-msg').innerText = "✓ Sync Complete";
-    } catch (e) { document.getElementById('status-msg').innerText = "Sync Failed"; }
-}
-
-function renderTable(data) {
-    const tbody = document.getElementById('job-table-body');
-    tbody.innerHTML = data.map((job, index) => `
-        <tr>
-            <td>${formatDate(job.Date)}</td>
-            <td title="${job.Company}">${job.Company}</td>
-            <td title="${job.Position}">${job.Position}</td>
-            <td>${job.Location}</td>
-            <td class="status-${(job.Status || '').toLowerCase()}">${job.Status}</td>
-            <td>
-                <button class="btn-edit" onclick="startEdit('${job.Company}', '${job.Position}', '${job.Status}')">Edit</button>
-                ${job.Source ? `<a class="btn-link" href="${job.Source}" target="_blank">🔗</a>` : ''}
-            </td>
-        </tr>
-    `).join('');
-}
-
-// Fills the form at the top with the job details so you can update them
-function startEdit(company, position, status) {
-    document.getElementById('company').value = company;
-    document.getElementById('position').value = position;
-    document.getElementById('status').value = status;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    document.getElementById('status-msg').innerText = "Editing: " + company;
-}
-
-function formatDate(dateStr) {
-    if (!dateStr) return "";
-    const d = new Date(dateStr);
-    return isNaN(d) ? dateStr : `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
-}
-
-function applyFilter() {
-    const statusVal = document.getElementById('filter-status').value;
-    const searchVal = document.getElementById('search-company').value.toLowerCase();
-    
-    const filtered = allJobs.filter(j => {
-        const matchStatus = (statusVal === "All" || j.Status === statusVal);
-        const matchSearch = (j.Company.toLowerCase().includes(searchVal) || j.Position.toLowerCase().includes(searchVal));
-        return matchStatus && matchSearch;
-    });
-    renderTable(filtered);
-}
-
-async function handleAddJob() {
-    const newJob = {
-        Date: new Date().toISOString(),
-        Company: document.getElementById('company').value,
-        Position: document.getElementById('position').value,
-        Location: document.getElementById('location').value,
-        Status: document.getElementById('status').value
-    };
-    if (!newJob.Company) return alert("Enter Company");
-    
-    await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-    setTimeout(loadJobs, 1500);
-}
-</body>
-</html>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Company</th>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="job-
