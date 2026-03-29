@@ -46,17 +46,13 @@
     </div>
 
     <script>
-        // PASTE YOUR URL CAREFULLY BETWEEN THE QUOTES BELOW
-        const G_SCRIPT_URL = "PASTE_YOUR_FULL_GOOGLE_SCRIPT_URL_HERE";
+        // FIXED: URL is now correctly assigned here
+        const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec";
         
         let allJobs = [];
 
         window.onload = function() {
-            if (G_SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec")) {
-                document.getElementById('status-msg').innerText = "❌ ERROR: You haven't pasted your Script URL in the code!";
-            } else {
-                loadJobs();
-            }
+            loadJobs();
         };
 
         async function loadJobs() {
@@ -90,7 +86,10 @@
 
         function applyFilter() {
             const searchVal = document.getElementById('search-box').value.toLowerCase();
-            const filtered = allJobs.filter(j => j.Company.toLowerCase().includes(searchVal) || j.Position.toLowerCase().includes(searchVal));
+            const filtered = allJobs.filter(j => 
+                (j.Company && j.Company.toLowerCase().includes(searchVal)) || 
+                (j.Position && j.Position.toLowerCase().includes(searchVal))
+            );
             renderTable(filtered);
         }
 
@@ -107,7 +106,9 @@
 
         async function handleAddJob() {
             const btn = document.getElementById('save-btn');
+            const statusMsg = document.getElementById('status-msg');
             btn.innerText = "Saving...";
+            
             const newJob = {
                 Date: new Date().toISOString(),
                 Company: document.getElementById('company').value,
@@ -116,10 +117,29 @@
                 Status: document.getElementById('status').value,
                 Source: document.getElementById('source').value
             };
+
             if (!newJob.Company) return alert("Enter Company Name");
-            await fetch(G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec", { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            btn.innerText = "Save Job";
-            loadJobs();
+
+            try {
+                await fetch(G_SCRIPT_URL, { 
+                    method: "POST", 
+                    mode: "no-cors", 
+                    body: JSON.stringify(newJob) 
+                });
+                
+                // Clear inputs
+                document.getElementById('company').value = "";
+                document.getElementById('position').value = "";
+                document.getElementById('location').value = "";
+                document.getElementById('source').value = "";
+                
+                btn.innerText = "Save Job";
+                statusMsg.innerText = "✓ Saved! Refreshing...";
+                setTimeout(loadJobs, 1500);
+            } catch (err) {
+                alert("Error saving job");
+                btn.innerText = "Save Job";
+            }
         }
         
         function startEdit(company, position, status, location, source) {
