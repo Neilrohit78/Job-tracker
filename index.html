@@ -16,13 +16,11 @@
         h1 { font-weight: 800; color: #0f172a; margin: 10px 0 5px 0; font-size: 1.8rem; }
         .subtitle { color: var(--text-light); margin-bottom: 25px; font-size: 0.9rem; }
 
-        /* Dashboard Stats - Better wrapping for mobile */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 25px; }
         .stat-card { background: var(--card-bg); padding: 15px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 22px; font-weight: 800; color: var(--primary); margin-top: 4px; }
 
-        /* Responsive Forms */
         .card { background: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         input, select { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; outline: none; font-size: 16px; flex: 1; min-width: 100%; box-sizing: border-box; }
         
@@ -30,26 +28,18 @@
 
         button { padding: 14px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; border: none; transition: 0.2s; background: var(--primary); color: white; width: 100%; font-size: 16px; }
         @media (min-width: 600px) { button { width: auto; } }
-        
         .btn-ghost { background: #e2e8f0; color: var(--text); }
 
-        /* Mobile-First Table -> Cards */
         .table-wrapper { background: transparent; border: none; }
         table { width: 100%; border-collapse: collapse; }
         
-        /* Hide traditional table headers on mobile */
         thead { display: none; }
-        tr { 
-            display: block; background: var(--card-bg); margin-bottom: 12px; 
-            padding: 15px; border-radius: 16px; border: 1px solid var(--border);
-            position: relative;
-        }
+        tr { display: block; background: var(--card-bg); margin-bottom: 12px; padding: 15px; border-radius: 16px; border: 1px solid var(--border); position: relative; }
         td { display: block; padding: 4px 0; border: none; font-size: 14px; white-space: normal; }
-        td:first-child { font-size: 11px; color: var(--text-light); font-weight: 600; margin-bottom: 5px; } /* Date */
-        td:nth-child(2) { font-size: 18px; color: var(--text); padding-bottom: 2px; } /* Company */
-        td:last-child { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; } /* Actions */
+        td:first-child { font-size: 11px; color: var(--text-light); font-weight: 600; margin-bottom: 5px; }
+        td:nth-child(2) { font-size: 18px; color: var(--text); padding-bottom: 2px; }
+        td:last-child { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
 
-        /* Desktop Table View Restored */
         @media (min-width: 768px) {
             .table-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
             thead { display: table-header-group; }
@@ -61,29 +51,16 @@
             th { background: #f8fafc; color: var(--text-light); text-transform: uppercase; font-size: 11px; padding: 16px; text-align: left; }
         }
 
-        /* Status Pills */
         .pill { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; border: 1px solid; display: inline-block; }
         .status-applied { color: #2563eb; background: #eff6ff; border-color: #dbeafe; }
         .status-interviewing { color: #d97706; background: #fffbeb; border-color: #fef3c7; }
         .status-offer { color: #059669; background: #ecfdf5; border-color: #d1fae5; }
         .status-rejected { color: #64748b; background: #f8fafc; border-color: #f1f5f9; }
 
-        /* Modal / Edit Popup */
-        .modal-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px);
-            display: none; justify-content: center; align-items: flex-end; z-index: 1000;
-        }
-        .modal-content { 
-            background: white; padding: 30px 20px; border-radius: 24px 24px 0 0; width: 100%;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.1); animation: slideUp 0.3s ease-out;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: flex-end; z-index: 1000; }
+        .modal-content { background: white; padding: 30px 20px; border-radius: 24px 24px 0 0; width: 100%; box-shadow: 0 -10px 25px rgba(0,0,0,0.1); animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
-        @media (min-width: 600px) {
-            .modal-overlay { align-items: center; }
-            .modal-content { border-radius: 24px; max-width: 450px; margin: 20px; }
-        }
+        @media (min-width: 600px) { .modal-overlay { align-items: center; } .modal-content { border-radius: 24px; max-width: 450px; margin: 20px; } }
     </style>
 </head>
 <body>
@@ -109,11 +86,20 @@
 
         <div class="card" style="background: transparent; box-shadow: none; border: none; padding: 0;">
             <input type="text" id="search-box" placeholder="🔍 Search..." oninput="applyFilter()">
-            <select id="filter-month" onchange="applyFilter()" style="min-width: 100px; flex: 0.5;">
+            
+            <select id="filter-month" onchange="applyFilter()" style="min-width: 80px; flex: 0.3;">
                 <option value="All">All Months</option>
                 <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
             </select>
-            <button class="btn-ghost" onclick="clearFilters()" style="flex: 0.3; padding: 12px;">Reset</button>
+
+            <select id="filter-year" onchange="applyFilter()" style="min-width: 80px; flex: 0.3;">
+                <option value="All">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026" selected>2026</option>
+            </select>
+
+            <button class="btn-ghost" onclick="clearFilters()" style="flex: 0.2; padding: 12px; font-size: 14px;">Reset</button>
         </div>
 
         <div class="table-wrapper">
@@ -156,8 +142,8 @@
                 allJobs = rawData.filter(j => j.Company && j.Company.trim() !== "");
                 updateStats();
                 applyFilter();
-                msg.innerText = "✓ Synced";
-            } catch (e) { msg.innerText = "❌ Connection Failed"; }
+                msg.innerText = "✓ Dashboard Ready";
+            } catch (e) { msg.innerText = "❌ Sync Failed"; }
         }
 
         function updateStats() {
@@ -174,7 +160,7 @@
 
         function renderTable(data) {
             const tbody = document.getElementById('job-table-body');
-            tbody.innerHTML = data.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job, index) => `
+            tbody.innerHTML = data.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job) => `
                 <tr>
                     <td>${formatDate(job.Date)}</td>
                     <td><strong>${job.Company}</strong></td>
@@ -188,11 +174,13 @@
         function applyFilter() {
             const s = document.getElementById('search-box').value.toLowerCase();
             const m = document.getElementById('filter-month').value;
+            const y = document.getElementById('filter-year').value;
             const filtered = allJobs.filter(j => {
                 const d = new Date(j.Date);
                 const matchSearch = (j.Company || "").toLowerCase().includes(s) || (j.Position || "").toLowerCase().includes(s);
                 const matchMonth = m === "All" || (!isNaN(d) && d.getMonth().toString() === m);
-                return matchSearch && matchMonth;
+                const matchYear = y === "All" || (!isNaN(d) && d.getFullYear().toString() === y);
+                return matchSearch && matchMonth && matchYear;
             });
             renderTable(filtered);
         }
@@ -249,8 +237,10 @@
         }
 
         function clearFilters() {
-            document.querySelectorAll('input').forEach(i => i.value = "");
+            document.getElementById('search-box').value = "";
             document.getElementById('filter-month').value = "All";
+            document.getElementById('filter-year').value = "2026"; // Reset to current year
+            document.querySelectorAll('#company, #position, #location, #source').forEach(i => i.value = "");
             applyFilter();
         }
     </script>
