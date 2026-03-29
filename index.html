@@ -5,66 +5,182 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Career Hub — Neil</title>
     <style>
-        :root { --bg: #0f111a; --card-bg: #161925; --primary: #6c5ce7; --text: #e8e9f0; --border: #2d3142; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
+        :root { 
+            --bg: #f8f9fc; 
+            --card-bg: #ffffff; 
+            --primary: #6c5ce7; 
+            --text: #2d3436; 
+            --text-light: #636e72;
+            --border: #e2e8f0; 
+        }
+        
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 40px 20px; 
+            margin: 0; 
+            line-height: 1.5;
+        }
+
         .container { max-width: 1100px; margin: 0 auto; }
-        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-        input, select { background: #1e2235; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 8px; outline: none; flex: 1; min-width: 150px; }
-        button { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; background: var(--primary); color: white; }
-        #status-msg { font-weight: bold; margin-bottom: 20px; color: #9294a8; }
-        .table-wrapper { border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; background: var(--card-bg); }
+        h1 { font-weight: 800; color: #1a1a1a; margin-bottom: 30px; letter-spacing: -0.5px; }
+
+        /* Card Styling */
+        .card { 
+            background: var(--card-bg); 
+            padding: 24px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            margin-bottom: 24px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex; 
+            gap: 12px; 
+            flex-wrap: wrap; 
+            align-items: center; 
+        }
+
+        input, select { 
+            background: #ffffff; 
+            border: 1px solid var(--border); 
+            color: var(--text); 
+            padding: 12px; 
+            border-radius: 10px; 
+            outline: none; 
+            font-size: 14px;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1); }
+
+        button { 
+            padding: 12px 24px; 
+            border-radius: 10px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border: none; 
+            transition: 0.2s; 
+            background: var(--primary); 
+            color: white; 
+        }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        #status-msg { font-size: 13px; font-weight: 600; margin-bottom: 20px; color: var(--text-light); }
+
+        /* Table Styling */
+        .table-wrapper { 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            overflow: hidden; 
+            background: var(--card-bg); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        th, td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        th { background: #1c2030; color: #9294a8; text-transform: uppercase; font-size: 11px; }
-        .pill { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; border: 1px solid; }
-        .status-applied { color: #81ecec; } .status-interviewing { color: #fdcb6e; } .status-offer { color: #55efc4; } .status-rejected { color: #ff7675; opacity: 0.6; }
-        .btn-edit { background: transparent; color: #9294a8; border: 1px solid #4b4d61; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
+        th { 
+            background: #f1f5f9; 
+            color: var(--text-light); 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            letter-spacing: 0.05em; 
+            padding: 16px; 
+            text-align: left;
+        }
+        td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        tr:last-child td { border-bottom: none; }
+        
+        /* Pills */
+        .pill { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid; }
+        .status-applied { color: #0984e3; background: #ebf5ff; border-color: #d1e9ff; }
+        .status-interviewing { color: #d63031; background: #fff5f5; border-color: #ffe3e3; }
+        .status-offer { color: #00b894; background: #e6fffa; border-color: #b2f5ea; }
+        .status-rejected { color: #636e72; background: #f1f2f6; border-color: #dfe4ea; }
+
+        .btn-edit { background: #f1f5f9; color: var(--text); padding: 6px 12px; border-radius: 6px; font-size: 12px; }
+        .btn-edit:hover { background: #e2e8f0; }
+
+        @media (max-width: 768px) { .card { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Career Hub</h1>
+        
         <div class="card" id="add-job-form">
-            <input type="text" id="company" placeholder="Company">
-            <input type="text" id="position" placeholder="Role">
+            <input type="text" id="company" placeholder="Company Name">
+            <input type="text" id="position" placeholder="Role/Position">
             <input type="text" id="location" placeholder="Location">
             <input type="text" id="source" placeholder="Link (URL)">
-            <select id="status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+            <select id="status">
+                <option value="Applied">Applied</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
             <button onclick="handleAddJob()" id="save-btn">Save Job</button>
         </div>
+
         <div id="status-msg">App Status: Initializing...</div>
+
         <div class="card">
-            <input type="text" id="search-box" placeholder="Search..." oninput="applyFilter()">
-            <button onclick="clearFilters()" style="background:#2d3142">Clear</button>
+            <input type="text" id="search-box" placeholder="🔍 Search company or role..." oninput="applyFilter()">
+            
+            <select id="filter-month" onchange="applyFilter()">
+                <option value="All">All Months</option>
+                <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+                <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+                <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+                <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+            </select>
+
+            <select id="filter-year" onchange="applyFilter()">
+                <option value="All">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+
+            <button onclick="clearFilters()" style="background:#dfe4ea; color:#2d3436">Clear</button>
         </div>
+
         <div class="table-wrapper">
             <table>
-                <thead><tr><th style="width:100px">Date</th><th>Company</th><th>Position</th><th>Location</th><th>Status</th><th style="width:100px">Actions</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th style="width:110px">Date</th>
+                        <th>Company</th>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th style="width:100px">Actions</th>
+                    </tr>
+                </thead>
                 <tbody id="job-table-body"></tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // FIXED: URL is now correctly assigned here
         const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec";
         
         let allJobs = [];
 
         window.onload = function() {
+            clearFilters(); // Ensures everything is blank on reload
             loadJobs();
         };
 
         async function loadJobs() {
             const msg = document.getElementById('status-msg');
-            msg.innerText = "App Status: ⏳ Connecting to Google...";
+            msg.innerText = "App Status: ⏳ Syncing Data...";
             try {
                 const response = await fetch(G_SCRIPT_URL);
                 allJobs = await response.json();
                 applyFilter();
                 msg.innerText = "App Status: ✓ Sync Complete (" + allJobs.length + " entries)";
             } catch (e) { 
-                msg.innerText = "App Status: ❌ Sync Failed. Check Script Deployment."; 
+                msg.innerText = "App Status: ❌ Sync Failed."; 
             }
         }
 
@@ -73,8 +189,8 @@
             tbody.innerHTML = data.map((job) => `
                 <tr>
                     <td>${formatDate(job.Date)}</td>
-                    <td><strong>${job.Company}</strong></td>
-                    <td>${job.Position}</td>
+                    <td><strong>${job.Company || ''}</strong></td>
+                    <td>${job.Position || ''}</td>
                     <td>${job.Location || '—'}</td>
                     <td><span class="pill status-${(job.Status || '').toLowerCase()}">${job.Status || 'Applied'}</span></td>
                     <td>
@@ -86,16 +202,31 @@
 
         function applyFilter() {
             const searchVal = document.getElementById('search-box').value.toLowerCase();
-            const filtered = allJobs.filter(j => 
-                (j.Company && j.Company.toLowerCase().includes(searchVal)) || 
-                (j.Position && j.Position.toLowerCase().includes(searchVal))
-            );
+            const monthVal = document.getElementById('filter-month').value;
+            const yearVal = document.getElementById('filter-year').value;
+
+            const filtered = allJobs.filter(j => {
+                const d = new Date(j.Date);
+                const matchSearch = (j.Company?.toLowerCase().includes(searchVal) || j.Position?.toLowerCase().includes(searchVal));
+                const matchMonth = (monthVal === "All" || d.getMonth().toString() === monthVal);
+                const matchYear = (yearVal === "All" || d.getFullYear().toString() === yearVal);
+                return matchSearch && matchMonth && matchYear;
+            });
             renderTable(filtered);
         }
 
         function clearFilters() {
             document.getElementById('search-box').value = "";
-            applyFilter();
+            document.getElementById('filter-month').value = "All";
+            document.getElementById('filter-year').value = "All";
+            
+            // Also clear the entry form inputs
+            document.getElementById('company').value = "";
+            document.getElementById('position').value = "";
+            document.getElementById('location').value = "";
+            document.getElementById('source').value = "";
+            
+            if(allJobs.length > 0) applyFilter();
         }
 
         function formatDate(dateStr) {
@@ -106,7 +237,6 @@
 
         async function handleAddJob() {
             const btn = document.getElementById('save-btn');
-            const statusMsg = document.getElementById('status-msg');
             btn.innerText = "Saving...";
             
             const newJob = {
@@ -120,26 +250,11 @@
 
             if (!newJob.Company) return alert("Enter Company Name");
 
-            try {
-                await fetch(G_SCRIPT_URL, { 
-                    method: "POST", 
-                    mode: "no-cors", 
-                    body: JSON.stringify(newJob) 
-                });
-                
-                // Clear inputs
-                document.getElementById('company').value = "";
-                document.getElementById('position').value = "";
-                document.getElementById('location').value = "";
-                document.getElementById('source').value = "";
-                
-                btn.innerText = "Save Job";
-                statusMsg.innerText = "✓ Saved! Refreshing...";
-                setTimeout(loadJobs, 1500);
-            } catch (err) {
-                alert("Error saving job");
-                btn.innerText = "Save Job";
-            }
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
+            
+            clearFilters();
+            btn.innerText = "Save Job";
+            loadJobs();
         }
         
         function startEdit(company, position, status, location, source) {
