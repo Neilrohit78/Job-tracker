@@ -6,154 +6,116 @@
     <title>Career Hub — Neil</title>
     <style>
         :root { 
-            --bg: #f8f9fc; 
-            --card-bg: #ffffff; 
-            --primary: #6c5ce7; 
-            --text: #2d3436; 
-            --text-light: #636e72;
-            --border: #e2e8f0; 
+            --bg: #f0f2f5; --card-bg: #ffffff; --primary: #6c5ce7; --text: #1e293b; 
+            --text-light: #64748b; --border: #e2e8f0; --accent: #f8fafc;
         }
         
-        body { 
-            font-family: 'Inter', -apple-system, sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            padding: 40px 20px; 
-            margin: 0; 
-            line-height: 1.5;
-        }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 40px 20px; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        h1 { font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+        .subtitle { color: var(--text-light); margin-bottom: 30px; font-size: 14px; }
 
-        .container { max-width: 1100px; margin: 0 auto; }
-        h1 { font-weight: 800; color: #1a1a1a; margin-bottom: 30px; letter-spacing: -0.5px; }
+        /* Dashboard Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .stat-label { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin-top: 5px; }
 
-        /* Card Styling */
-        .card { 
-            background: var(--card-bg); 
-            padding: 24px; 
-            border-radius: 16px; 
-            border: 1px solid var(--border); 
-            margin-bottom: 24px; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            display: flex; 
-            gap: 12px; 
-            flex-wrap: wrap; 
-            align-items: center; 
-        }
+        /* Forms & Filters */
+        .card { background: var(--card-bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        input, select { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; outline: none; font-size: 14px; flex: 1; min-width: 140px; }
+        input:focus { border-color: var(--primary); background: #fff; }
 
-        input, select { 
-            background: #ffffff; 
-            border: 1px solid var(--border); 
-            color: var(--text); 
-            padding: 12px; 
-            border-radius: 10px; 
-            outline: none; 
-            font-size: 14px;
-            transition: all 0.2s;
-            flex: 1;
-            min-width: 140px;
-        }
+        button { padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; background: var(--primary); color: white; }
+        .btn-ghost { background: #f1f5f9; color: var(--text); }
 
-        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1); }
-
-        button { 
-            padding: 12px 24px; 
-            border-radius: 10px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            border: none; 
-            transition: 0.2s; 
-            background: var(--primary); 
-            color: white; 
-        }
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        #status-msg { font-size: 13px; font-weight: 600; margin-bottom: 20px; color: var(--text-light); }
-
-        /* Table Styling */
-        .table-wrapper { 
-            border-radius: 16px; 
-            border: 1px solid var(--border); 
-            overflow: hidden; 
-            background: var(--card-bg); 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-        }
+        /* Table */
+        .table-wrapper { border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--card-bg); }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        th { 
-            background: #f1f5f9; 
-            color: var(--text-light); 
-            text-transform: uppercase; 
-            font-size: 11px; 
-            letter-spacing: 0.05em; 
-            padding: 16px; 
-            text-align: left;
-        }
-        td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        tr:last-child td { border-bottom: none; }
-        
+        th { background: #f8fafc; color: var(--text-light); text-transform: uppercase; font-size: 11px; padding: 16px; text-align: left; }
+        td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
         /* Pills */
-        .pill { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid; }
-        .status-applied { color: #0984e3; background: #ebf5ff; border-color: #d1e9ff; }
-        .status-interviewing { color: #d63031; background: #fff5f5; border-color: #ffe3e3; }
-        .status-offer { color: #00b894; background: #e6fffa; border-color: #b2f5ea; }
-        .status-rejected { color: #636e72; background: #f1f2f6; border-color: #dfe4ea; }
+        .pill { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; border: 1px solid; }
+        .status-applied { color: #2563eb; background: #eff6ff; border-color: #dbeafe; }
+        .status-interviewing { color: #d97706; background: #fffbeb; border-color: #fef3c7; }
+        .status-offer { color: #059669; background: #ecfdf5; border-color: #d1fae5; }
+        .status-rejected { color: #64748b; background: #f8fafc; border-color: #f1f5f9; }
 
-        .btn-edit { background: #f1f5f9; color: var(--text); padding: 6px 12px; border-radius: 6px; font-size: 12px; }
-        .btn-edit:hover { background: #e2e8f0; }
+        /* Modal / Edit View */
+        .modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content { 
+            background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        .modal-content h2 { margin-top: 0; margin-bottom: 20px; }
+        .modal-content .form-group { display: flex; flex-direction: column; gap: 15px; }
 
-        @media (max-width: 768px) { .card { flex-direction: column; align-items: stretch; } }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Career Hub</h1>
+        <p class="subtitle" id="status-msg">Initializing Dashboard...</p>
         
-        <div class="card" id="add-job-form">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Applied</div>
+                <div class="stat-value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">In Pipeline</div>
+                <div class="stat-value" id="stat-pipeline" style="color: #d97706;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Added This Week</div>
+                <div class="stat-value" id="stat-week" style="color: #2563eb;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Offers</div>
+                <div class="stat-value" id="stat-offers" style="color: #059669;">0</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="width: 100%; margin: 0 0 10px 0; font-size: 16px;">Log New Application</h3>
             <input type="text" id="company" placeholder="Company Name">
-            <input type="text" id="position" placeholder="Role/Position">
+            <input type="text" id="position" placeholder="Role">
             <input type="text" id="location" placeholder="Location">
             <input type="text" id="source" placeholder="Link (URL)">
             <select id="status">
-                <option value="Applied">Applied</option>
-                <option value="Interviewing">Interviewing</option>
-                <option value="Offer">Offer</option>
-                <option value="Rejected">Rejected</option>
+                <option>Applied</option>
+                <option>Interviewing</option>
+                <option>Offer</option>
+                <option>Rejected</option>
             </select>
-            <button onclick="handleAddJob()" id="save-btn">Save Job</button>
+            <button onclick="handleAddJob()" id="save-btn">Save Entry</button>
         </div>
 
-        <div id="status-msg">App Status: Initializing...</div>
-
-        <div class="card">
-            <input type="text" id="search-box" placeholder="🔍 Search company or role..." oninput="applyFilter()">
-            
-            <select id="filter-month" onchange="applyFilter()">
+        <div class="card" style="background: transparent; box-shadow: none; padding-left: 0;">
+            <input type="text" id="search-box" placeholder="🔍 Filter by company or role..." oninput="applyFilter()">
+            <select id="filter-month" onchange="applyFilter()" style="max-width: 150px;">
                 <option value="All">All Months</option>
-                <option value="0">January</option><option value="1">February</option><option value="2">March</option>
-                <option value="3">April</option><option value="4">May</option><option value="5">June</option>
-                <option value="6">July</option><option value="7">August</option><option value="8">September</option>
-                <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+                <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
             </select>
-
-            <select id="filter-year" onchange="applyFilter()">
-                <option value="All">All Years</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
-
-            <button onclick="clearFilters()" style="background:#dfe4ea; color:#2d3436">Clear</button>
+            <button class="btn-ghost" onclick="clearFilters()">Reset</button>
         </div>
 
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
-                        <th style="width:110px">Date</th>
+                        <th style="width: 110px;">Date</th>
                         <th>Company</th>
                         <th>Position</th>
-                        <th>Location</th>
                         <th>Status</th>
-                        <th style="width:100px">Actions</th>
+                        <th style="width: 100px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="job-table-body"></tbody>
@@ -161,41 +123,65 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content">
+            <h2>Edit Application</h2>
+            <div class="form-group">
+                <input type="text" id="edit-company" placeholder="Company Name">
+                <input type="text" id="edit-position" placeholder="Position">
+                <input type="text" id="edit-location" placeholder="Location">
+                <input type="text" id="edit-source" placeholder="Source Link">
+                <select id="edit-status">
+                    <option>Applied</option>
+                    <option>Interviewing</option>
+                    <option>Offer</option>
+                    <option>Rejected</option>
+                </select>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button onclick="saveEdit()" style="flex: 2;">Update Record</button>
+                    <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec";
-        
         let allJobs = [];
 
-        window.onload = function() {
-            clearFilters(); // Ensures everything is blank on reload
-            loadJobs();
-        };
+        window.onload = loadJobs;
 
         async function loadJobs() {
             const msg = document.getElementById('status-msg');
-            msg.innerText = "App Status: ⏳ Syncing Data...";
+            msg.innerText = "⏳ Syncing with Google Cloud...";
             try {
                 const response = await fetch(G_SCRIPT_URL);
                 allJobs = await response.json();
+                updateStats();
                 applyFilter();
-                msg.innerText = "App Status: ✓ Sync Complete (" + allJobs.length + " entries)";
-            } catch (e) { 
-                msg.innerText = "App Status: ❌ Sync Failed."; 
-            }
+                msg.innerText = "✓ Dashboard Ready";
+            } catch (e) { msg.innerText = "❌ Connection Failed"; }
+        }
+
+        function updateStats() {
+            const now = new Date();
+            const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            
+            document.getElementById('stat-total').innerText = allJobs.length;
+            document.getElementById('stat-pipeline').innerText = allJobs.filter(j => j.Status === 'Interviewing' || j.Status === 'Applied').length;
+            document.getElementById('stat-offers').innerText = allJobs.filter(j => j.Status === 'Offer').length;
+            document.getElementById('stat-week').innerText = allJobs.filter(j => new Date(j.Date) > oneWeekAgo).length;
         }
 
         function renderTable(data) {
             const tbody = document.getElementById('job-table-body');
-            tbody.innerHTML = data.map((job) => `
+            tbody.innerHTML = data.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job) => `
                 <tr>
-                    <td>${formatDate(job.Date)}</td>
-                    <td><strong>${job.Company || ''}</strong></td>
-                    <td>${job.Position || ''}</td>
-                    <td>${job.Location || '—'}</td>
-                    <td><span class="pill status-${(job.Status || '').toLowerCase()}">${job.Status || 'Applied'}</span></td>
-                    <td>
-                        <button class="btn-edit" onclick="startEdit('${job.Company}', '${job.Position}', '${job.Status}', '${job.Location || ''}', '${job.Source || ''}')">Edit</button>
-                    </td>
+                    <td>${new Date(job.Date).toLocaleDateString('en-GB')}</td>
+                    <td><strong>${job.Company}</strong></td>
+                    <td>${job.Position}</td>
+                    <td><span class="pill status-${(job.Status || '').toLowerCase()}">${job.Status}</span></td>
+                    <td><button onclick="openModal('${encodeURIComponent(JSON.stringify(job))}')" style="background:#f1f5f9; color:#475569; padding: 5px 10px; font-size:12px">Edit</button></td>
                 </tr>
             `).join('');
         }
@@ -203,68 +189,5 @@
         function applyFilter() {
             const searchVal = document.getElementById('search-box').value.toLowerCase();
             const monthVal = document.getElementById('filter-month').value;
-            const yearVal = document.getElementById('filter-year').value;
-
             const filtered = allJobs.filter(j => {
-                const d = new Date(j.Date);
-                const matchSearch = (j.Company?.toLowerCase().includes(searchVal) || j.Position?.toLowerCase().includes(searchVal));
-                const matchMonth = (monthVal === "All" || d.getMonth().toString() === monthVal);
-                const matchYear = (yearVal === "All" || d.getFullYear().toString() === yearVal);
-                return matchSearch && matchMonth && matchYear;
-            });
-            renderTable(filtered);
-        }
-
-        function clearFilters() {
-            document.getElementById('search-box').value = "";
-            document.getElementById('filter-month').value = "All";
-            document.getElementById('filter-year').value = "All";
-            
-            // Also clear the entry form inputs
-            document.getElementById('company').value = "";
-            document.getElementById('position').value = "";
-            document.getElementById('location').value = "";
-            document.getElementById('source').value = "";
-            
-            if(allJobs.length > 0) applyFilter();
-        }
-
-        function formatDate(dateStr) {
-            if (!dateStr) return "";
-            const d = new Date(dateStr);
-            return isNaN(d) ? dateStr : d.toLocaleDateString('en-GB');
-        }
-
-        async function handleAddJob() {
-            const btn = document.getElementById('save-btn');
-            btn.innerText = "Saving...";
-            
-            const newJob = {
-                Date: new Date().toISOString(),
-                Company: document.getElementById('company').value,
-                Position: document.getElementById('position').value,
-                Location: document.getElementById('location').value,
-                Status: document.getElementById('status').value,
-                Source: document.getElementById('source').value
-            };
-
-            if (!newJob.Company) return alert("Enter Company Name");
-
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            
-            clearFilters();
-            btn.innerText = "Save Job";
-            loadJobs();
-        }
-        
-        function startEdit(company, position, status, location, source) {
-            document.getElementById('company').value = company;
-            document.getElementById('position').value = position;
-            document.getElementById('status').value = status;
-            document.getElementById('location').value = location;
-            document.getElementById('source').value = source;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-</body>
-</html>
+                const d = new Date(j.
