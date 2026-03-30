@@ -6,81 +6,81 @@
     <title>Career Hub — Neil</title>
     <style>
         :root { 
-            --bg: #f8fafc; --card-bg: #ffffff; --primary: #0f172a; --accent: #2563eb;
-            --border: #e2e8f0; --text-main: #1e293b; --text-sub: #64748b;
+            --bg: #ffffff; /* Clean White Background */
+            --card-bg: #f8fafc; /* Subtle off-white for cards */
+            --primary: #0f172a; 
+            --accent: #2563eb;
+            --border: #e2e8f0; 
+            --text-main: #1e293b; 
+            --text-sub: #64748b;
+            /* Status Colors */
             --applied-bg: #dbeafe; --applied-txt: #1e40af;
             --progress-bg: #fef3c7; --progress-txt: #92400e;
             --rejected-bg: #fee2e2; --rejected-txt: #991b1b;
             --offer-bg: #dcfce7; --offer-txt: #166534;
         }
         
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-main); padding: 20px; margin: 0; line-height: 1.5; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-main); padding: 30px 20px; margin: 0; line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; }
         
-        /* Header & Dashboard Stats */
-        header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
-        h1 { font-size: 2rem; font-weight: 800; margin: 0; letter-spacing: -1px; color: var(--primary); }
+        header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; }
+        h1 { font-size: 2.2rem; font-weight: 900; margin: 0; letter-spacing: -1.5px; color: var(--primary); }
         
+        /* Dashboard Headers - Distinct Styling */
         .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s; }
-        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-        .stat-label { font-size: 11px; color: var(--text-sub); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .stat-value { font-size: 28px; font-weight: 800; margin-top: 5px; color: var(--primary); }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); text-align: left; }
+        .stat-label { font-size: 12px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; display: block; margin-bottom: 8px; }
+        .stat-value { font-size: 32px; font-weight: 900; color: var(--primary); }
 
-        /* Unified Filter & Search Bar */
+        /* Control Panel */
         .control-panel { 
             display: grid; 
-            grid-template-columns: 1fr auto auto auto auto; 
+            grid-template-columns: 1.5fr 1fr 0.8fr 0.8fr auto; 
             gap: 12px; 
-            background: white; 
-            padding: 12px; 
-            border-radius: 14px; 
-            border: 1px solid var(--border); 
-            margin-bottom: 20px; 
+            background: #f1f5f9; 
+            padding: 15px; 
+            border-radius: 18px; 
+            margin-bottom: 25px; 
             align-items: center;
         }
-        .search-input { padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 14px; outline: none; transition: border 0.2s; }
-        .search-input:focus { border-color: var(--accent); }
-        .filter-select { padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-size: 13px; background: #f9fafb; cursor: pointer; outline: none; }
+        .search-input { padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 14px; outline: none; background: white; }
+        .filter-select { padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; background: white; cursor: pointer; font-weight: 600; color: var(--primary); }
 
-        /* Buttons */
-        .btn-main { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; }
-        .btn-main:hover { background: #334155; }
-        .btn-modify { background: #f1f5f9; color: var(--accent); border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.2s; }
-        .btn-modify:hover { background: var(--accent); color: white; }
+        .btn-main { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.2s; }
+        .btn-main:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-modify { background: white; color: var(--text-sub); border: 1px solid var(--border); padding: 8px 16px; border-radius: 10px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .btn-modify:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* Table Design */
-        .table-wrapper { background: white; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        /* Table Headers - Distinct High Contrast */
+        .table-wrapper { background: white; border-radius: 20px; border: 1px solid var(--border); overflow: hidden; }
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; background: #f8fafc; padding: 16px; font-size: 12px; color: var(--text-sub); text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: 700; }
-        td { padding: 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        th { text-align: left; background: var(--primary); padding: 18px 20px; font-size: 11px; color: #ffffff; text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; }
+        td { padding: 20px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
         
-        .date-cell { font-weight: 600; color: var(--text-main); font-size: 13px; min-width: 140px; }
-        .company-info { display: flex; flex-direction: column; gap: 2px; }
-        .co-name { font-weight: 700; font-size: 15px; color: var(--primary); }
-        .role-name { font-size: 13px; color: var(--text-sub); }
+        tr:last-child td { border-bottom: none; }
+        .date-cell { font-weight: 700; color: var(--text-main); font-size: 14px; }
+        .co-name { font-weight: 800; font-size: 16px; color: var(--primary); display: block; }
+        .role-name { font-size: 14px; color: var(--text-sub); font-weight: 500; }
 
-        /* Status Pills - More Visually Pleasant */
-        .pill { padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
-        .pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+        /* Status Pills */
+        .pill { padding: 8px 16px; border-radius: 12px; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; }
+        .pill::before { content: ''; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
         
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); }
         .status-applied::before { background: var(--applied-txt); }
-        
         .status-in-progress { background: var(--progress-bg); color: var(--progress-txt); }
         .status-in-progress::before { background: var(--progress-txt); }
-        
         .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); }
         .status-rejected::before { background: var(--rejected-txt); }
-        
         .status-offer { background: var(--offer-bg); color: var(--offer-txt); }
         .status-offer::before { background: var(--offer-txt); }
 
-        #add-form-container { display: none; background: white; padding: 25px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; animation: fadeIn 0.3s ease; }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        /* Modals & Forms */
+        #add-form-container { display: none; background: #f8fafc; padding: 25px; border-radius: 18px; border: 2px dashed var(--border); margin-bottom: 25px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
+        .modal-content { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 480px; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -88,13 +88,13 @@
         <header>
             <div>
                 <h1>Career Hub</h1>
-                <p style="color: var(--text-sub); margin: 5px 0 0 0;">Manage your applications and pipeline.</p>
+                <p style="color: var(--text-sub); font-weight: 500; margin: 8px 0 0 0;">Professional Application Tracking System</p>
             </div>
             <button class="btn-main" onclick="toggleForm()" style="background: var(--accent);">+ Add Application</button>
         </header>
 
         <div class="stats-grid">
-            <div class="stat-card"><span class="stat-label">Total Applications</span><div class="stat-value" id="stat-total">0</div></div>
+            <div class="stat-card"><span class="stat-label">Total Jobs</span><div class="stat-value" id="stat-total">0</div></div>
             <div class="stat-card"><span class="stat-label">Applied</span><div class="stat-value" id="stat-applied" style="color: var(--applied-txt);">0</div></div>
             <div class="stat-card"><span class="stat-label">In Progress</span><div class="stat-value" id="stat-progress" style="color: var(--progress-txt);">0</div></div>
             <div class="stat-card"><span class="stat-label">Rejected</span><div class="stat-value" id="stat-rejected" style="color: var(--rejected-txt);">0</div></div>
@@ -102,7 +102,16 @@
         </div>
 
         <div class="control-panel">
-            <input type="text" id="search-box" class="search-input" placeholder="Search company or role..." onkeyup="renderUI()">
+            <input type="text" id="search-box" class="search-input" placeholder="Search by Company or Role..." onkeyup="renderUI()">
+            
+            <select id="filter-status" class="filter-select" onchange="renderUI()">
+                <option value="all">All Statuses</option>
+                <option>Applied</option>
+                <option>In Progress</option>
+                <option>Offer</option>
+                <option>Rejected</option>
+            </select>
+
             <select id="filter-month" class="filter-select" onchange="renderUI()">
                 <option value="all">All Months</option>
                 <option value="0">January</option><option value="1">February</option>
@@ -112,26 +121,28 @@
                 <option value="8">September</option><option value="9">October</option>
                 <option value="10">November</option><option value="11">December</option>
             </select>
+
             <select id="filter-year" class="filter-select" onchange="renderUI()">
                 <option value="all">All Years</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
             </select>
-            <button class="btn-main" onclick="loadJobs()">Sync Now</button>
+            
+            <button class="btn-main" onclick="loadJobs()">Sync</button>
         </div>
 
         <div id="add-form-container">
-            <h3 style="margin-top:0">New Application</h3>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="company" class="search-input" placeholder="Company Name" style="flex:1">
-                <input type="text" id="role" class="search-input" placeholder="Role Title" style="flex:1">
+            <h3 style="margin-top:0; color: var(--primary);">Quick Add</h3>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <input type="text" id="company" class="search-input" placeholder="Company" style="flex:1">
+                <input type="text" id="role" class="search-input" placeholder="Role" style="flex:1">
                 <select id="status" class="filter-select">
                     <option>Applied</option>
                     <option>In Progress</option>
                     <option>Offer</option>
                     <option>Rejected</option>
                 </select>
-                <button class="btn-main" onclick="handleSyncJob()" style="background: var(--accent);">Submit</button>
+                <button class="btn-main" onclick="handleSyncJob()">Submit</button>
             </div>
         </div>
 
@@ -140,8 +151,8 @@
                 <thead>
                     <tr>
                         <th>Date Applied</th>
-                        <th>Opportunity</th>
-                        <th>Current Status</th>
+                        <th>Company & Role</th>
+                        <th>Status</th>
                         <th style="text-align: right;">Action</th>
                     </tr>
                 </thead>
@@ -152,18 +163,18 @@
 
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
-            <h2 style="margin-top:0; letter-spacing: -1px;">Update Application</h2>
-            <div style="display:flex; flex-direction:column; gap:15px;">
+            <h2 style="margin-top:0; color: var(--primary);">Update Entry</h2>
+            <div style="display:flex; flex-direction:column; gap:20px;">
                 <div>
-                    <label class="stat-label">Company</label>
+                    <label class="stat-label">Company Name</label>
                     <input type="text" id="edit-company" class="search-input" style="width:100%; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="stat-label">Role</label>
+                    <label class="stat-label">Role Title</label>
                     <input type="text" id="edit-role" class="search-input" style="width:100%; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="stat-label">Status</label>
+                    <label class="stat-label">Process Status</label>
                     <select id="edit-status" class="filter-select" style="width:100%;">
                         <option>Applied</option>
                         <option>In Progress</option>
@@ -171,8 +182,10 @@
                         <option>Rejected</option>
                     </select>
                 </div>
-                <button class="btn-main" onclick="saveSyncEdit()" style="background: var(--accent); margin-top: 10px;">Save Sync</button>
-                <button class="btn-modify" onclick="closeModal()" style="background: transparent; color: var(--text-sub);">Cancel</button>
+                <div style="display:flex; gap:10px; margin-top: 10px;">
+                    <button class="btn-main" onclick="saveSyncEdit()" style="flex:2; background: var(--accent);">Save Changes</button>
+                    <button class="btn-modify" onclick="closeModal()" style="flex:1;">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -196,6 +209,7 @@
         function renderUI() {
             const tbody = document.getElementById('job-table-body');
             const searchQ = document.getElementById('search-box').value.toLowerCase();
+            const sFilter = document.getElementById('filter-status').value;
             const mFilter = document.getElementById('filter-month').value;
             const yFilter = document.getElementById('filter-year').value;
             
@@ -204,13 +218,15 @@
 
             allJobs.forEach((job, idx) => {
                 const jDate = new Date(job.Date);
+                const status = (job.Status || 'Applied').trim();
+
                 const matchesSearch = job.Company.toLowerCase().includes(searchQ) || job.Role.toLowerCase().includes(searchQ);
+                const matchesStatus = sFilter === "all" || status === sFilter;
                 const matchesMonth = mFilter === "all" || jDate.getMonth().toString() === mFilter;
                 const matchesYear = yFilter === "all" || jDate.getFullYear().toString() === yFilter;
 
-                if (matchesSearch && matchesMonth && matchesYear) {
+                if (matchesSearch && matchesStatus && matchesMonth && matchesYear) {
                     counts.Total++;
-                    const status = (job.Status || 'Applied').trim();
                     if (status === 'Applied') counts.Applied++;
                     else if (status === 'In Progress') counts.Progress++;
                     else if (status === 'Rejected') counts.Rejected++;
@@ -219,10 +235,8 @@
                     const row = `<tr>
                         <td class="date-cell">${jDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
                         <td>
-                            <div class="company-info">
-                                <span class="co-name">${job.Company}</span>
-                                <span class="role-name">${job.Role}</span>
-                            </div>
+                            <span class="co-name">${job.Company}</span>
+                            <span class="role-name">${job.Role}</span>
                         </td>
                         <td><span class="pill status-${status.toLowerCase().replace(/\s+/g, '-')}">${status}</span></td>
                         <td style="text-align: right;"><button class="btn-modify" onclick="openEdit(${idx})">Modify</button></td>
