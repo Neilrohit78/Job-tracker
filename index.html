@@ -16,60 +16,46 @@
         h1 { font-weight: 800; color: var(--text); margin: 10px 0 5px 0; font-size: 1.8rem; }
         .subtitle { color: var(--text-light); margin-bottom: 25px; font-size: 0.9rem; font-weight: 500; }
 
-        /* Stats Cards - Soft Green Theme */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 25px; }
         .stat-card { background: var(--card-bg); padding: 15px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
 
-        /* Inputs & Buttons */
         .card { background: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        input, select { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; outline: none; font-size: 16px; flex: 1; min-width: 100%; box-sizing: border-box; font-weight: 500; }
-        input::placeholder { color: #6b7280; }
+        input, select, textarea { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; outline: none; font-size: 16px; flex: 1; min-width: 100%; box-sizing: border-box; font-weight: 500; font-family: inherit; }
+        textarea { min-height: 60px; resize: none; }
         
-        @media (min-width: 600px) { input, select { min-width: 140px; } }
-
         button { padding: 14px 24px; border-radius: 10px; font-weight: 800; cursor: pointer; border: none; transition: 0.2s; background: var(--primary); color: white; width: 100%; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         @media (min-width: 600px) { button { width: auto; } }
         .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); }
-        .btn-link { background: #f3f4f6; color: #374151; font-size: 12px; padding: 8px 12px; text-decoration: none; border-radius: 6px; display: inline-flex; align-items: center; border: 1px solid #d1d5db; }
 
-        /* Layout Logic */
-        .table-wrapper { background: transparent; border: none; }
         table { width: 100%; border-collapse: collapse; }
-        thead { display: none; }
         tr { display: block; background: var(--card-bg); margin-bottom: 12px; padding: 18px; border-radius: 16px; border: 1px solid var(--border); }
         td { display: block; padding: 4px 0; border: none; font-size: 14px; color: var(--text); }
+        
+        /* Reverted Company Name Style */
+        .company-name { font-size: 16px; font-weight: 500; color: var(--text); display: block; }
+        .role-name { font-weight: 400; color: var(--text-light); display: block; margin-bottom: 4px; }
+        .note-preview { font-size: 12px; color: #64748b; font-style: italic; display: block; margin-top: 6px; }
+        
         td:first-child { font-size: 11px; color: var(--text-light); font-weight: 700; }
-        td:nth-child(2) { font-size: 19px; font-weight: 800; padding-bottom: 2px; }
-        td:last-child { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; display: flex; gap: 8px; }
+        td:last-child { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
 
-        @media (min-width: 768px) {
-            .table-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-            thead { display: table-header-group; background: var(--primary-light); }
-            tr { display: table-row; background: transparent; padding: 0; border: none; }
-            td { display: table-cell; padding: 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-            td:first-child { font-size: 14px; font-weight: 500; }
-            th { color: var(--primary); text-transform: uppercase; font-size: 11px; padding: 16px; text-align: left; font-weight: 800; }
-        }
-
-        /* Status Styling */
         .pill { padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 800; border: 1px solid; display: inline-block; text-transform: uppercase; }
         .status-applied { color: #1e40af; background: #dbeafe; border-color: #bfdbfe; }
         .status-interviewing { color: #854d0e; background: #fef3c7; border-color: #fde68a; }
         .status-offer { color: #065f46; background: #d1fae5; border-color: #a7f3d0; }
         .status-rejected { color: #374151; background: #f3f4f6; border-color: #d1d5db; }
 
-        /* Full Screen Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
-        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-        .modal-content label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 5px; color: var(--text-light); margin-top: 10px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow-y: auto; max-height: 90vh; }
+        label { display: block; font-size: 11px; font-weight: 800; margin: 10px 0 4px 0; color: var(--text-light); text-transform: uppercase; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Career Hub</h1>
-        <p class="subtitle" id="status-msg">Syncing data...</p>
+        <p class="subtitle" id="status-msg">Connecting...</p>
         
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-label">Total Apps</div><div class="stat-value" id="stat-total">0</div></div>
@@ -82,44 +68,36 @@
             <input type="text" id="company" placeholder="Company Name">
             <input type="text" id="position" placeholder="Position / Role">
             <input type="text" id="location" placeholder="Location">
-            <input type="text" id="source" placeholder="Job Link (JD URL)">
+            <input type="text" id="source" placeholder="Job Link">
             <select id="status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+            <textarea id="notes" placeholder="Notes (Referrals, Interview Dates, etc.)"></textarea>
             <button onclick="handleAddJob()" id="save-btn">Add Record</button>
         </div>
 
         <div class="card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
-            <input type="text" id="search-box" placeholder="🔍 Search company or role..." oninput="applyFilter()">
-            <select id="filter-month" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">All Months</option><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select>
-            <select id="filter-year" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">All Years</option><option value="2025">2025</option><option value="2026" selected>2026</option></select>
+            <input type="text" id="search-box" placeholder="🔍 Search..." oninput="applyFilter()">
+            <select id="filter-month" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">Month: All</option><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select>
+            <select id="filter-year" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">Year: All</option><option value="2025">2025</option><option value="2026" selected>2026</option></select>
             <button class="btn-ghost" onclick="clearFilters()" style="flex: 0.2; min-width: 80px; padding: 12px;">Clear</button>
         </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead><tr><th>Date</th><th>Company</th><th>Role</th><th>Status</th><th>Action</th></tr></thead>
-                <tbody id="job-table-body"></tbody>
-            </table>
-        </div>
+        <table>
+            <tbody id="job-table-body"></tbody>
+        </table>
     </div>
 
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
-            <h2 style="margin: 0 0 15px 0;">Update Application</h2>
-            <div style="display: flex; flex-direction: column;">
-                <label>Application Date</label>
-                <input type="date" id="edit-date">
-                <label>Company</label>
-                <input type="text" id="edit-company">
-                <label>Position</label>
-                <input type="text" id="edit-position">
-                <label>Source Link</label>
-                <input type="text" id="edit-source">
-                <label>Current Status</label>
-                <select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button onclick="saveEdit()" style="flex: 2;">Save Changes</button>
-                    <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
-                </div>
+            <h2 style="margin: 0;">Update Application</h2>
+            <label>Date</label><input type="date" id="edit-date">
+            <label>Company</label><input type="text" id="edit-company">
+            <label>Position</label><input type="text" id="edit-position">
+            <label>Link</label><input type="text" id="edit-source">
+            <label>Status</label><select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+            <label>Notes</label><textarea id="edit-notes" placeholder="Update notes..."></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="saveEdit()" style="flex: 2;">Save</button>
+                <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
             </div>
         </div>
     </div>
@@ -138,8 +116,8 @@
                 allJobs = data.filter(j => j.Company);
                 updateStats();
                 applyFilter();
-                msg.innerText = "Showing active applications for 2026";
-            } catch (e) { msg.innerText = "Connection Error"; }
+                msg.innerText = "Showing 2026 records";
+            } catch (e) { msg.innerText = "Sync Error"; }
         }
 
         function updateStats() {
@@ -156,13 +134,13 @@
             tbody.innerHTML = data.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job) => `
                 <tr>
                     <td>${new Date(job.Date).toLocaleDateString('en-GB')}</td>
-                    <td>${job.Company}</td>
-                    <td>${job.Position || '—'}</td>
-                    <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
                     <td>
-                        <button onclick="openModal(${allJobs.indexOf(job)})" style="background:#000; padding: 8px 12px; font-size:12px; width:auto; flex:1;">Edit</button>
-                        ${job.Source ? `<a href="${job.Source}" target="_blank" class="btn-link">🔗 JD</a>` : ''}
+                        <span class="company-name">${job.Company}</span>
+                        <span class="role-name">${job.Position || '—'}</span>
+                        ${job.Notes ? `<span class="note-preview">💬 ${job.Notes}</span>` : ''}
                     </td>
+                    <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
+                    <td><button onclick="openModal(${allJobs.indexOf(job)})" style="background:#000; padding: 8px 20px; font-size:12px; width:auto;">Edit</button></td>
                 </tr>
             `).join('');
         }
@@ -173,7 +151,7 @@
             const y = document.getElementById('filter-year').value;
             const filtered = allJobs.filter(j => {
                 const d = new Date(j.Date);
-                const matchSearch = j.Company.toLowerCase().includes(s) || (j.Position || "").toLowerCase().includes(s);
+                const matchSearch = j.Company.toLowerCase().includes(s) || (j.Position || "").toLowerCase().includes(s) || (j.Notes || "").toLowerCase().includes(s);
                 const matchMonth = m === "All" || d.getMonth().toString() === m;
                 const matchYear = y === "All" || d.getFullYear().toString() === y;
                 return matchSearch && matchMonth && matchYear;
@@ -183,12 +161,12 @@
 
         function openModal(index) {
             const job = allJobs[index];
-            const dateObj = new Date(job.Date);
-            document.getElementById('edit-date').value = dateObj.toISOString().split('T')[0];
+            document.getElementById('edit-date').value = new Date(job.Date).toISOString().split('T')[0];
             document.getElementById('edit-company').value = job.Company;
             document.getElementById('edit-position').value = job.Position || '';
             document.getElementById('edit-source').value = job.Source || '';
             document.getElementById('edit-status').value = job.Status || 'Applied';
+            document.getElementById('edit-notes').value = job.Notes || '';
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
@@ -202,7 +180,8 @@
                 Company: document.getElementById('edit-company').value,
                 Position: document.getElementById('edit-position').value,
                 Status: document.getElementById('edit-status').value,
-                Source: document.getElementById('edit-source').value
+                Source: document.getElementById('edit-source').value,
+                Notes: document.getElementById('edit-notes').value
             };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(updated) });
             closeModal();
@@ -217,10 +196,11 @@
                 Company: document.getElementById('company').value,
                 Position: document.getElementById('position').value,
                 Status: document.getElementById('status').value,
-                Source: document.getElementById('source').value
+                Source: document.getElementById('source').value,
+                Notes: document.getElementById('notes').value
             };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            document.querySelectorAll('.card input').forEach(i => i.value = "");
+            document.querySelectorAll('.card input, .card textarea').forEach(i => i.value = "");
             btn.innerText = "Add Record";
             loadJobs();
         }
