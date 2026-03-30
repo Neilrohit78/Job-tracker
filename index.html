@@ -14,28 +14,26 @@
             --rejected-bg: #fef2f2; --rejected-txt: #991b1b;
         }
         
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 1200px; margin: 0 auto; }
         h1 { font-weight: 800; margin: 10px 0 5px 0; font-size: 1.8rem; }
         .subtitle { color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem; }
 
+        /* Stats & Form Styles (Same as before) */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .stat-card { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
-
         .card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 15px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; font-family: inherit; }
+        input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 15px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; }
         textarea { min-width: 100%; min-height: 60px; }
-        
-        button { padding: 14px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; font-size: 13px; text-transform: uppercase; transition: opacity 0.2s; }
-        button:active { opacity: 0.7; }
-        .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); }
+        button { padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; text-transform: uppercase; font-size: 12px; }
 
-        .table-wrapper { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; min-width: 950px; table-layout: fixed; }
-        th { text-align: left; background: var(--primary-light); padding: 12px 15px; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border); color: var(--text-light); }
-        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; word-wrap: break-word; }
+        /* Table Styles */
+        .table-wrapper { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; min-width: 950px; }
+        th { text-align: left; background: var(--primary-light); padding: 12px 15px; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
         
         .resume-badge { font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; margin-left: 6px; border: 1px solid; }
         .badge-word { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
@@ -43,19 +41,18 @@
 
         .pill { padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 700; border: 1px solid; display: inline-block; text-transform: uppercase; }
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); border-color: #a7f3d0; }
-        .status-interviewing { background: var(--interview-bg); color: var(--interview-txt); border-color: #bfdbfe; }
-        .status-offer { background: var(--offer-bg); color: var(--offer-txt); border-color: #86efac; }
         .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); border-color: #fecaca; }
 
-        .edit-btn { background: #000; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 10px; cursor: pointer; font-weight: 700; }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); display: none; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; }
+        /* Pagination Styles */
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; padding: 10px; }
+        .page-btn { background: white; border: 1px solid var(--border); color: var(--primary); padding: 8px 16px; border-radius: 6px; font-weight: bold; }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Career Hub</h1>
-        <p class="subtitle" id="status-msg">Connecting to Neil's Sheet...</p>
+        <p class="subtitle" id="status-msg">Syncing with Sheet...</p>
         
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">0</div></div>
@@ -77,10 +74,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 90px;">Date</th>
+                        <th style="width: 100px;">Date</th>
                         <th>Company & Info</th>
                         <th>Role</th>
-                        <th style="width: 120px;">Salary Range</th>
+                        <th style="width: 130px;">Salary Range</th>
                         <th style="width: 110px;">Status</th>
                         <th style="width: 70px;">Action</th>
                     </tr>
@@ -88,36 +85,33 @@
                 <tbody id="job-table-body"></tbody>
             </table>
         </div>
-    </div>
 
-    <div class="modal-overlay" id="edit-modal">
-        <div class="modal-content">
-            <h3 style="margin-top:0">Update Application</h3>
-            <label style="font-size:10px; font-weight:700; text-transform: uppercase;">Status</label>
-            <select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
-            <label style="font-size:10px; font-weight:700; text-transform: uppercase; margin-top:10px; display:block;">Notes</label>
-            <textarea id="edit-notes"></textarea>
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button onclick="saveSyncEdit()" style="flex: 2;">Save to Sheet</button>
-                <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
-            </div>
+        <div class="pagination">
+            <button class="page-btn" id="prev-btn" onclick="changePage(-1)">Previous</button>
+            <span id="page-info" style="font-size: 14px; font-weight: bold;">Page 1</span>
+            <button class="page-btn" id="next-btn" onclick="changePage(1)">Next</button>
         </div>
     </div>
 
     <script>
         const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
         let allJobs = [];
-        let currentJobIndex = null;
+        let currentPage = 1;
+        const itemsPerPage = 25;
         const RESUME_CUTOFF = new Date("2026-03-03");
 
         window.onload = loadJobs;
 
         async function loadJobs() {
             try {
-                const response = await fetch(G_SCRIPT_URL);
+                const response = await fetch(G_SCRIPT_URL + "?v=" + new Date().getTime());
                 allJobs = await response.json();
+                
+                // SORT: Newest to Oldest
+                allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
+                
                 renderTable();
-                document.getElementById('status-msg').innerText = "Dashboard Live — Synced with Google Sheet";
+                document.getElementById('status-msg').innerText = "Dashboard Live — 25 per page";
             } catch (e) { document.getElementById('status-msg').innerText = "Connection Error"; }
         }
 
@@ -127,7 +121,11 @@
             document.getElementById('stat-pipeline').innerText = allJobs.filter(j => ['Applied','Interviewing'].includes(j.Status)).length;
             document.getElementById('stat-offers').innerText = allJobs.filter(j => j.Status === 'Offer').length;
 
-            tbody.innerHTML = allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job, idx) => {
+            // Pagination Logic
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const paginatedItems = allJobs.slice(startIndex, startIndex + itemsPerPage);
+            
+            tbody.innerHTML = paginatedItems.map((job, idx) => {
                 const d = new Date(job.Date);
                 const badge = d >= RESUME_CUTOFF ? '<span class="resume-badge badge-word">Word</span>' : '<span class="resume-badge badge-canva">Canva</span>';
                 
@@ -137,15 +135,29 @@
                         <td>
                             <div style="display:flex; align-items:center;"><strong>${job.Company}</strong> ${badge}</div>
                             <span style="font-size:12px; color:#666;">📍 ${job.Location || 'N/A'}</span>
-                            ${job.Notes ? `<span style="font-size:11px; color:#999; font-style:italic; display:block;">💬 ${job.Notes}</span>` : ''}
                         </td>
                         <td>${job.Role || '—'}</td>
                         <td style="font-size: 12px; color:#1a5d1a; font-weight:700;">${job["Salary range"] || '—'}</td>
                         <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
-                        <td><button class="edit-btn" onclick="openEdit(${idx})">Edit</button></td>
+                        <td><button style="padding:5px 10px; font-size:10px;" onclick="openEdit(${startIndex + idx})">Edit</button></td>
                     </tr>
                 `;
             }).join('');
+
+            updatePaginationControls();
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderTable();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function updatePaginationControls() {
+            const totalPages = Math.ceil(allJobs.length / itemsPerPage);
+            document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages || 1}`;
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            document.getElementById('next-btn').disabled = (currentPage >= totalPages);
         }
 
         async function handleSyncJob() {
@@ -165,27 +177,6 @@
             btn.innerText = "Add & Sync";
             loadJobs();
         }
-
-        function openEdit(idx) {
-            currentJobIndex = idx;
-            const sorted = allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
-            const job = sorted[idx];
-            document.getElementById('edit-status').value = job.Status;
-            document.getElementById('edit-notes').value = job.Notes || "";
-            document.getElementById('edit-modal').style.display = 'flex';
-        }
-
-        async function saveSyncEdit() {
-            const sorted = allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
-            const job = sorted[currentJobIndex];
-            job.Status = document.getElementById('edit-status').value;
-            job.Notes = document.getElementById('edit-notes').value;
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(job) });
-            closeModal();
-            loadJobs();
-        }
-
-        function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
     </script>
 </body>
 </html>
