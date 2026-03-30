@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Career Hub — Neil</title>
     <style>
         :root { 
@@ -14,56 +14,56 @@
             --rejected-bg: #fef2f2; --rejected-txt: #991b1b;
         }
         
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; -webkit-tap-highlight-color: transparent; }
         .container { max-width: 1200px; margin: 0 auto; }
         
         h1 { font-weight: 800; margin: 10px 0 5px 0; font-size: 1.8rem; }
-        .subtitle { color: var(--text-light); margin-bottom: 25px; font-size: 0.9rem; }
+        .subtitle { color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem; }
 
         /* Stats Section */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 25px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .stat-card { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
 
-        /* Entry Card */
-        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
-        input, select, textarea { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 8px; outline: none; font-size: 14px; flex: 1; min-width: 100%; box-sizing: border-box; }
+        /* Entry Form */
+        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        input, select, textarea { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; outline: none; font-size: 16px; flex: 1; min-width: 100%; box-sizing: border-box; font-family: inherit; }
         textarea { min-height: 60px; resize: none; }
         
-        button { padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; width: 100%; font-size: 14px; text-transform: uppercase; }
+        button { padding: 14px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; width: 100%; font-size: 14px; text-transform: uppercase; transition: opacity 0.2s; }
+        button:active { opacity: 0.7; }
         @media (min-width: 600px) { button { width: auto; } }
         .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); }
 
-        /* Linear Table Layout */
-        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+        /* MOBILE OPTIMIZED LINEAR TABLE */
+        .table-wrapper { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; table-layout: fixed; }
         th { text-align: left; background: var(--primary-light); padding: 12px 15px; font-size: 11px; text-transform: uppercase; color: var(--text-light); border-bottom: 1px solid var(--border); }
-        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; word-wrap: break-word; white-space: normal; }
         
-        /* Company & Role Matching Text */
         .company-name { font-size: 14px; font-weight: 400; color: var(--text); display: block; }
         .role-name { font-size: 13px; color: var(--text-light); display: block; }
-        .note-preview { font-size: 12px; color: #64748b; font-style: italic; }
+        .note-preview { font-size: 12px; color: #64748b; font-style: italic; display: block; margin-top: 4px; }
 
-        /* Status Pills */
-        .pill { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; border: 1px solid; display: inline-block; text-transform: uppercase; }
+        .pill { padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 700; border: 1px solid; display: inline-block; text-transform: uppercase; }
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); border-color: #a7f3d0; }
         .status-interviewing { background: var(--interview-bg); color: var(--interview-txt); border-color: #bfdbfe; }
         .status-offer { background: var(--offer-bg); color: var(--offer-txt); border-color: #86efac; }
         .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); border-color: #fecaca; }
 
-        .edit-btn { background: #000; color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 11px; }
+        .edit-btn { background: #000; color: #fff; padding: 8px 15px; border-radius: 6px; font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: 700; }
 
-        /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 450px; }
-        label { display: block; font-size: 10px; font-weight: 700; margin: 8px 0 4px 0; color: var(--text-light); text-transform: uppercase; }
+        /* Modal Overlay */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 15px; box-sizing: border-box; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
+        label { display: block; font-size: 10px; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-light); text-transform: uppercase; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Career Hub</h1>
-        <p class="subtitle" id="status-msg">Syncing...</p>
+        <p class="subtitle" id="status-msg">Connecting...</p>
         
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">0</div></div>
@@ -74,36 +74,38 @@
 
         <div class="card">
             <input type="text" id="company" placeholder="Company Name">
-            <input type="text" id="position" placeholder="Position / Role">
+            <input type="text" id="position" placeholder="Role">
             <select id="status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
-            <textarea id="notes" placeholder="Notes & Comments"></textarea>
+            <textarea id="notes" placeholder="Notes (Referrals, Dates, etc.)"></textarea>
             <button onclick="handleAddJob()" id="save-btn">Add Record</button>
         </div>
 
         <div class="card" style="background: transparent; border: none; padding: 0;">
-            <input type="text" id="search-box" placeholder="🔍 Search Company, Role, or Notes..." oninput="applyFilter()">
-            <select id="filter-month" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">All Months</option><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select>
-            <select id="filter-year" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">All Years</option><option value="2025">2025</option><option value="2026" selected>2026</option></select>
+            <input type="text" id="search-box" placeholder="🔍 Search..." oninput="applyFilter()">
+            <select id="filter-month" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">Month</option><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select>
+            <select id="filter-year" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">Year</option><option value="2025">2025</option><option value="2026" selected>2026</option></select>
             <button class="btn-ghost" onclick="clearFilters()" style="flex: 0.2; min-width: 80px; padding: 10px;">Clear</button>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Application Details</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="job-table-body"></tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 90px;">Date</th>
+                        <th>Application Details</th>
+                        <th style="width: 120px;">Status</th>
+                        <th style="width: 80px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="job-table-body"></tbody>
+            </table>
+        </div>
     </div>
 
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
-            <h2 style="margin: 0; font-size: 1.2rem;">Edit Application</h2>
-            <label>Date</label><input type="date" id="edit-date">
+            <h3 style="margin-top:0">Update Application</h3>
+            <label>Application Date</label><input type="date" id="edit-date">
             <label>Company</label><input type="text" id="edit-company">
             <label>Position</label><input type="text" id="edit-position">
             <label>Status</label><select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
@@ -122,15 +124,14 @@
         window.onload = loadJobs;
 
         async function loadJobs() {
-            const msg = document.getElementById('status-msg');
             try {
                 const response = await fetch(G_SCRIPT_URL);
                 const data = await response.json();
                 allJobs = data.filter(j => j.Company);
                 updateStats();
                 applyFilter();
-                msg.innerText = "Showing 2026 records";
-            } catch (e) { msg.innerText = "Sync Error"; }
+                document.getElementById('status-msg').innerText = "Dashboard Live — 2026";
+            } catch (e) { document.getElementById('status-msg').innerText = "Connection Lost"; }
         }
 
         function updateStats() {
@@ -146,14 +147,14 @@
             const tbody = document.getElementById('job-table-body');
             tbody.innerHTML = data.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job) => `
                 <tr>
-                    <td style="width: 15%; color: #6b7280; font-size: 12px;">${new Date(job.Date).toLocaleDateString('en-GB')}</td>
-                    <td style="width: 55%;">
+                    <td style="color: #6b7280; font-size: 12px;">${new Date(job.Date).toLocaleDateString('en-GB')}</td>
+                    <td>
                         <span class="company-name">${job.Company}</span>
                         <span class="role-name">${job.Position || '—'}</span>
                         ${job.Notes ? `<span class="note-preview">💬 ${job.Notes}</span>` : ''}
                     </td>
-                    <td style="width: 15%;"><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
-                    <td style="width: 15%;"><button class="edit-btn" onclick="openModal(${allJobs.indexOf(job)})">Edit</button></td>
+                    <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
+                    <td><button class="edit-btn" onclick="openModal(${allJobs.indexOf(job)})">Edit</button></td>
                 </tr>
             `).join('');
         }
@@ -185,8 +186,6 @@
         function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
 
         async function saveEdit() {
-            const btn = document.querySelector('.modal-content button');
-            btn.innerText = "Saving...";
             const updated = {
                 Date: new Date(document.getElementById('edit-date').value).toISOString(),
                 Company: document.getElementById('edit-company').value,
@@ -200,8 +199,6 @@
         }
 
         async function handleAddJob() {
-            const btn = document.getElementById('save-btn');
-            btn.innerText = "Adding...";
             const newJob = {
                 Date: new Date().toISOString(),
                 Company: document.getElementById('company').value,
@@ -211,7 +208,6 @@
             };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
             document.querySelectorAll('.card input, .card textarea').forEach(i => i.value = "");
-            btn.innerText = "Add Record";
             loadJobs();
         }
 
