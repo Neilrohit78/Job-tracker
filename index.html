@@ -21,14 +21,12 @@
         h1 { font-weight: 800; margin: 0; font-size: 1.8rem; }
         .subtitle { color: var(--text-light); font-size: 0.9rem; width: 100%; margin-bottom: 20px;}
 
-        /* Search Bar */
+        /* Search & Actions */
         .search-container { width: 100%; margin-bottom: 15px; }
         .search-input { width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid var(--border); font-size: 15px; box-sizing: border-box; outline: none; }
-
-        /* Action Buttons */
         .action-bar { display: flex; gap: 10px; margin-bottom: 20px; }
-        .btn-main { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; }
-        .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px;}
+        .btn-main { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+        .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 11px;}
 
         /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
@@ -36,11 +34,11 @@
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
 
-        /* Hidden Form Drawer */
+        /* Form & Modal Shared Styles */
         #add-form-container { display: none; background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; animation: slideDown 0.3s ease-out; }
         .form-grid { display: flex; gap: 10px; flex-wrap: wrap; }
-        input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 15px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; }
-        textarea { min-width: 100%; min-height: 60px; }
+        input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 14px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; font-family: inherit; }
+        textarea { min-width: 100%; min-height: 80px; resize: vertical; }
 
         /* Table */
         .table-wrapper { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); }
@@ -56,12 +54,12 @@
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); border-color: #a7f3d0; }
         .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); border-color: #fecaca; }
 
-        /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; }
+        /* Modal Overlay */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+        .modal-header { font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
 
         .pagination { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; }
-
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -70,7 +68,7 @@
         <header>
             <h1>Career Hub</h1>
             <div class="action-bar">
-                <button class="btn-main" onclick="toggleForm()">+ Add New Application</button>
+                <button class="btn-main" onclick="toggleForm()">+ New Application</button>
                 <button class="btn-ghost" onclick="loadJobs()">Refresh</button>
             </div>
             <p class="subtitle" id="status-msg">Fetching records...</p>
@@ -123,15 +121,37 @@
 
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
-            <h3 style="margin-top:0">Update Application</h3>
-            <p id="edit-job-title" style="font-size: 12px; color: #666;"></p>
-            <label style="font-size:10px; font-weight:700;">STATUS</label>
-            <select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
-            <label style="font-size:10px; font-weight:700; margin-top:10px; display:block;">NOTES</label>
-            <textarea id="edit-notes"></textarea>
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button onclick="saveSyncEdit()" class="btn-main" style="flex: 2;">Save Changes</button>
-                <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
+            <div class="modal-header">Edit Application</div>
+            <div class="form-grid">
+                <div style="width: 100%; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">COMPANY</label>
+                        <input type="text" id="edit-company">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">ROLE</label>
+                        <input type="text" id="edit-role">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">LOCATION</label>
+                        <input type="text" id="edit-location">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">SALARY RANGE</label>
+                        <input type="text" id="edit-salary">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">STATUS</label>
+                        <select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+                    </div>
+                </div>
+                <label style="font-size:10px; font-weight:700; width: 100%; margin-top: 10px;">NOTES</label>
+                <textarea id="edit-notes"></textarea>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px; width: 100%;">
+                    <button onclick="saveSyncEdit()" id="edit-save-btn" class="btn-main" style="flex: 2;">Save to Sheet</button>
+                    <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -159,16 +179,16 @@
                 allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
                 filteredJobs = [...allJobs];
                 renderTable();
-                document.getElementById('status-msg').innerText = "Dashboard Synced | Newest First";
+                document.getElementById('status-msg').innerText = "Sheet Synced Successfully";
             } catch (e) { document.getElementById('status-msg').innerText = "Sync Error"; }
         }
 
         function handleSearch() {
             const query = document.getElementById('search-bar').value.toLowerCase();
             filteredJobs = allJobs.filter(j => 
-                j.Company.toLowerCase().includes(query) || 
-                j.Role.toLowerCase().includes(query) || 
-                j.Location.toLowerCase().includes(query)
+                (j.Company || "").toLowerCase().includes(query) || 
+                (j.Role || "").toLowerCase().includes(query) || 
+                (j.Location || "").toLowerCase().includes(query)
             );
             currentPage = 1;
             renderTable();
@@ -193,12 +213,11 @@
                         <td>
                             <div style="display:flex; align-items:center;"><strong>${job.Company}</strong> ${badge}</div>
                             <span style="font-size:12px; color:#666;">📍 ${job.Location || 'N/A'}</span>
-                            ${job.Notes ? `<span style="font-size:11px; color:#999; font-style:italic; display:block;">💬 ${job.Notes}</span>` : ''}
                         </td>
                         <td>${job.Role || '—'}</td>
                         <td style="font-size: 12px; color:#1a5d1a; font-weight:700;">${job["Salary range"] || '—'}</td>
                         <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
-                        <td><button class="edit-btn" onclick="openEdit(${startIndex + idx})">Edit</button></td>
+                        <td><button class="btn-ghost" style="padding: 5px 10px; font-size: 9px;" onclick="openEdit(${startIndex + idx})">Edit</button></td>
                     </tr>
                 `;
             }).join('');
@@ -220,22 +239,37 @@
         }
 
         function openEdit(globalIdx) {
-            selectedJob = filteredJobs[globalIdx];
-            document.getElementById('edit-job-title').innerText = `${selectedJob.Company} - ${selectedJob.Role}`;
-            document.getElementById('edit-status').value = selectedJob.Status;
+            selectedJob = JSON.parse(JSON.stringify(filteredJobs[globalIdx])); // Clone object
+            
+            document.getElementById('edit-company').value = selectedJob.Company || "";
+            document.getElementById('edit-role').value = selectedJob.Role || "";
+            document.getElementById('edit-location').value = selectedJob.Location || "";
+            document.getElementById('edit-salary').value = selectedJob["Salary range"] || "";
+            document.getElementById('edit-status').value = selectedJob.Status || "Applied";
             document.getElementById('edit-notes').value = selectedJob.Notes || "";
+            
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
         async function saveSyncEdit() {
             if (!selectedJob) return;
-            const btn = event.target;
+            const btn = document.getElementById('edit-save-btn');
+            const originalText = btn.innerText;
             btn.innerText = "Syncing...";
             
-            selectedJob.Status = document.getElementById('edit-status').value;
-            selectedJob.Notes = document.getElementById('edit-notes').value;
+            // Collect updated values
+            const updatedJob = {
+                Date: selectedJob.Date, // Keep original date to find the row
+                Company: document.getElementById('edit-company').value,
+                Role: document.getElementById('edit-role').value,
+                Location: document.getElementById('edit-location').value,
+                Status: document.getElementById('edit-status').value,
+                Notes: document.getElementById('edit-notes').value,
+                "Salary range": document.getElementById('edit-salary').value
+            };
             
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(selectedJob) });
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(updatedJob) });
+            btn.innerText = originalText;
             closeModal();
             loadJobs();
         }
