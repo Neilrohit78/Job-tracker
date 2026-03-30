@@ -148,8 +148,9 @@
                 </div>
                 <label style="font-size:10px; font-weight:700; width: 100%; margin-top: 10px;">NOTES</label>
                 <textarea id="edit-notes"></textarea>
+                
                 <div style="display: flex; gap: 10px; margin-top: 20px; width: 100%;">
-                    <button onclick="saveSyncEdit()" id="edit-save-btn" class="btn-main" style="flex: 2;">Save Changes</button>
+                    <button onclick="saveSyncEdit()" id="edit-save-btn" class="btn-main" style="flex: 2;">Save to Sheet</button>
                     <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
                 </div>
             </div>
@@ -177,7 +178,7 @@
                 const response = await fetch(G_SCRIPT_URL + "?v=" + new Date().getTime());
                 const rawData = await response.json();
                 
-                // ANTI-DUPLICATE: Map ensures unique keys based on Date + Company + Role
+                // ANTI-DUPLICATE LOGIC: Filter by unique Date + Company + Role
                 const uniqueMap = new Map();
                 rawData.forEach(j => {
                     const id = `${j.Date}-${j.Company}-${j.Role}`;
@@ -262,6 +263,7 @@
 
         async function saveSyncEdit() {
             const btn = document.getElementById('edit-save-btn');
+            const originalText = btn.innerText;
             btn.innerText = "Syncing...";
             const updated = {
                 Date: selectedJob.Date,
@@ -273,7 +275,7 @@
                 "Salary range": document.getElementById('edit-salary').value
             };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(updated) });
-            btn.innerText = "Save Changes";
+            btn.innerText = originalText;
             closeModal();
             showSuccessToast();
             loadJobs();
