@@ -3,123 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Hub — Dashboard</title>
+    <title>Career Hub — Neil</title>
     <style>
         :root { 
-            --bg: #f4f7f6; --card-bg: #ffffff; --primary: #1b5e20; --border: #e0e0e0;
-            --applied-bg: #e3f2fd; --applied-txt: #1565c0;
-            --progress-bg: #fff8e1; --progress-txt: #f57f17;
-            --rejected-bg: #ffebee; --rejected-txt: #c62828;
-            --offer-bg: #e8f5e9; --offer-txt: #2e7d32;
+            --bg: #f8fafc; --card-bg: #ffffff; --primary: #0f172a; --accent: #2563eb;
+            --border: #e2e8f0; --text-main: #1e293b; --text-sub: #64748b;
+            --applied-bg: #dbeafe; --applied-txt: #1e40af;
+            --progress-bg: #fef3c7; --progress-txt: #92400e;
+            --rejected-bg: #fee2e2; --rejected-txt: #991b1b;
+            --offer-bg: #dcfce7; --offer-txt: #166534;
         }
         
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); padding: 10px; margin: 0; color: #333; }
-        .container { max-width: 1100px; margin: 0 auto; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-main); padding: 20px; margin: 0; line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; }
         
-        /* Header & Action Area */
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        h1 { font-size: 1.4rem; font-weight: 800; margin: 0; color: var(--primary); letter-spacing: -0.5px; }
-        .btn-main { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12px; transition: 0.2s; }
-        .btn-ghost { background: white; color: var(--primary); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12px; }
-        .btn-main:hover { opacity: 0.9; }
-
-        /* Filter Bar - New */
-        .filter-bar { display: flex; gap: 10px; margin-bottom: 15px; background: white; padding: 10px; border-radius: 10px; border: 1px solid var(--border); align-items: center; flex-wrap: wrap; }
-        .filter-group { display: flex; align-items: center; gap: 5px; }
-        .filter-label { font-size: 11px; font-weight: 800; color: #888; text-transform: uppercase; }
-        select.filter-select { padding: 5px; border-radius: 4px; border: 1px solid var(--border); font-size: 13px; outline: none; }
-
-        /* Dashboard Stats - Compacted */
-        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 15px; }
-        .stat-card { background: var(--card-bg); padding: 10px; border-radius: 10px; border: 1px solid var(--border); text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .stat-label { font-size: 9px; color: #777; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 2px; }
-        .stat-value { font-size: 18px; font-weight: 900; color: #222; }
-
-        /* Table & Spacing - Optimized for Density */
-        .table-wrapper { background: white; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.03); }
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        th { text-align: left; background: #fafafa; padding: 8px 12px; font-size: 10px; color: #999; text-transform: uppercase; border-bottom: 1px solid #f0f0f0; }
-        td { padding: 6px 12px; border-bottom: 1px solid #f8f8f8; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        /* Header & Dashboard Stats */
+        header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
+        h1 { font-size: 2rem; font-weight: 800; margin: 0; letter-spacing: -1px; color: var(--primary); }
         
-        tr:hover { background-color: #fcfdfc; }
-        .company-name { font-weight: 700; color: #111; display: block; }
-        .role-name { font-size: 12px; color: #666; }
+        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .stat-label { font-size: 11px; color: var(--text-sub); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .stat-value { font-size: 28px; font-weight: 800; margin-top: 5px; color: var(--primary); }
 
-        /* Status Pills */
-        .pill { padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; display: inline-block; letter-spacing: 0.3px; }
+        /* Unified Filter & Search Bar */
+        .control-panel { 
+            display: grid; 
+            grid-template-columns: 1fr auto auto auto auto; 
+            gap: 12px; 
+            background: white; 
+            padding: 12px; 
+            border-radius: 14px; 
+            border: 1px solid var(--border); 
+            margin-bottom: 20px; 
+            align-items: center;
+        }
+        .search-input { padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 14px; outline: none; transition: border 0.2s; }
+        .search-input:focus { border-color: var(--accent); }
+        .filter-select { padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-size: 13px; background: #f9fafb; cursor: pointer; outline: none; }
+
+        /* Buttons */
+        .btn-main { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .btn-main:hover { background: #334155; }
+        .btn-modify { background: #f1f5f9; color: var(--accent); border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .btn-modify:hover { background: var(--accent); color: white; }
+
+        /* Table Design */
+        .table-wrapper { background: white; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; background: #f8fafc; padding: 16px; font-size: 12px; color: var(--text-sub); text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: 700; }
+        td { padding: 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        
+        .date-cell { font-weight: 600; color: var(--text-main); font-size: 13px; min-width: 140px; }
+        .company-info { display: flex; flex-direction: column; gap: 2px; }
+        .co-name { font-weight: 700; font-size: 15px; color: var(--primary); }
+        .role-name { font-size: 13px; color: var(--text-sub); }
+
+        /* Status Pills - More Visually Pleasant */
+        .pill { padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
+        .pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+        
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); }
-        .status-in-progress { background: var(--progress-bg); color: var(--progress-txt); }
-        .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); }
-        .status-offer { background: var(--offer-bg); color: var(--offer-txt); }
-
-        /* Forms & Modals */
-        #add-form-container { display: none; background: white; padding: 15px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 15px; animation: slideDown 0.2s ease; }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 20px; border-radius: 12px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .status-applied::before { background: var(--applied-txt); }
         
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .status-in-progress { background: var(--progress-bg); color: var(--progress-txt); }
+        .status-in-progress::before { background: var(--progress-txt); }
+        
+        .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); }
+        .status-rejected::before { background: var(--rejected-txt); }
+        
+        .status-offer { background: var(--offer-bg); color: var(--offer-txt); }
+        .status-offer::before { background: var(--offer-txt); }
 
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: repeat(3, 1fr); }
-            th:nth-child(4), td:nth-child(4) { display: none; } /* Hide Location on mobile */
-        }
+        #add-form-container { display: none; background: white; padding: 25px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; animation: fadeIn 0.3s ease; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Career Hub</h1>
-            <div class="action-bar">
-                <button class="btn-main" onclick="toggleForm()">+ New App</button>
-                <button class="btn-ghost" onclick="loadJobs()">Refresh</button>
+            <div>
+                <h1>Career Hub</h1>
+                <p style="color: var(--text-sub); margin: 5px 0 0 0;">Manage your applications and pipeline.</p>
             </div>
+            <button class="btn-main" onclick="toggleForm()" style="background: var(--accent);">+ Add Application</button>
         </header>
 
-        <div class="filter-bar">
-            <div class="filter-group">
-                <span class="filter-label">Month:</span>
-                <select id="filter-month" class="filter-select" onchange="renderUI()">
-                    <option value="all">All Months</option>
-                    <option value="0">January</option><option value="1">February</option>
-                    <option value="2">March</option><option value="3">April</option>
-                    <option value="4">May</option><option value="5">June</option>
-                    <option value="6">July</option><option value="7">August</option>
-                    <option value="8">September</option><option value="9">October</option>
-                    <option value="10">November</option><option value="11">December</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <span class="filter-label">Year:</span>
-                <select id="filter-year" class="filter-select" onchange="renderUI()">
-                    <option value="all">All Years</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                </select>
-            </div>
-            <div style="flex-grow: 1; text-align: right; font-size: 11px; color: #999;" id="last-updated"></div>
-        </div>
-
         <div class="stats-grid">
-            <div class="stat-card"><span class="stat-label">Total</span><div class="stat-value" id="stat-total">0</div></div>
+            <div class="stat-card"><span class="stat-label">Total Applications</span><div class="stat-value" id="stat-total">0</div></div>
             <div class="stat-card"><span class="stat-label">Applied</span><div class="stat-value" id="stat-applied" style="color: var(--applied-txt);">0</div></div>
             <div class="stat-card"><span class="stat-label">In Progress</span><div class="stat-value" id="stat-progress" style="color: var(--progress-txt);">0</div></div>
             <div class="stat-card"><span class="stat-label">Rejected</span><div class="stat-value" id="stat-rejected" style="color: var(--rejected-txt);">0</div></div>
             <div class="stat-card"><span class="stat-label">Offers</span><div class="stat-value" id="stat-offers" style="color: var(--offer-txt);">0</div></div>
         </div>
 
+        <div class="control-panel">
+            <input type="text" id="search-box" class="search-input" placeholder="Search company or role..." onkeyup="renderUI()">
+            <select id="filter-month" class="filter-select" onchange="renderUI()">
+                <option value="all">All Months</option>
+                <option value="0">January</option><option value="1">February</option>
+                <option value="2">March</option><option value="3">April</option>
+                <option value="4">May</option><option value="5">June</option>
+                <option value="6">July</option><option value="7">August</option>
+                <option value="8">September</option><option value="9">October</option>
+                <option value="10">November</option><option value="11">December</option>
+            </select>
+            <select id="filter-year" class="filter-select" onchange="renderUI()">
+                <option value="all">All Years</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+            <button class="btn-main" onclick="loadJobs()">Sync Now</button>
+        </div>
+
         <div id="add-form-container">
-            <div class="form-grid">
-                <input type="text" id="company" placeholder="Company">
-                <input type="text" id="role" placeholder="Role">
-                <select id="status">
+            <h3 style="margin-top:0">New Application</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="company" class="search-input" placeholder="Company Name" style="flex:1">
+                <input type="text" id="role" class="search-input" placeholder="Role Title" style="flex:1">
+                <select id="status" class="filter-select">
                     <option>Applied</option>
                     <option>In Progress</option>
                     <option>Offer</option>
                     <option>Rejected</option>
                 </select>
-                <button class="btn-main" onclick="handleSyncJob()">Submit Entry</button>
+                <button class="btn-main" onclick="handleSyncJob()" style="background: var(--accent);">Submit</button>
             </div>
         </div>
 
@@ -127,10 +139,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 15%;">Date</th>
-                        <th style="width: 40%;">Company & Role</th>
-                        <th style="width: 25%;">Status</th>
-                        <th style="width: 20%;">Action</th>
+                        <th>Date Applied</th>
+                        <th>Opportunity</th>
+                        <th>Current Status</th>
+                        <th style="text-align: right;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="job-table-body"></tbody>
@@ -140,19 +152,27 @@
 
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
-            <h3 style="margin-top:0; font-size: 16px;">Update Details</h3>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-                <input type="text" id="edit-company" placeholder="Company">
-                <input type="text" id="edit-role" placeholder="Role">
-                <select id="edit-status">
-                    <option>Applied</option>
-                    <option>In Progress</option>
-                    <option>Offer</option>
-                    <option>Rejected</option>
-                </select>
-                <textarea id="edit-notes" placeholder="Notes" style="height: 60px;"></textarea>
-                <button class="btn-main" onclick="saveSyncEdit()">Save Changes</button>
-                <button class="btn-ghost" onclick="closeModal()">Close</button>
+            <h2 style="margin-top:0; letter-spacing: -1px;">Update Application</h2>
+            <div style="display:flex; flex-direction:column; gap:15px;">
+                <div>
+                    <label class="stat-label">Company</label>
+                    <input type="text" id="edit-company" class="search-input" style="width:100%; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label class="stat-label">Role</label>
+                    <input type="text" id="edit-role" class="search-input" style="width:100%; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label class="stat-label">Status</label>
+                    <select id="edit-status" class="filter-select" style="width:100%;">
+                        <option>Applied</option>
+                        <option>In Progress</option>
+                        <option>Offer</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+                <button class="btn-main" onclick="saveSyncEdit()" style="background: var(--accent); margin-top: 10px;">Save Sync</button>
+                <button class="btn-modify" onclick="closeModal()" style="background: transparent; color: var(--text-sub);">Cancel</button>
             </div>
         </div>
     </div>
@@ -169,27 +189,26 @@
                 const res = await fetch(G_SCRIPT_URL + "?v=" + Date.now());
                 allJobs = await res.json();
                 allJobs.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-                document.getElementById('last-updated').innerText = "Last sync: " + new Date().toLocaleTimeString();
                 renderUI();
             } catch (e) { console.error("Sync Error", e); }
         }
 
         function renderUI() {
             const tbody = document.getElementById('job-table-body');
-            const monthFilter = document.getElementById('filter-month').value;
-            const yearFilter = document.getElementById('filter-year').value;
+            const searchQ = document.getElementById('search-box').value.toLowerCase();
+            const mFilter = document.getElementById('filter-month').value;
+            const yFilter = document.getElementById('filter-year').value;
             
             tbody.innerHTML = '';
             let counts = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
 
             allJobs.forEach((job, idx) => {
-                const jobDate = new Date(job.Date);
-                
-                // Filtering Logic
-                const matchMonth = monthFilter === "all" || jobDate.getMonth().toString() === monthFilter;
-                const matchYear = yearFilter === "all" || jobDate.getFullYear().toString() === yearFilter;
+                const jDate = new Date(job.Date);
+                const matchesSearch = job.Company.toLowerCase().includes(searchQ) || job.Role.toLowerCase().includes(searchQ);
+                const matchesMonth = mFilter === "all" || jDate.getMonth().toString() === mFilter;
+                const matchesYear = yFilter === "all" || jDate.getFullYear().toString() === yFilter;
 
-                if (matchMonth && matchYear) {
+                if (matchesSearch && matchesMonth && matchesYear) {
                     counts.Total++;
                     const status = (job.Status || 'Applied').trim();
                     if (status === 'Applied') counts.Applied++;
@@ -198,19 +217,20 @@
                     else if (status === 'Offer') counts.Offer++;
 
                     const row = `<tr>
-                        <td style="color: #888;">${jobDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}</td>
+                        <td class="date-cell">${jDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
                         <td>
-                            <span class="company-name">${job.Company}</span>
-                            <span class="role-name">${job.Role}</span>
+                            <div class="company-info">
+                                <span class="co-name">${job.Company}</span>
+                                <span class="role-name">${job.Role}</span>
+                            </div>
                         </td>
                         <td><span class="pill status-${status.toLowerCase().replace(/\s+/g, '-')}">${status}</span></td>
-                        <td><button class="btn-ghost" style="padding: 4px 8px; font-size: 10px;" onclick="openEdit(${idx})">Modify</button></td>
+                        <td style="text-align: right;"><button class="btn-modify" onclick="openEdit(${idx})">Modify</button></td>
                     </tr>`;
                     tbody.innerHTML += row;
                 }
             });
 
-            // Update Stats Display
             document.getElementById('stat-total').innerText = counts.Total;
             document.getElementById('stat-applied').innerText = counts.Applied;
             document.getElementById('stat-progress').innerText = counts.Progress;
@@ -228,37 +248,21 @@
             document.getElementById('edit-company').value = selectedJob.Company;
             document.getElementById('edit-role').value = selectedJob.Role;
             document.getElementById('edit-status').value = selectedJob.Status || 'Applied';
-            document.getElementById('edit-notes').value = selectedJob.Notes || '';
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
         async function saveSyncEdit() {
-            const btn = document.querySelector('#edit-modal .btn-main');
-            btn.innerText = "Saving...";
-            
             selectedJob.Company = document.getElementById('edit-company').value;
             selectedJob.Role = document.getElementById('edit-role').value;
             selectedJob.Status = document.getElementById('edit-status').value;
-            selectedJob.Notes = document.getElementById('edit-notes').value;
-
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(selectedJob) });
-            btn.innerText = "Save Changes";
             closeModal();
             loadJobs();
         }
 
         async function handleSyncJob() {
-            const btn = document.querySelector('#add-form-container .btn-main');
-            btn.innerText = "Syncing...";
-            const newJob = {
-                Date: new Date().toISOString(),
-                Company: document.getElementById('company').value,
-                Role: document.getElementById('role').value,
-                Status: document.getElementById('status').value,
-                Notes: ""
-            };
+            const newJob = { Date: new Date().toISOString(), Company: document.getElementById('company').value, Role: document.getElementById('role').value, Status: document.getElementById('status').value, Notes: "" };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            btn.innerText = "Submit Entry";
             toggleForm();
             loadJobs();
         }
