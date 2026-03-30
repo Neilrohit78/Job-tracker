@@ -16,35 +16,30 @@
         
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; -webkit-tap-highlight-color: transparent; }
         .container { max-width: 1200px; margin: 0 auto; }
-        
         h1 { font-weight: 800; margin: 10px 0 5px 0; font-size: 1.8rem; }
         .subtitle { color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem; }
 
-        /* Stats Section */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .stat-card { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
 
-        /* Entry Form */
         .card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        input, select, textarea { background: var(--accent); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; outline: none; font-size: 16px; flex: 1; min-width: 100%; box-sizing: border-box; font-family: inherit; }
-        textarea { min-height: 60px; resize: none; }
+        input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 15px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; font-family: inherit; }
+        textarea { min-width: 100%; min-height: 60px; }
         
-        button { padding: 14px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; width: 100%; font-size: 14px; text-transform: uppercase; transition: opacity 0.2s; }
+        button { padding: 14px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; font-size: 13px; text-transform: uppercase; transition: opacity 0.2s; }
         button:active { opacity: 0.7; }
-        @media (min-width: 600px) { button { width: auto; } }
         .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); }
 
-        /* MOBILE OPTIMIZED LINEAR TABLE */
         .table-wrapper { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; min-width: 650px; table-layout: fixed; }
-        th { text-align: left; background: var(--primary-light); padding: 12px 15px; font-size: 11px; text-transform: uppercase; color: var(--text-light); border-bottom: 1px solid var(--border); }
-        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; word-wrap: break-word; white-space: normal; }
+        table { width: 100%; border-collapse: collapse; min-width: 950px; table-layout: fixed; }
+        th { text-align: left; background: var(--primary-light); padding: 12px 15px; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border); color: var(--text-light); }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; word-wrap: break-word; }
         
-        .company-name { font-size: 14px; font-weight: 400; color: var(--text); display: block; }
-        .role-name { font-size: 13px; color: var(--text-light); display: block; }
-        .note-preview { font-size: 12px; color: #64748b; font-style: italic; display: block; margin-top: 4px; }
+        .resume-badge { font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; margin-left: 6px; border: 1px solid; }
+        .badge-word { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+        .badge-canva { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
 
         .pill { padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 700; border: 1px solid; display: inline-block; text-transform: uppercase; }
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); border-color: #a7f3d0; }
@@ -52,39 +47,30 @@
         .status-offer { background: var(--offer-bg); color: var(--offer-txt); border-color: #86efac; }
         .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); border-color: #fecaca; }
 
-        .edit-btn { background: #000; color: #fff; padding: 8px 15px; border-radius: 6px; font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: 700; }
-
-        /* Modal Overlay */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 15px; box-sizing: border-box; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; }
-        label { display: block; font-size: 10px; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-light); text-transform: uppercase; }
+        .edit-btn { background: #000; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 10px; cursor: pointer; font-weight: 700; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Career Hub</h1>
-        <p class="subtitle" id="status-msg">Connecting...</p>
+        <p class="subtitle" id="status-msg">Connecting to Neil's Sheet...</p>
         
         <div class="stats-grid">
             <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">0</div></div>
             <div class="stat-card"><div class="stat-label">Pipeline</div><div class="stat-value" id="stat-pipeline">0</div></div>
-            <div class="stat-card"><div class="stat-label">Recent</div><div class="stat-value" id="stat-week">0</div></div>
             <div class="stat-card"><div class="stat-label">Offers</div><div class="stat-value" id="stat-offers">0</div></div>
         </div>
 
         <div class="card">
             <input type="text" id="company" placeholder="Company Name">
-            <input type="text" id="position" placeholder="Role">
+            <input type="text" id="role" placeholder="Role">
+            <input type="text" id="location" placeholder="Location">
+            <input type="text" id="salary" placeholder="Salary Range">
             <select id="status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
-            <textarea id="notes" placeholder="Notes (Referrals, Dates, etc.)"></textarea>
-            <button onclick="handleAddJob()" id="save-btn">Add Record</button>
-        </div>
-
-        <div class="card" style="background: transparent; border: none; padding: 0;">
-            <input type="text" id="search-box" placeholder="🔍 Search..." oninput="applyFilter()">
-            <select id="filter-month" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">Month</option><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select>
-            <select id="filter-year" onchange="applyFilter()" style="flex: 0.3; min-width: 80px;"><option value="All">Year</option><option value="2025">2025</option><option value="2026" selected>2026</option></select>
-            <button class="btn-ghost" onclick="clearFilters()" style="flex: 0.2; min-width: 80px; padding: 10px;">Clear</button>
+            <textarea id="notes" placeholder="Notes..."></textarea>
+            <button onclick="handleSyncJob()" id="save-btn">Add & Sync</button>
         </div>
 
         <div class="table-wrapper">
@@ -92,9 +78,11 @@
                 <thead>
                     <tr>
                         <th style="width: 90px;">Date</th>
-                        <th>Application Details</th>
-                        <th style="width: 120px;">Status</th>
-                        <th style="width: 80px;">Action</th>
+                        <th>Company & Info</th>
+                        <th>Role</th>
+                        <th style="width: 120px;">Salary Range</th>
+                        <th style="width: 110px;">Status</th>
+                        <th style="width: 70px;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="job-table-body"></tbody>
@@ -105,118 +93,99 @@
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
             <h3 style="margin-top:0">Update Application</h3>
-            <label>Application Date</label><input type="date" id="edit-date">
-            <label>Company</label><input type="text" id="edit-company">
-            <label>Position</label><input type="text" id="edit-position">
-            <label>Status</label><select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
-            <label>Notes</label><textarea id="edit-notes"></textarea>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button onclick="saveEdit()" style="flex: 2;">Save Changes</button>
+            <label style="font-size:10px; font-weight:700; text-transform: uppercase;">Status</label>
+            <select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+            <label style="font-size:10px; font-weight:700; text-transform: uppercase; margin-top:10px; display:block;">Notes</label>
+            <textarea id="edit-notes"></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button onclick="saveSyncEdit()" style="flex: 2;">Save to Sheet</button>
                 <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
-        const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa-waYH4RSD4oFHHJXt1D8B7L0nHnWfLDAHflN3_5GmJhDamso5-MenkRFLKKIrWo0/exec";
+        const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
         let allJobs = [];
+        let currentJobIndex = null;
+        const RESUME_CUTOFF = new Date("2026-03-03");
 
         window.onload = loadJobs;
 
         async function loadJobs() {
             try {
                 const response = await fetch(G_SCRIPT_URL);
-                const data = await response.json();
-                allJobs = data.filter(j => j.Company);
-                updateStats();
-                applyFilter();
-                document.getElementById('status-msg').innerText = "Dashboard Live — 2026";
-            } catch (e) { document.getElementById('status-msg').innerText = "Connection Lost"; }
+                allJobs = await response.json();
+                renderTable();
+                document.getElementById('status-msg').innerText = "Dashboard Live — Synced with Google Sheet";
+            } catch (e) { document.getElementById('status-msg').innerText = "Connection Error"; }
         }
 
-        function updateStats() {
-            const now = new Date();
-            const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        function renderTable() {
+            const tbody = document.getElementById('job-table-body');
             document.getElementById('stat-total').innerText = allJobs.length;
             document.getElementById('stat-pipeline').innerText = allJobs.filter(j => ['Applied','Interviewing'].includes(j.Status)).length;
             document.getElementById('stat-offers').innerText = allJobs.filter(j => j.Status === 'Offer').length;
-            document.getElementById('stat-week').innerText = allJobs.filter(j => new Date(j.Date) > lastWeek).length;
+
+            tbody.innerHTML = allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job, idx) => {
+                const d = new Date(job.Date);
+                const badge = d >= RESUME_CUTOFF ? '<span class="resume-badge badge-word">Word</span>' : '<span class="resume-badge badge-canva">Canva</span>';
+                
+                return `
+                    <tr>
+                        <td style="font-size: 11px; color: #888;">${d.toLocaleDateString('en-GB')}</td>
+                        <td>
+                            <div style="display:flex; align-items:center;"><strong>${job.Company}</strong> ${badge}</div>
+                            <span style="font-size:12px; color:#666;">📍 ${job.Location || 'N/A'}</span>
+                            ${job.Notes ? `<span style="font-size:11px; color:#999; font-style:italic; display:block;">💬 ${job.Notes}</span>` : ''}
+                        </td>
+                        <td>${job.Role || '—'}</td>
+                        <td style="font-size: 12px; color:#1a5d1a; font-weight:700;">${job["Salary range"] || '—'}</td>
+                        <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
+                        <td><button class="edit-btn" onclick="openEdit(${idx})">Edit</button></td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        function renderTable(data) {
-            const tbody = document.getElementById('job-table-body');
-            tbody.innerHTML = data.sort((a,b) => new Date(b.Date) - new Date(a.Date)).map((job) => `
-                <tr>
-                    <td style="color: #6b7280; font-size: 12px;">${new Date(job.Date).toLocaleDateString('en-GB')}</td>
-                    <td>
-                        <span class="company-name">${job.Company}</span>
-                        <span class="role-name">${job.Position || '—'}</span>
-                        ${job.Notes ? `<span class="note-preview">💬 ${job.Notes}</span>` : ''}
-                    </td>
-                    <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
-                    <td><button class="edit-btn" onclick="openModal(${allJobs.indexOf(job)})">Edit</button></td>
-                </tr>
-            `).join('');
+        async function handleSyncJob() {
+            const btn = document.getElementById('save-btn');
+            btn.innerText = "Syncing...";
+            const newJob = {
+                Date: new Date().toISOString(),
+                Company: document.getElementById('company').value,
+                Role: document.getElementById('role').value,
+                Location: document.getElementById('location').value,
+                Status: document.getElementById('status').value,
+                Notes: document.getElementById('notes').value,
+                "Salary range": document.getElementById('salary').value
+            };
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
+            document.querySelectorAll('input, textarea').forEach(i => i.value = "");
+            btn.innerText = "Add & Sync";
+            loadJobs();
         }
 
-        function applyFilter() {
-            const s = document.getElementById('search-box').value.toLowerCase();
-            const m = document.getElementById('filter-month').value;
-            const y = document.getElementById('filter-year').value;
-            const filtered = allJobs.filter(j => {
-                const d = new Date(j.Date);
-                const matchSearch = j.Company.toLowerCase().includes(s) || (j.Position || "").toLowerCase().includes(s) || (j.Notes || "").toLowerCase().includes(s);
-                const matchMonth = m === "All" || d.getMonth().toString() === m;
-                const matchYear = y === "All" || d.getFullYear().toString() === y;
-                return matchSearch && matchMonth && matchYear;
-            });
-            renderTable(filtered);
-        }
-
-        function openModal(index) {
-            const job = allJobs[index];
-            document.getElementById('edit-date').value = new Date(job.Date).toISOString().split('T')[0];
-            document.getElementById('edit-company').value = job.Company;
-            document.getElementById('edit-position').value = job.Position || '';
-            document.getElementById('edit-status').value = job.Status || 'Applied';
-            document.getElementById('edit-notes').value = job.Notes || '';
+        function openEdit(idx) {
+            currentJobIndex = idx;
+            const sorted = allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
+            const job = sorted[idx];
+            document.getElementById('edit-status').value = job.Status;
+            document.getElementById('edit-notes').value = job.Notes || "";
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
-        function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
-
-        async function saveEdit() {
-            const updated = {
-                Date: new Date(document.getElementById('edit-date').value).toISOString(),
-                Company: document.getElementById('edit-company').value,
-                Position: document.getElementById('edit-position').value,
-                Status: document.getElementById('edit-status').value,
-                Notes: document.getElementById('edit-notes').value
-            };
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(updated) });
+        async function saveSyncEdit() {
+            const sorted = allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
+            const job = sorted[currentJobIndex];
+            job.Status = document.getElementById('edit-status').value;
+            job.Notes = document.getElementById('edit-notes').value;
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(job) });
             closeModal();
             loadJobs();
         }
 
-        async function handleAddJob() {
-            const newJob = {
-                Date: new Date().toISOString(),
-                Company: document.getElementById('company').value,
-                Position: document.getElementById('position').value,
-                Status: document.getElementById('status').value,
-                Notes: document.getElementById('notes').value
-            };
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            document.querySelectorAll('.card input, .card textarea').forEach(i => i.value = "");
-            loadJobs();
-        }
-
-        function clearFilters() {
-            document.getElementById('search-box').value = "";
-            document.getElementById('filter-month').value = "All";
-            document.getElementById('filter-year').value = "2026";
-            applyFilter();
-        }
+        function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
     </script>
 </body>
 </html>
