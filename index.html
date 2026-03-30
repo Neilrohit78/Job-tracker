@@ -12,6 +12,7 @@
             --interview-bg: #eff6ff; --interview-txt: #1e40af;
             --offer-bg: #f0fdf4; --offer-txt: #15803d;
             --rejected-bg: #fef2f2; --rejected-txt: #991b1b;
+            --success: #059669;
         }
         
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
@@ -19,7 +20,9 @@
         
         header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; margin-bottom: 10px; }
         h1 { font-weight: 800; margin: 0; font-size: 1.8rem; }
-        .subtitle { color: var(--text-light); font-size: 0.9rem; width: 100%; margin-bottom: 20px;}
+        .subtitle-wrapper { width: 100%; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .subtitle { color: var(--text-light); font-size: 0.9rem; margin: 0; }
+        .toast-msg { font-size: 0.8rem; font-weight: 700; color: var(--success); display: none; animation: fadeIn 0.3s; }
 
         /* Search & Actions */
         .search-container { width: 100%; margin-bottom: 15px; }
@@ -34,7 +37,7 @@
         .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
         .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
 
-        /* Form & Modal Shared Styles */
+        /* Form Drawer */
         #add-form-container { display: none; background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; animation: slideDown 0.3s ease-out; }
         .form-grid { display: flex; gap: 10px; flex-wrap: wrap; }
         input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 14px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; font-family: inherit; }
@@ -60,7 +63,9 @@
         .modal-header { font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
 
         .pagination { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; }
+        
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -71,7 +76,10 @@
                 <button class="btn-main" onclick="toggleForm()">+ New Application</button>
                 <button class="btn-ghost" onclick="loadJobs()">Refresh</button>
             </div>
-            <p class="subtitle" id="status-msg">Fetching records...</p>
+            <div class="subtitle-wrapper">
+                <p class="subtitle" id="status-msg">Fetching records...</p>
+                <span id="sync-success" class="toast-msg">✓ Changes Synced</span>
+            </div>
         </header>
 
         <div class="search-container">
@@ -167,6 +175,12 @@
 
         window.onload = loadJobs;
 
+        function showSuccessToast() {
+            const toast = document.getElementById('sync-success');
+            toast.style.display = 'inline-block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
+
         function toggleForm() {
             const f = document.getElementById('add-form-container');
             f.style.display = (f.style.display === 'block') ? 'none' : 'block';
@@ -179,7 +193,7 @@
                 allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
                 filteredJobs = [...allJobs];
                 renderTable();
-                document.getElementById('status-msg').innerText = "Sheet Synced Successfully";
+                document.getElementById('status-msg').innerText = "Dashboard Live";
             } catch (e) { document.getElementById('status-msg').innerText = "Sync Error"; }
         }
 
@@ -239,27 +253,23 @@
         }
 
         function openEdit(globalIdx) {
-            selectedJob = JSON.parse(JSON.stringify(filteredJobs[globalIdx])); // Clone object
-            
+            selectedJob = JSON.parse(JSON.stringify(filteredJobs[globalIdx])); 
             document.getElementById('edit-company').value = selectedJob.Company || "";
             document.getElementById('edit-role').value = selectedJob.Role || "";
             document.getElementById('edit-location').value = selectedJob.Location || "";
             document.getElementById('edit-salary').value = selectedJob["Salary range"] || "";
             document.getElementById('edit-status').value = selectedJob.Status || "Applied";
             document.getElementById('edit-notes').value = selectedJob.Notes || "";
-            
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
         async function saveSyncEdit() {
             if (!selectedJob) return;
             const btn = document.getElementById('edit-save-btn');
-            const originalText = btn.innerText;
             btn.innerText = "Syncing...";
             
-            // Collect updated values
             const updatedJob = {
-                Date: selectedJob.Date, // Keep original date to find the row
+                Date: selectedJob.Date, 
                 Company: document.getElementById('edit-company').value,
                 Role: document.getElementById('edit-role').value,
                 Location: document.getElementById('edit-location').value,
@@ -269,8 +279,9 @@
             };
             
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(updatedJob) });
-            btn.innerText = originalText;
+            btn.innerText = "Save to Sheet";
             closeModal();
+            showSuccessToast();
             loadJobs();
         }
 
@@ -288,7 +299,9 @@
             };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
             document.querySelectorAll('#add-form-container input, #add-form-container textarea').forEach(i => i.value = "");
+            btn.innerText = "Submit to Sheet";
             toggleForm();
+            showSuccessToast();
             loadJobs();
         }
 
