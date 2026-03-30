@@ -1,27 +1,305 @@
-// ... (Keep all your CSS and HTML from the previous message) ...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Career Hub — Neil</title>
+    <style>
+        :root { 
+            --bg: #f1f8f1; --card-bg: #ffffff; --primary: #2e7d32; --primary-light: #e8f5e9;
+            --text: #000000; --text-light: #374151; --border: #c8e6c9; --accent: #f9fff9;
+            --applied-bg: #ecfdf5; --applied-txt: #065f46;
+            --interview-bg: #eff6ff; --interview-txt: #1e40af;
+            --offer-bg: #f0fdf4; --offer-txt: #15803d;
+            --rejected-bg: #fef2f2; --rejected-txt: #991b1b;
+            --success: #059669;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; margin-bottom: 10px; }
+        h1 { font-weight: 800; margin: 0; font-size: 1.8rem; }
+        .subtitle-wrapper { width: 100%; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .subtitle { color: var(--text-light); font-size: 0.9rem; margin: 0; }
+        .toast-msg { font-size: 0.8rem; font-weight: 700; color: var(--success); display: none; animation: fadeIn 0.3s; }
 
-async function loadJobs() {
-    try {
-        const response = await fetch(G_SCRIPT_URL + "?v=" + new Date().getTime());
-        const rawData = await response.json();
+        .search-container { width: 100%; margin-bottom: 15px; }
+        .search-input { width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid var(--border); font-size: 15px; box-sizing: border-box; outline: none; }
         
-        // ANTI-DUPLICATE FILTER: 
-        // Only keeps one entry per unique Company + Role + Date combo
-        const uniqueMap = new Map();
-        rawData.forEach(job => {
-            const id = `${job.Company}-${job.Role}-${job.Date}`;
-            uniqueMap.set(id, job);
-        });
-        
-        allJobs = Array.from(uniqueMap.values());
-        
-        // SORT: Newest to Oldest
-        allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
-        
-        filteredJobs = [...allJobs];
-        renderTable();
-        document.getElementById('status-msg').innerText = "Dashboard Synced | No Duplicates";
-    } catch (e) { document.getElementById('status-msg').innerText = "Sync Error"; }
-}
+        .action-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        .btn-main { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+        .btn-ghost { background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 11px;}
 
-// ... (Keep the rest of the functions exactly as they were) ...
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
+        .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; font-weight: 700; }
+        .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); margin-top: 4px; }
+
+        #add-form-container { display: none; background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; animation: slideDown 0.3s ease-out; }
+        .form-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+        input, select, textarea { background: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; outline: none; font-size: 14px; flex: 1; min-width: calc(33% - 10px); box-sizing: border-box; font-family: inherit; }
+        textarea { min-width: 100%; min-height: 80px; resize: vertical; }
+
+        .table-wrapper { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; min-width: 950px; }
+        th { text-align: left; background: var(--primary-light); padding: 12px 15px; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
+        
+        .pill { padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 700; border: 1px solid; display: inline-block; text-transform: uppercase; }
+        .status-applied { background: var(--applied-bg); color: var(--applied-txt); border-color: #a7f3d0; }
+        .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); border-color: #fecaca; }
+        .status-interviewing { background: var(--interview-bg); color: var(--interview-txt); border-color: #bfdbfe; }
+        .status-offer { background: var(--offer-bg); color: var(--offer-txt); border-color: #86efac; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+        .modal-header { font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Career Hub</h1>
+            <div class="action-bar">
+                <button class="btn-main" onclick="toggleForm()">+ New Application</button>
+                <button class="btn-ghost" onclick="loadJobs()">Refresh</button>
+            </div>
+            <div class="subtitle-wrapper">
+                <p class="subtitle" id="status-msg">Fetching records...</p>
+                <span id="sync-success" class="toast-msg">✓ Changes Synced</span>
+            </div>
+        </header>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="search-bar" placeholder="Search by Company, Role, or Location..." onkeyup="handleSearch()">
+        </div>
+
+        <div id="add-form-container">
+            <div class="form-grid">
+                <input type="text" id="company" placeholder="Company Name">
+                <input type="text" id="role" placeholder="Role">
+                <input type="text" id="location" placeholder="Location">
+                <input type="text" id="salary" placeholder="Salary Range">
+                <select id="status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+                <textarea id="notes" placeholder="Notes..."></textarea>
+                <button class="btn-main" onclick="handleSyncJob()" id="save-btn" style="width: 100%;">Submit to Sheet</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">0</div></div>
+            <div class="stat-card"><div class="stat-label">Pipeline</div><div class="stat-value" id="stat-pipeline">0</div></div>
+            <div class="stat-card"><div class="stat-label">Offers</div><div class="stat-value" id="stat-offers">0</div></div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 100px;">Date</th>
+                        <th>Company & Info</th>
+                        <th>Role</th>
+                        <th style="width: 130px;">Salary Range</th>
+                        <th style="width: 110px;">Status</th>
+                        <th style="width: 80px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="job-table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="btn-ghost" id="prev-btn" onclick="changePage(-1)">Previous</button>
+            <span id="page-info" style="font-size: 14px; font-weight: bold;">Page 1</span>
+            <button class="btn-ghost" id="next-btn" onclick="changePage(1)">Next</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">Edit Application</div>
+            <div class="form-grid">
+                <div style="width: 100%; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">COMPANY</label>
+                        <input type="text" id="edit-company">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">ROLE</label>
+                        <input type="text" id="edit-role">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">LOCATION</label>
+                        <input type="text" id="edit-location">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">SALARY RANGE</label>
+                        <input type="text" id="edit-salary">
+                    </div>
+                    <div style="flex:1; min-width: 250px;">
+                        <label style="font-size:10px; font-weight:700;">STATUS</label>
+                        <select id="edit-status"><option>Applied</option><option>Interviewing</option><option>Offer</option><option>Rejected</option></select>
+                    </div>
+                </div>
+                <label style="font-size:10px; font-weight:700; width: 100%; margin-top: 10px;">NOTES</label>
+                <textarea id="edit-notes"></textarea>
+                <div style="display: flex; gap: 10px; margin-top: 20px; width: 100%;">
+                    <button onclick="saveSyncEdit()" id="edit-save-btn" class="btn-main" style="flex: 2;">Save Changes</button>
+                    <button onclick="closeModal()" class="btn-ghost" style="flex: 1;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
+        let allJobs = [];
+        let filteredJobs = [];
+        let currentPage = 1;
+        let selectedJob = null;
+        const itemsPerPage = 25;
+
+        window.onload = loadJobs;
+
+        function showSuccessToast() {
+            const toast = document.getElementById('sync-success');
+            toast.style.display = 'inline-block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
+
+        async function loadJobs() {
+            try {
+                const response = await fetch(G_SCRIPT_URL + "?v=" + new Date().getTime());
+                const rawData = await response.json();
+                
+                // ANTI-DUPLICATE: Map ensures unique keys based on Date + Company + Role
+                const uniqueMap = new Map();
+                rawData.forEach(j => {
+                    const id = `${j.Date}-${j.Company}-${j.Role}`;
+                    uniqueMap.set(id, j);
+                });
+                
+                allJobs = Array.from(uniqueMap.values());
+                allJobs.sort((a,b) => new Date(b.Date) - new Date(a.Date));
+                filteredJobs = [...allJobs];
+                renderTable();
+                document.getElementById('status-msg').innerText = "Dashboard Ready";
+            } catch (e) { document.getElementById('status-msg').innerText = "Sync Error"; }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            filteredJobs = allJobs.filter(j => 
+                (j.Company || "").toLowerCase().includes(query) || 
+                (j.Role || "").toLowerCase().includes(query) || 
+                (j.Location || "").toLowerCase().includes(query)
+            );
+            currentPage = 1;
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('job-table-body');
+            document.getElementById('stat-total').innerText = allJobs.length;
+            document.getElementById('stat-pipeline').innerText = allJobs.filter(j => ['Applied','Interviewing'].includes(j.Status)).length;
+            document.getElementById('stat-offers').innerText = allJobs.filter(j => j.Status === 'Offer').length;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const paginatedItems = filteredJobs.slice(startIndex, startIndex + itemsPerPage);
+            
+            tbody.innerHTML = paginatedItems.map((job, idx) => {
+                const d = new Date(job.Date);
+                return `
+                    <tr>
+                        <td style="font-size: 11px; color: #888;">${d.toLocaleDateString('en-GB')}</td>
+                        <td>
+                            <strong>${job.Company}</strong><br>
+                            <span style="font-size:12px; color:#666;">📍 ${job.Location || 'N/A'}</span>
+                        </td>
+                        <td>${job.Role || '—'}</td>
+                        <td style="font-size: 12px; color:#1a5d1a; font-weight:700;">${job["Salary range"] || '—'}</td>
+                        <td><span class="pill status-${(job.Status || 'applied').toLowerCase()}">${job.Status}</span></td>
+                        <td><button class="btn-ghost" style="padding: 5px 10px; font-size: 9px;" onclick="openEdit(${startIndex + idx})">Edit</button></td>
+                    </tr>
+                `;
+            }).join('');
+            updatePaginationControls();
+        }
+
+        function toggleForm() {
+            const f = document.getElementById('add-form-container');
+            f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderTable();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function updatePaginationControls() {
+            const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+            document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages || 1}`;
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            document.getElementById('next-btn').disabled = (currentPage >= totalPages);
+        }
+
+        function openEdit(globalIdx) {
+            selectedJob = JSON.parse(JSON.stringify(filteredJobs[globalIdx])); 
+            document.getElementById('edit-company').value = selectedJob.Company || "";
+            document.getElementById('edit-role').value = selectedJob.Role || "";
+            document.getElementById('edit-location').value = selectedJob.Location || "";
+            document.getElementById('edit-salary').value = selectedJob["Salary range"] || "";
+            document.getElementById('edit-status').value = selectedJob.Status || "Applied";
+            document.getElementById('edit-notes').value = selectedJob.Notes || "";
+            document.getElementById('edit-modal').style.display = 'flex';
+        }
+
+        async function saveSyncEdit() {
+            const btn = document.getElementById('edit-save-btn');
+            btn.innerText = "Syncing...";
+            const updated = {
+                Date: selectedJob.Date,
+                Company: document.getElementById('edit-company').value,
+                Role: document.getElementById('edit-role').value,
+                Location: document.getElementById('edit-location').value,
+                Status: document.getElementById('edit-status').value,
+                Notes: document.getElementById('edit-notes').value,
+                "Salary range": document.getElementById('edit-salary').value
+            };
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(updated) });
+            btn.innerText = "Save Changes";
+            closeModal();
+            showSuccessToast();
+            loadJobs();
+        }
+
+        async function handleSyncJob() {
+            const btn = document.getElementById('save-btn');
+            btn.innerText = "Processing...";
+            const newJob = {
+                Date: new Date().toISOString(),
+                Company: document.getElementById('company').value,
+                Role: document.getElementById('role').value,
+                Location: document.getElementById('location').value,
+                Status: document.getElementById('status').value,
+                Notes: document.getElementById('notes').value,
+                "Salary range": document.getElementById('salary').value
+            };
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
+            document.querySelectorAll('#add-form-container input, #add-form-container textarea').forEach(i => i.value = "");
+            btn.innerText = "Submit to Sheet";
+            toggleForm();
+            showSuccessToast();
+            loadJobs();
+        }
+
+        function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
