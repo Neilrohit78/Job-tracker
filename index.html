@@ -4,100 +4,629 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Career Hub — Neil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #ffffff; --card-bg: #f8fafc; --primary: #0f172a; --accent: #2563eb;
-            --border: #e2e8f0; --text-main: #1e293b; --text-sub: #64748b;
-            --applied-bg: #dbeafe; --applied-txt: #1e40af;
-            --progress-bg: #fef3c7; --progress-txt: #92400e;
-            --rejected-bg: #fee2e2; --rejected-txt: #991b1b;
-            --offer-bg: #dcfce7; --offer-txt: #166534;
-        }
-        
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); padding: 15px; margin: 0; line-height: 1.5; overflow-x: hidden; }
-        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-        h1 { font-size: 1.8rem; font-weight: 900; margin: 0; letter-spacing: -1px; color: var(--primary); }
-        
-        /* Stats Grid - Responsive */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .stat-card { background: var(--card-bg); padding: 15px; border-radius: 14px; border: 1px solid var(--border); }
-        .stat-label { font-size: 10px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; display: block; margin-bottom: 5px; }
-        .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); }
+        :root {
+            --bg: #f5f4f0;
+            --card-bg: #ffffff;
+            --primary: #1a1a2e;
+            --accent: #4f46e5;
+            --accent-soft: #eef2ff;
+            --border: #e8e6df;
+            --text-main: #1a1a2e;
+            --text-sub: #7c7b82;
 
-        /* Control Panel - Responsive */
-        .control-panel { 
-            display: flex; flex-direction: column; gap: 10px; background: #f1f5f9; padding: 15px; border-radius: 16px; margin-bottom: 20px; 
-        }
-        @media (min-width: 768px) {
-            .control-panel { display: grid; grid-template-columns: 1.5fr 1fr 0.8fr 0.8fr auto; }
+            --applied-bg: #dbeafe;
+            --applied-txt: #1d4ed8;
+            --applied-dot: #3b82f6;
+
+            --progress-bg: #fef9c3;
+            --progress-txt: #854d0e;
+            --progress-dot: #eab308;
+
+            --rejected-bg: #ffe4e6;
+            --rejected-txt: #9f1239;
+            --rejected-dot: #f43f5e;
+
+            --offer-bg: #dcfce7;
+            --offer-txt: #15803d;
+            --offer-dot: #22c55e;
         }
 
-        .search-input, .filter-select { padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 14px; outline: none; background: white; width: 100%; box-sizing: border-box; }
+        * { box-sizing: border-box; }
 
-        .btn-main { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 14px; width: 100%; }
-        @media (min-width: 768px) { .btn-main { width: auto; } }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-        /* Scrollable Table Fix */
-        .table-wrapper { background: white; border-radius: 16px; border: 1px solid var(--border); overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; min-width: 700px; } /* Ensures table doesn't squish too much */
-        
-        th { text-align: left; background: var(--primary); padding: 15px; font-size: 10px; color: #ffffff; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; white-space: nowrap; }
-        td { padding: 15px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
-        
-        .co-name { font-weight: 800; font-size: 15px; color: var(--primary); display: block; }
-        .role-name { font-size: 13px; color: var(--text-sub); }
+        /* ─── HEADER ─────────────────────────────── */
+        .page-header {
+            background: var(--primary);
+            padding: 28px 30px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79,70,229,0.4) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; left: 30%;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .header-eyebrow {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 4px;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 0;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        h1 span { color: #818cf8; }
 
-        /* Status Pills */
-        .pill { padding: 6px 12px; border-radius: 10px; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; white-space: nowrap; }
-        .pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-        
+        .btn-new {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-new:hover { background: #4338ca; transform: translateY(-1px); }
+
+        /* ─── MAIN CONTENT ───────────────────────── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 20px;
+        }
+
+        /* ─── STATS GRID ─────────────────────────── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 560px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 18px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-2px); }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            border-radius: 4px 0 0 4px;
+        }
+        .stat-card.total::before { background: var(--primary); }
+        .stat-card.applied::before { background: var(--applied-dot); }
+        .stat-card.progress::before { background: var(--progress-dot); }
+        .stat-card.rejected::before { background: var(--rejected-dot); }
+        .stat-card.offers::before { background: var(--offer-dot); }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-sub);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .stat-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+        }
+        .stat-card.applied .stat-value { color: var(--applied-txt); }
+        .stat-card.progress .stat-value { color: var(--progress-txt); }
+        .stat-card.rejected .stat-value { color: var(--rejected-txt); }
+        .stat-card.offers .stat-value { color: var(--offer-txt); }
+
+        /* ─── PROGRESS BAR ───────────────────────── */
+        .pipeline-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .pipeline-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-sub);
+            white-space: nowrap;
+        }
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: #f0ede6;
+            border-radius: 99px;
+            overflow: hidden;
+            display: flex;
+        }
+        .bar-segment { height: 100%; transition: width 0.5s ease; }
+        .bar-segment.applied { background: var(--applied-dot); }
+        .bar-segment.progress { background: var(--progress-dot); }
+        .bar-segment.rejected { background: var(--rejected-dot); }
+        .bar-segment.offer { background: var(--offer-dot); }
+
+        .bar-legend { display: flex; gap: 14px; flex-shrink: 0; }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-sub); }
+        .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+        @media (max-width: 640px) {
+            .pipeline-bar { flex-wrap: wrap; }
+            .bar-legend { display: none; }
+        }
+
+        /* ─── CONTROLS ───────────────────────────── */
+        .control-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-wrap {
+            flex: 2;
+            min-width: 180px;
+            position: relative;
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sub);
+            font-size: 14px;
+            pointer-events: none;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 12px 10px 34px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            background: #fafaf8;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+        }
+        .search-input:focus { border-color: var(--accent); background: white; }
+
+        .filter-select {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            background: #fafaf8;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .filter-select:focus { border-color: var(--accent); }
+
+        .btn-sync {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-sync:hover { background: #2d2b52; }
+        .btn-sync.syncing { opacity: 0.6; pointer-events: none; }
+
+        /* ─── ADD FORM ───────────────────────────── */
+        #add-form-container {
+            display: none;
+            background: var(--card-bg);
+            border: 2px dashed #c7c4bc;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+            animation: slideDown 0.2s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 160px auto;
+            gap: 10px;
+            align-items: end;
+        }
+        @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            background: #fafaf8;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus { border-color: var(--accent); background: white; }
+        .btn-submit {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-submit:hover { background: #4338ca; }
+
+        /* ─── TABLE ──────────────────────────────── */
+        .table-wrapper {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 640px; }
+
+        thead tr {
+            background: var(--primary);
+        }
+        th {
+            text-align: left;
+            padding: 14px 18px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f3f1eb;
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: #faf9f6; }
+
+        td { padding: 14px 18px; vertical-align: middle; }
+
+        .date-text {
+            font-size: 13px;
+            color: var(--text-sub);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .co-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 2px;
+        }
+        .role-name {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        /* ─── STATUS PILLS ───────────────────────── */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .pill-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); }
-        .status-applied::before { background: var(--applied-txt); }
+        .status-applied .pill-dot { background: var(--applied-dot); }
         .status-in-progress { background: var(--progress-bg); color: var(--progress-txt); }
-        .status-in-progress::before { background: var(--progress-txt); }
+        .status-in-progress .pill-dot { background: var(--progress-dot); }
         .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); }
-        .status-rejected::before { background: var(--rejected-txt); }
+        .status-rejected .pill-dot { background: var(--rejected-dot); }
         .status-offer { background: var(--offer-bg); color: var(--offer-txt); }
-        .status-offer::before { background: var(--offer-txt); }
+        .status-offer .pill-dot { background: var(--offer-dot); }
 
-        /* Modals */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 15px; box-sizing: border-box; }
-        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; }
-        
-        #add-form-container { display: none; background: #f8fafc; padding: 20px; border-radius: 16px; border: 2px dashed var(--border); margin-bottom: 20px; }
+        /* ─── ACTION BUTTON ──────────────────────── */
+        .btn-modify {
+            background: transparent;
+            color: var(--text-sub);
+            border: 1.5px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .btn-modify:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        /* ─── EMPTY STATE ────────────────────────── */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .empty-state h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            margin: 0 0 6px;
+            color: var(--text-main);
+        }
+        .empty-state p {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin: 0;
+        }
+
+        /* ─── MODAL ──────────────────────────────── */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 15, 30, 0.65);
+            backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 28px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 420px;
+            animation: popIn 0.2s ease;
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0 0 20px;
+        }
+        .modal-field { margin-bottom: 14px; }
+        .modal-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+        }
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-cancel {
+            flex: 1;
+            background: #f5f4f0;
+            color: var(--text-sub);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.15s;
+        }
+        .btn-cancel:hover { background: #e9e7e0; }
+        .btn-save {
+            flex: 2;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            transition: background 0.15s;
+        }
+        .btn-save:hover { background: #4338ca; }
+
+        /* ─── TOAST ──────────────────────────────── */
+        .toast {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div>
-                <h1>Career Hub</h1>
-                <p style="color: var(--text-sub); font-size: 13px; margin: 2px 0 0 0;">Application Tracker</p>
-            </div>
-            <button class="btn-main" onclick="toggleForm()" style="background: var(--accent); width: auto;">+ New</button>
-        </header>
 
+    <div class="page-header">
+        <div class="header-inner">
+            <div>
+                <div class="header-eyebrow">Neil's Dashboard</div>
+                <h1>Career <span>Hub</span></h1>
+            </div>
+            <button class="btn-new" onclick="toggleForm()">
+                <span style="font-size:16px; line-height:1;">+</span> New Application
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Stats -->
         <div class="stats-grid">
-            <div class="stat-card"><span class="stat-label">Total</span><div class="stat-value" id="stat-total">0</div></div>
-            <div class="stat-card"><span class="stat-label">Applied</span><div class="stat-value" id="stat-applied" style="color: var(--applied-txt);">0</div></div>
-            <div class="stat-card"><span class="stat-label">In Progress</span><div class="stat-value" id="stat-progress" style="color: var(--progress-txt);">0</div></div>
-            <div class="stat-card"><span class="stat-label">Rejected</span><div class="stat-value" id="stat-rejected" style="color: var(--rejected-txt);">0</div></div>
-            <div class="stat-card"><span class="stat-label">Offers</span><div class="stat-value" id="stat-offers" style="color: var(--offer-txt);">0</div></div>
+            <div class="stat-card total">
+                <span class="stat-label">Total</span>
+                <div class="stat-value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card applied">
+                <span class="stat-label">Applied</span>
+                <div class="stat-value" id="stat-applied">0</div>
+            </div>
+            <div class="stat-card progress">
+                <span class="stat-label">In Progress</span>
+                <div class="stat-value" id="stat-progress">0</div>
+            </div>
+            <div class="stat-card rejected">
+                <span class="stat-label">Rejected</span>
+                <div class="stat-value" id="stat-rejected">0</div>
+            </div>
+            <div class="stat-card offers">
+                <span class="stat-label">Offers</span>
+                <div class="stat-value" id="stat-offers">0</div>
+            </div>
         </div>
 
+        <!-- Pipeline bar -->
+        <div class="pipeline-bar">
+            <span class="pipeline-label">Pipeline</span>
+            <div class="bar-track" id="pipeline-track">
+                <div class="bar-segment applied" id="bar-applied" style="width:0%"></div>
+                <div class="bar-segment progress" id="bar-progress" style="width:0%"></div>
+                <div class="bar-segment rejected" id="bar-rejected" style="width:0%"></div>
+                <div class="bar-segment offer" id="bar-offer" style="width:0%"></div>
+            </div>
+            <div class="bar-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:var(--applied-dot)"></div>Applied</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--progress-dot)"></div>In Progress</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--rejected-dot)"></div>Rejected</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--offer-dot)"></div>Offer</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
         <div class="control-panel">
-            <input type="text" id="search-box" class="search-input" placeholder="Search..." onkeyup="renderUI()">
+            <div class="search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-box" class="search-input" placeholder="Search company or role…" onkeyup="renderUI()">
+            </div>
             <select id="filter-status" class="filter-select" onchange="renderUI()">
-                <option value="all">Status: All</option>
+                <option value="all">All Statuses</option>
                 <option>Applied</option>
                 <option>In Progress</option>
                 <option>Offer</option>
                 <option>Rejected</option>
             </select>
             <select id="filter-month" class="filter-select" onchange="renderUI()">
-                <option value="all">Month: All</option>
+                <option value="all">All Months</option>
                 <option value="0">January</option><option value="1">February</option>
                 <option value="2">March</option><option value="3">April</option>
                 <option value="4">May</option><option value="5">June</option>
@@ -106,27 +635,41 @@
                 <option value="10">November</option><option value="11">December</option>
             </select>
             <select id="filter-year" class="filter-select" onchange="renderUI()">
-                <option value="all">Year: All</option>
+                <option value="all">All Years</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
             </select>
-            <button class="btn-main" onclick="loadJobs()">Sync</button>
+            <button class="btn-sync" id="sync-btn" onclick="loadJobs()">↻ Sync</button>
         </div>
 
+        <!-- Add Form -->
         <div id="add-form-container">
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <input type="text" id="company" class="search-input" placeholder="Company">
-                <input type="text" id="role" class="search-input" placeholder="Role">
-                <select id="status" class="filter-select">
-                    <option>Applied</option>
-                    <option>In Progress</option>
-                    <option>Offer</option>
-                    <option>Rejected</option>
-                </select>
-                <button class="btn-main" onclick="handleSyncJob()" style="background: var(--accent);">Submit</button>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" id="company" class="form-input" placeholder="e.g. Google">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <input type="text" id="role" class="form-input" placeholder="e.g. Project Manager">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="status" class="form-input">
+                        <option>Applied</option>
+                        <option>In Progress</option>
+                        <option>Offer</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label style="opacity:0">_</label>
+                    <button class="btn-submit" onclick="handleSyncJob()">Add Entry</button>
+                </div>
             </div>
         </div>
 
+        <!-- Table -->
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -134,40 +677,45 @@
                         <th>Date Applied</th>
                         <th>Company & Role</th>
                         <th>Status</th>
-                        <th style="text-align: right;">Action</th>
+                        <th style="text-align:right">Action</th>
                     </tr>
                 </thead>
                 <tbody id="job-table-body"></tbody>
             </table>
         </div>
+
     </div>
 
+    <!-- Edit Modal -->
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
-            <h2 style="margin-top:0; font-size: 20px;">Update Entry</h2>
-            <div style="display:flex; flex-direction:column; gap:15px;">
-                <div>
-                    <label class="stat-label">Company</label>
-                    <input type="text" id="edit-company" class="search-input">
-                </div>
-                <div>
-                    <label class="stat-label">Role</label>
-                    <input type="text" id="edit-role" class="search-input">
-                </div>
-                <div>
-                    <label class="stat-label">Status</label>
-                    <select id="edit-status" class="filter-select">
-                        <option>Applied</option>
-                        <option>In Progress</option>
-                        <option>Offer</option>
-                        <option>Rejected</option>
-                    </select>
-                </div>
-                <button class="btn-main" onclick="saveSyncEdit()" style="background: var(--accent);">Save</button>
-                <button class="btn-main" onclick="closeModal()" style="background: transparent; color: var(--text-sub);">Cancel</button>
+            <div class="modal-title">Update Application</div>
+            <div class="modal-field">
+                <label>Company</label>
+                <input type="text" id="edit-company" class="form-input" style="width:100%">
+            </div>
+            <div class="modal-field">
+                <label>Role</label>
+                <input type="text" id="edit-role" class="form-input" style="width:100%">
+            </div>
+            <div class="modal-field">
+                <label>Status</label>
+                <select id="edit-status" class="form-input" style="width:100%">
+                    <option>Applied</option>
+                    <option>In Progress</option>
+                    <option>Offer</option>
+                    <option>Rejected</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" onclick="saveSyncEdit()">Save Changes</button>
             </div>
         </div>
     </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
     <script>
         const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
@@ -176,13 +724,29 @@
 
         window.onload = loadJobs;
 
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
         async function loadJobs() {
+            const btn = document.getElementById('sync-btn');
+            btn.textContent = '⟳ Syncing…';
+            btn.classList.add('syncing');
             try {
                 const res = await fetch(G_SCRIPT_URL + "?v=" + Date.now());
                 allJobs = await res.json();
                 allJobs.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                 renderUI();
-            } catch (e) { console.error("Sync Error", e); }
+                showToast('✓ Synced successfully');
+            } catch (e) {
+                showToast('⚠ Sync failed');
+                console.error("Sync Error", e);
+            }
+            btn.textContent = '↻ Sync';
+            btn.classList.remove('syncing');
         }
 
         function renderUI() {
@@ -191,44 +755,83 @@
             const sFilter = document.getElementById('filter-status').value;
             const mFilter = document.getElementById('filter-month').value;
             const yFilter = document.getElementById('filter-year').value;
-            
+
             tbody.innerHTML = '';
             let counts = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
 
-            allJobs.forEach((job, idx) => {
+            const filtered = allJobs.filter(job => {
                 const jDate = new Date(job.Date);
                 const status = (job.Status || 'Applied').trim();
+                return (job.Company || "").toLowerCase().includes(searchQ) || (job.Role || "").toLowerCase().includes(searchQ)
+                    ? (sFilter === "all" || status === sFilter)
+                      && (mFilter === "all" || jDate.getMonth().toString() === mFilter)
+                      && (yFilter === "all" || jDate.getFullYear().toString() === yFilter)
+                    : false;
+            });
 
-                const matchesSearch = (job.Company || "").toLowerCase().includes(searchQ) || (job.Role || "").toLowerCase().includes(searchQ);
-                const matchesStatus = sFilter === "all" || status === sFilter;
-                const matchesMonth = mFilter === "all" || jDate.getMonth().toString() === mFilter;
-                const matchesYear = yFilter === "all" || jDate.getFullYear().toString() === yFilter;
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4">
+                    <div class="empty-state">
+                        <div class="empty-icon">📂</div>
+                        <h3>No applications found</h3>
+                        <p>Try adjusting your filters or add a new entry.</p>
+                    </div>
+                </td></tr>`;
+            } else {
+                filtered.forEach((job, idx) => {
+                    const originalIdx = allJobs.indexOf(job);
+                    const jDate = new Date(job.Date);
+                    const status = (job.Status || 'Applied').trim();
 
-                if (matchesSearch && matchesStatus && matchesMonth && matchesYear) {
                     counts.Total++;
                     if (status === 'Applied') counts.Applied++;
                     else if (status === 'In Progress') counts.Progress++;
                     else if (status === 'Rejected') counts.Rejected++;
                     else if (status === 'Offer') counts.Offer++;
 
+                    const pillClass = 'status-' + status.toLowerCase().replace(/\s+/g, '-');
                     const row = `<tr>
-                        <td class="date-cell" style="white-space: nowrap;">${jDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                        <td><span class="date-text">${jDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span></td>
                         <td>
                             <span class="co-name">${job.Company}</span>
                             <span class="role-name">${job.Role}</span>
                         </td>
-                        <td><span class="pill status-${status.toLowerCase().replace(/\s+/g, '-')}">${status}</span></td>
-                        <td style="text-align: right;"><button class="btn-main" style="width: auto; padding: 6px 12px; font-size: 11px;" onclick="openEdit(${idx})">Modify</button></td>
+                        <td>
+                            <span class="pill ${pillClass}">
+                                <span class="pill-dot"></span>${status}
+                            </span>
+                        </td>
+                        <td style="text-align:right">
+                            <button class="btn-modify" onclick="openEdit(${originalIdx})">Modify</button>
+                        </td>
                     </tr>`;
                     tbody.innerHTML += row;
-                }
+                });
+            }
+
+            // Update stats (always from full allJobs for global counts)
+            let globalCounts = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
+            allJobs.forEach(job => {
+                const s = (job.Status || 'Applied').trim();
+                globalCounts.Total++;
+                if (s === 'Applied') globalCounts.Applied++;
+                else if (s === 'In Progress') globalCounts.Progress++;
+                else if (s === 'Rejected') globalCounts.Rejected++;
+                else if (s === 'Offer') globalCounts.Offer++;
             });
 
-            document.getElementById('stat-total').innerText = counts.Total;
-            document.getElementById('stat-applied').innerText = counts.Applied;
-            document.getElementById('stat-progress').innerText = counts.Progress;
-            document.getElementById('stat-rejected').innerText = counts.Rejected;
-            document.getElementById('stat-offers').innerText = counts.Offer;
+            document.getElementById('stat-total').innerText = globalCounts.Total;
+            document.getElementById('stat-applied').innerText = globalCounts.Applied;
+            document.getElementById('stat-progress').innerText = globalCounts.Progress;
+            document.getElementById('stat-rejected').innerText = globalCounts.Rejected;
+            document.getElementById('stat-offers').innerText = globalCounts.Offer;
+
+            // Pipeline bar
+            const t = globalCounts.Total || 1;
+            document.getElementById('bar-applied').style.width = (globalCounts.Applied / t * 100) + '%';
+            document.getElementById('bar-progress').style.width = (globalCounts.Progress / t * 100) + '%';
+            document.getElementById('bar-rejected').style.width = (globalCounts.Rejected / t * 100) + '%';
+            document.getElementById('bar-offer').style.width = (globalCounts.Offer / t * 100) + '%';
         }
 
         function toggleForm() {
@@ -250,13 +853,26 @@
             selectedJob.Status = document.getElementById('edit-status').value;
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(selectedJob) });
             closeModal();
+            showToast('✓ Entry updated');
             loadJobs();
         }
 
         async function handleSyncJob() {
-            const newJob = { Date: new Date().toISOString(), Company: document.getElementById('company').value, Role: document.getElementById('role').value, Status: document.getElementById('status').value, Notes: "" };
+            const co = document.getElementById('company').value.trim();
+            const rl = document.getElementById('role').value.trim();
+            if (!co || !rl) { showToast('⚠ Please fill all fields'); return; }
+            const newJob = {
+                Date: new Date().toISOString(),
+                Company: co,
+                Role: rl,
+                Status: document.getElementById('status').value,
+                Notes: ""
+            };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
+            document.getElementById('company').value = '';
+            document.getElementById('role').value = '';
             toggleForm();
+            showToast('✓ Application added');
             loadJobs();
         }
 
