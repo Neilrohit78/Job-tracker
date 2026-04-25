@@ -663,6 +663,91 @@
             transition: background 0.15s;
         }
         .btn-save:hover { background: #4338ca; }
+        .btn-delete {
+            flex: 1;
+            background: transparent;
+            color: #f43f5e;
+            border: 1.5px solid #fecdd3;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.15s;
+        }
+        .btn-delete:hover { background: #ffe4e6; border-color: #f43f5e; }
+        .btn-delete-row {
+            background: transparent;
+            color: #f43f5e;
+            border: 1.5px solid #fecdd3;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.15s;
+            white-space: nowrap;
+            margin-left: 6px;
+        }
+        .btn-delete-row:hover { background: #ffe4e6; border-color: #f43f5e; }
+
+        /* ─── CONFIRM MODAL ──────────────────────── */
+        .confirm-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 15, 30, 0.7);
+            backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .confirm-content {
+            background: white;
+            padding: 28px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            animation: popIn 0.2s ease;
+            text-align: center;
+        }
+        .confirm-icon { font-size: 32px; margin-bottom: 12px; }
+        .confirm-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0 0 8px;
+            color: var(--text-main);
+        }
+        .confirm-sub { font-size: 13px; color: var(--text-sub); margin: 0 0 24px; }
+        .confirm-actions { display: flex; gap: 10px; }
+        .btn-confirm-cancel {
+            flex: 1;
+            background: #f5f4f0;
+            color: var(--text-sub);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .btn-confirm-cancel:hover { background: #e9e7e0; }
+        .btn-confirm-delete {
+            flex: 2;
+            background: #f43f5e;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .btn-confirm-delete:hover { background: #e11d48; }
 
         /* ─── TOAST ──────────────────────────────── */
         .toast {
@@ -951,8 +1036,22 @@
                 <textarea id="edit-notes" class="form-textarea" style="width:100%" placeholder="JD keywords, summary swap, anything relevant…"></textarea>
             </div>
             <div class="modal-actions">
+                <button class="btn-delete" onclick="confirmDeleteFromModal()">Delete</button>
                 <button class="btn-cancel" onclick="closeModal()">Cancel</button>
                 <button class="btn-save" onclick="saveSyncEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="confirm-overlay" id="confirm-modal">
+        <div class="confirm-content">
+            <div class="confirm-icon">🗑️</div>
+            <div class="confirm-title">Delete this entry?</div>
+            <div class="confirm-sub" id="confirm-sub-text">This cannot be undone.</div>
+            <div class="confirm-actions">
+                <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancel</button>
+                <button class="btn-confirm-delete" onclick="executeDelete()">Yes, Delete</button>
             </div>
         </div>
     </div>
@@ -1099,6 +1198,7 @@
                         </td>
                         <td style="text-align:right">
                             <button class="btn-modify" onclick="openEdit(${originalIdx})">Modify</button>
+                            <button class="btn-delete-row" onclick="confirmDelete(${originalIdx})">Delete</button>
                         </td>
                     </tr>`;
                     tbody.innerHTML += row;
@@ -1181,6 +1281,39 @@
             toggleForm();
             showToast('✓ Application added');
             loadJobs();
+        }
+
+        let jobToDeleteIdx = null;
+
+        function confirmDelete(idx) {
+            jobToDeleteIdx = idx;
+            const job = allJobs[idx];
+            document.getElementById('confirm-sub-text').textContent =
+                job.Company + ' — ' + job.Role + '. This cannot be undone.';
+            document.getElementById('confirm-modal').style.display = 'flex';
+        }
+
+        function confirmDeleteFromModal() {
+            const idx = allJobs.indexOf(selectedJob);
+            closeModal();
+            confirmDelete(idx);
+        }
+
+        function closeConfirm() {
+            jobToDeleteIdx = null;
+            document.getElementById('confirm-modal').style.display = 'none';
+        }
+
+        async function executeDelete() {
+            if (jobToDeleteIdx === null) return;
+            const job = allJobs[jobToDeleteIdx];
+            job._delete = true;
+            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(job) });
+            allJobs.splice(jobToDeleteIdx, 1);
+            closeConfirm();
+            showToast('✓ Entry deleted');
+            renderUI();
+            checkBulkBanner();
         }
 
         function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
