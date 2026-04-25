@@ -1080,7 +1080,22 @@
             btn.classList.add('syncing');
             try {
                 const res = await fetch(G_SCRIPT_URL + "?v=" + Date.now());
-                allJobs = await res.json();
+                const raw = await res.json();
+                // Normalize fields — handle case mismatches and blank keys
+                allJobs = raw
+                  .filter(j => j.Company || j.Role) // drop blank rows
+                  .map(j => ({
+                    Date:        j.Date || j.date || '',
+                    Company:     j.Company || j.company || '',
+                    Role:        j.Role || j.role || '',
+                    Location:    j.Location || j.location || '',
+                    Status:      j.Status || j.status || 'Applied',
+                    Notes:       j.Notes || j.notes || '',
+                    SalaryRange: j['Salary Range'] || j['Salary range'] || j['salary range'] || '',
+                    Tier:        j.Tier || j.tier || '',
+                    Base:        j.Base || j.base || '',
+                    Sector:      j.Sector || j.sector || '',
+                  }));
                 allJobs.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                 renderUI();
                 checkBulkBanner();
@@ -1139,9 +1154,9 @@
 
             const filtered = allJobs.filter(job => {
                 const jDate = new Date(job.Date);
-                const status = (job.Status || 'Applied').trim();
-                const tier = (job.Tier || '').trim();
-                const sector = (job.Sector || '').trim();
+                const status = (job.Status || 'Applied').toString().trim();
+                const tier = (job.Tier || '').toString().trim();
+                const sector = (job.Sector || '').toString().trim();
                 const matchSearch = (job.Company || "").toLowerCase().includes(searchQ) || (job.Role || "").toLowerCase().includes(searchQ);
                 if (!matchSearch) return false;
                 if (sFilter !== "all" && status !== sFilter) return false;
@@ -1208,7 +1223,7 @@
             // Global counts
             let gc = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
             allJobs.forEach(job => {
-                const s = (job.Status || 'Applied').trim();
+                const s = (job.Status || 'Applied').toString().trim();
                 gc.Total++;
                 if (s === 'Applied') gc.Applied++;
                 else if (s === 'In Progress') gc.Progress++;
