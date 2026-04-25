@@ -32,6 +32,13 @@
             --offer-bg: #dcfce7;
             --offer-txt: #15803d;
             --offer-dot: #22c55e;
+
+            --tier-a-bg: #fce7f3;
+            --tier-a-txt: #9d174d;
+            --tier-b-bg: #e0f2fe;
+            --tier-b-txt: #075985;
+            --tier-c-bg: #f3f4f6;
+            --tier-c-txt: #374151;
         }
 
         * { box-sizing: border-box; }
@@ -71,7 +78,7 @@
             pointer-events: none;
         }
         .header-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -117,7 +124,7 @@
 
         /* ─── MAIN CONTENT ───────────────────────── */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 24px 20px;
         }
@@ -306,11 +313,24 @@
         }
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 160px auto;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 10px;
+        }
+        .form-grid-row2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
             gap: 10px;
             align-items: end;
         }
-        @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) {
+            .form-grid { grid-template-columns: 1fr 1fr; }
+            .form-grid-row2 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 560px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
         .form-group label {
             display: block;
             font-size: 11px;
@@ -332,6 +352,20 @@
             transition: border-color 0.2s;
         }
         .form-input:focus { border-color: var(--accent); background: white; }
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            background: #fafaf8;
+            outline: none;
+            transition: border-color 0.2s;
+            resize: vertical;
+            min-height: 42px;
+        }
+        .form-textarea:focus { border-color: var(--accent); background: white; }
         .btn-submit {
             background: var(--accent);
             color: white;
@@ -344,8 +378,39 @@
             font-size: 14px;
             transition: background 0.2s;
             white-space: nowrap;
+            height: 42px;
         }
         .btn-submit:hover { background: #4338ca; }
+
+        /* ─── TIER PILLS ─────────────────────────── */
+        .tier-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .tier-A { background: var(--tier-a-bg); color: var(--tier-a-txt); }
+        .tier-B { background: var(--tier-b-bg); color: var(--tier-b-txt); }
+        .tier-C { background: var(--tier-c-bg); color: var(--tier-c-txt); }
+        .tier-none { background: #f3f4f6; color: #9ca3af; }
+
+        /* ─── BASE BADGE ─────────────────────────── */
+        .base-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            background: #f3f4f6;
+            color: #6b7280;
+            white-space: nowrap;
+        }
 
         /* ─── TABLE ──────────────────────────────── */
         .table-wrapper {
@@ -356,11 +421,9 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        table { width: 100%; border-collapse: collapse; min-width: 640px; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
 
-        thead tr {
-            background: var(--primary);
-        }
+        thead tr { background: var(--primary); }
         th {
             text-align: left;
             padding: 14px 18px;
@@ -380,7 +443,7 @@
         tbody tr:last-child { border-bottom: none; }
         tbody tr:hover { background: #faf9f6; }
 
-        td { padding: 14px 18px; vertical-align: middle; }
+        td { padding: 12px 18px; vertical-align: middle; }
 
         .date-text {
             font-size: 13px;
@@ -395,10 +458,23 @@
             display: block;
             margin-bottom: 2px;
         }
-        .role-name {
-            font-size: 12px;
+        .role-name { font-size: 12px; color: var(--text-sub); }
+
+        .sector-text {
+            font-size: 11px;
             color: var(--text-sub);
+            margin-top: 3px;
         }
+
+        .notes-preview {
+            font-size: 11px;
+            color: var(--text-sub);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .notes-empty { font-size: 11px; color: #d1d5db; font-style: italic; }
 
         /* ─── STATUS PILLS ───────────────────────── */
         .pill {
@@ -413,11 +489,7 @@
             letter-spacing: 0.5px;
             white-space: nowrap;
         }
-        .pill-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        .pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
         .status-applied { background: var(--applied-bg); color: var(--applied-txt); }
         .status-applied .pill-dot { background: var(--applied-dot); }
         .status-in-progress { background: var(--progress-bg); color: var(--progress-txt); }
@@ -447,26 +519,73 @@
             background: var(--accent-soft);
         }
 
+        /* ─── BULK ASSIGN BANNER ─────────────────── */
+        .bulk-banner {
+            background: #fffbeb;
+            border: 1.5px solid #fcd34d;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .bulk-banner-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #92400e;
+            flex: 1;
+            min-width: 200px;
+        }
+        .bulk-banner-text span { font-weight: 400; color: #b45309; }
+        .bulk-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .bulk-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1.5px solid #fcd34d;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            background: white;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+        .btn-bulk-apply {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .btn-bulk-apply:hover { background: #d97706; }
+        .btn-bulk-dismiss {
+            background: transparent;
+            color: #b45309;
+            border: none;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            padding: 8px;
+            text-decoration: underline;
+        }
+
         /* ─── EMPTY STATE ────────────────────────── */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        .empty-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; }
+        .empty-icon { font-size: 36px; margin-bottom: 12px; }
         .empty-state h3 {
             font-family: 'Syne', sans-serif;
             font-size: 16px;
             margin: 0 0 6px;
             color: var(--text-main);
         }
-        .empty-state p {
-            font-size: 13px;
-            color: var(--text-sub);
-            margin: 0;
-        }
+        .empty-state p { font-size: 13px; color: var(--text-sub); margin: 0; }
 
         /* ─── MODAL ──────────────────────────────── */
         .modal-overlay {
@@ -483,8 +602,10 @@
             padding: 28px;
             border-radius: 20px;
             width: 100%;
-            max-width: 420px;
+            max-width: 520px;
             animation: popIn 0.2s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.95) translateY(8px); }
@@ -506,6 +627,13 @@
             color: var(--text-sub);
             margin-bottom: 5px;
         }
+        .modal-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        @media (max-width: 480px) { .modal-row { grid-template-columns: 1fr; } }
         .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
         .btn-cancel {
             flex: 1;
@@ -612,6 +740,24 @@
             </div>
         </div>
 
+        <!-- Bulk assign banner — shown when entries exist without a tier -->
+        <div class="bulk-banner" id="bulk-banner" style="display:none">
+            <div class="bulk-banner-text">
+                ⚡ <span id="bulk-count">0</span> existing entries have no tier assigned.
+                <span>Assign tiers to track which roles got full tailoring treatment.</span>
+            </div>
+            <div class="bulk-controls">
+                <select class="bulk-select" id="bulk-tier-select">
+                    <option value="">— Select tier —</option>
+                    <option value="A">Tier A — Full tailoring</option>
+                    <option value="B">Tier B — Light tailoring</option>
+                    <option value="C">Tier C — Base send</option>
+                </select>
+                <button class="btn-bulk-apply" onclick="bulkAssignTier()">Assign to all untiered</button>
+                <button class="btn-bulk-dismiss" onclick="dismissBulk()">Dismiss</button>
+            </div>
+        </div>
+
         <!-- Controls -->
         <div class="control-panel">
             <div class="search-wrap">
@@ -624,6 +770,23 @@
                 <option>In Progress</option>
                 <option>Offer</option>
                 <option>Rejected</option>
+            </select>
+            <select id="filter-tier" class="filter-select" onchange="renderUI()">
+                <option value="all">All Tiers</option>
+                <option value="A">Tier A</option>
+                <option value="B">Tier B</option>
+                <option value="C">Tier C</option>
+                <option value="">Unassigned</option>
+            </select>
+            <select id="filter-sector" class="filter-select" onchange="renderUI()">
+                <option value="all">All Sectors</option>
+                <option>Government</option>
+                <option>Engineering</option>
+                <option>Private Sector</option>
+                <option>Utilities</option>
+                <option>Real Estate</option>
+                <option>Technology</option>
+                <option>Other</option>
             </select>
             <select id="filter-month" class="filter-select" onchange="renderUI()">
                 <option value="all">All Months</option>
@@ -647,11 +810,11 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>Company</label>
-                    <input type="text" id="company" class="form-input" placeholder="e.g. Google">
+                    <input type="text" id="company" class="form-input" placeholder="e.g. Metrolinx">
                 </div>
                 <div class="form-group">
                     <label>Role</label>
-                    <input type="text" id="role" class="form-input" placeholder="e.g. Project Manager">
+                    <input type="text" id="role" class="form-input" placeholder="e.g. Project Coordinator">
                 </div>
                 <div class="form-group">
                     <label>Status</label>
@@ -661,6 +824,43 @@
                         <option>Offer</option>
                         <option>Rejected</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label>Tier</label>
+                    <select id="tier" class="form-input">
+                        <option value="">— Unassigned —</option>
+                        <option value="A">Tier A — Full tailoring</option>
+                        <option value="B">Tier B — Light tailoring</option>
+                        <option value="C">Tier C — Base send</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Base Version</label>
+                    <select id="base" class="form-input">
+                        <option value="">— None —</option>
+                        <option value="A">Base A — Coordinator</option>
+                        <option value="B">Base B — Controls</option>
+                        <option value="C">Base C — Government</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-grid-row2">
+                <div class="form-group">
+                    <label>Sector</label>
+                    <select id="sector" class="form-input">
+                        <option value="">— Select sector —</option>
+                        <option>Government</option>
+                        <option>Engineering</option>
+                        <option>Private Sector</option>
+                        <option>Utilities</option>
+                        <option>Real Estate</option>
+                        <option>Technology</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="notes" class="form-textarea" placeholder="JD keywords, summary swap, anything relevant…"></textarea>
                 </div>
                 <div class="form-group">
                     <label style="opacity:0">_</label>
@@ -676,7 +876,9 @@
                     <tr>
                         <th>Date Applied</th>
                         <th>Company & Role</th>
+                        <th>Tier / Base</th>
                         <th>Status</th>
+                        <th>Notes</th>
                         <th style="text-align:right">Action</th>
                     </tr>
                 </thead>
@@ -690,22 +892,63 @@
     <div class="modal-overlay" id="edit-modal">
         <div class="modal-content">
             <div class="modal-title">Update Application</div>
-            <div class="modal-field">
-                <label>Company</label>
-                <input type="text" id="edit-company" class="form-input" style="width:100%">
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label>Company</label>
+                    <input type="text" id="edit-company" class="form-input" style="width:100%">
+                </div>
+                <div class="modal-field">
+                    <label>Role</label>
+                    <input type="text" id="edit-role" class="form-input" style="width:100%">
+                </div>
+            </div>
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label>Status</label>
+                    <select id="edit-status" class="form-input" style="width:100%">
+                        <option>Applied</option>
+                        <option>In Progress</option>
+                        <option>Offer</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+                <div class="modal-field">
+                    <label>Tier</label>
+                    <select id="edit-tier" class="form-input" style="width:100%">
+                        <option value="">— Unassigned —</option>
+                        <option value="A">Tier A — Full tailoring</option>
+                        <option value="B">Tier B — Light tailoring</option>
+                        <option value="C">Tier C — Base send</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label>Base Version</label>
+                    <select id="edit-base" class="form-input" style="width:100%">
+                        <option value="">— None —</option>
+                        <option value="A">Base A — Coordinator</option>
+                        <option value="B">Base B — Controls</option>
+                        <option value="C">Base C — Government</option>
+                    </select>
+                </div>
+                <div class="modal-field">
+                    <label>Sector</label>
+                    <select id="edit-sector" class="form-input" style="width:100%">
+                        <option value="">— Select sector —</option>
+                        <option>Government</option>
+                        <option>Engineering</option>
+                        <option>Private Sector</option>
+                        <option>Utilities</option>
+                        <option>Real Estate</option>
+                        <option>Technology</option>
+                        <option>Other</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-field">
-                <label>Role</label>
-                <input type="text" id="edit-role" class="form-input" style="width:100%">
-            </div>
-            <div class="modal-field">
-                <label>Status</label>
-                <select id="edit-status" class="form-input" style="width:100%">
-                    <option>Applied</option>
-                    <option>In Progress</option>
-                    <option>Offer</option>
-                    <option>Rejected</option>
-                </select>
+                <label>Notes</label>
+                <textarea id="edit-notes" class="form-textarea" style="width:100%" placeholder="JD keywords, summary swap, anything relevant…"></textarea>
             </div>
             <div class="modal-actions">
                 <button class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -721,6 +964,7 @@
         const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
         let allJobs = [];
         let selectedJob = null;
+        let bulkDismissed = false;
 
         window.onload = loadJobs;
 
@@ -740,6 +984,7 @@
                 allJobs = await res.json();
                 allJobs.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                 renderUI();
+                checkBulkBanner();
                 showToast('✓ Synced successfully');
             } catch (e) {
                 showToast('⚠ Sync failed');
@@ -749,28 +994,67 @@
             btn.classList.remove('syncing');
         }
 
+        function checkBulkBanner() {
+            if (bulkDismissed) return;
+            const untiered = allJobs.filter(j => !j.Tier || j.Tier === '').length;
+            const banner = document.getElementById('bulk-banner');
+            if (untiered > 0) {
+                document.getElementById('bulk-count').textContent = untiered;
+                banner.style.display = 'flex';
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        async function bulkAssignTier() {
+            const tier = document.getElementById('bulk-tier-select').value;
+            if (!tier) { showToast('⚠ Select a tier first'); return; }
+            const untiered = allJobs.filter(j => !j.Tier || j.Tier === '');
+            if (untiered.length === 0) { showToast('✓ No untiered entries'); return; }
+
+            showToast(`⟳ Assigning Tier ${tier} to ${untiered.length} entries…`);
+            for (const job of untiered) {
+                job.Tier = tier;
+                await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(job) });
+            }
+            showToast(`✓ Tier ${tier} assigned to ${untiered.length} entries`);
+            document.getElementById('bulk-banner').style.display = 'none';
+            renderUI();
+        }
+
+        function dismissBulk() {
+            bulkDismissed = true;
+            document.getElementById('bulk-banner').style.display = 'none';
+        }
+
         function renderUI() {
             const tbody = document.getElementById('job-table-body');
             const searchQ = document.getElementById('search-box').value.toLowerCase();
             const sFilter = document.getElementById('filter-status').value;
+            const tFilter = document.getElementById('filter-tier').value;
+            const secFilter = document.getElementById('filter-sector').value;
             const mFilter = document.getElementById('filter-month').value;
             const yFilter = document.getElementById('filter-year').value;
 
             tbody.innerHTML = '';
-            let counts = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
 
             const filtered = allJobs.filter(job => {
                 const jDate = new Date(job.Date);
                 const status = (job.Status || 'Applied').trim();
-                return (job.Company || "").toLowerCase().includes(searchQ) || (job.Role || "").toLowerCase().includes(searchQ)
-                    ? (sFilter === "all" || status === sFilter)
-                      && (mFilter === "all" || jDate.getMonth().toString() === mFilter)
-                      && (yFilter === "all" || jDate.getFullYear().toString() === yFilter)
-                    : false;
+                const tier = (job.Tier || '').trim();
+                const sector = (job.Sector || '').trim();
+                const matchSearch = (job.Company || "").toLowerCase().includes(searchQ) || (job.Role || "").toLowerCase().includes(searchQ);
+                if (!matchSearch) return false;
+                if (sFilter !== "all" && status !== sFilter) return false;
+                if (tFilter !== "all" && tier !== tFilter) return false;
+                if (secFilter !== "all" && sector !== secFilter) return false;
+                if (mFilter !== "all" && jDate.getMonth().toString() !== mFilter) return false;
+                if (yFilter !== "all" && jDate.getFullYear().toString() !== yFilter) return false;
+                return true;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4">
+                tbody.innerHTML = `<tr><td colspan="6">
                     <div class="empty-state">
                         <div class="empty-icon">📂</div>
                         <h3>No applications found</h3>
@@ -778,28 +1062,40 @@
                     </div>
                 </td></tr>`;
             } else {
-                filtered.forEach((job, idx) => {
+                filtered.forEach((job) => {
                     const originalIdx = allJobs.indexOf(job);
                     const jDate = new Date(job.Date);
                     const status = (job.Status || 'Applied').trim();
-
-                    counts.Total++;
-                    if (status === 'Applied') counts.Applied++;
-                    else if (status === 'In Progress') counts.Progress++;
-                    else if (status === 'Rejected') counts.Rejected++;
-                    else if (status === 'Offer') counts.Offer++;
+                    const tier = (job.Tier || '').trim();
+                    const base = (job.Base || '').trim();
+                    const sector = (job.Sector || '').trim();
+                    const notes = (job.Notes || '').trim();
 
                     const pillClass = 'status-' + status.toLowerCase().replace(/\s+/g, '-');
+                    const tierClass = tier ? `tier-${tier}` : 'tier-none';
+                    const tierLabel = tier ? `Tier ${tier}` : '—';
+                    const baseLabel = base ? `Base ${base}` : '';
+
                     const row = `<tr>
                         <td><span class="date-text">${jDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span></td>
                         <td>
                             <span class="co-name">${job.Company}</span>
                             <span class="role-name">${job.Role}</span>
+                            ${sector ? `<div class="sector-text">${sector}</div>` : ''}
+                        </td>
+                        <td>
+                            <span class="tier-pill ${tierClass}">${tierLabel}</span>
+                            ${baseLabel ? `<div style="margin-top:4px"><span class="base-badge">${baseLabel}</span></div>` : ''}
                         </td>
                         <td>
                             <span class="pill ${pillClass}">
                                 <span class="pill-dot"></span>${status}
                             </span>
+                        </td>
+                        <td>
+                            ${notes
+                                ? `<span class="notes-preview" title="${notes.replace(/"/g, '&quot;')}">${notes}</span>`
+                                : `<span class="notes-empty">No notes</span>`}
                         </td>
                         <td style="text-align:right">
                             <button class="btn-modify" onclick="openEdit(${originalIdx})">Modify</button>
@@ -809,29 +1105,28 @@
                 });
             }
 
-            // Update stats (always from full allJobs for global counts)
-            let globalCounts = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
+            // Global counts
+            let gc = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
             allJobs.forEach(job => {
                 const s = (job.Status || 'Applied').trim();
-                globalCounts.Total++;
-                if (s === 'Applied') globalCounts.Applied++;
-                else if (s === 'In Progress') globalCounts.Progress++;
-                else if (s === 'Rejected') globalCounts.Rejected++;
-                else if (s === 'Offer') globalCounts.Offer++;
+                gc.Total++;
+                if (s === 'Applied') gc.Applied++;
+                else if (s === 'In Progress') gc.Progress++;
+                else if (s === 'Rejected') gc.Rejected++;
+                else if (s === 'Offer') gc.Offer++;
             });
 
-            document.getElementById('stat-total').innerText = globalCounts.Total;
-            document.getElementById('stat-applied').innerText = globalCounts.Applied;
-            document.getElementById('stat-progress').innerText = globalCounts.Progress;
-            document.getElementById('stat-rejected').innerText = globalCounts.Rejected;
-            document.getElementById('stat-offers').innerText = globalCounts.Offer;
+            document.getElementById('stat-total').innerText = gc.Total;
+            document.getElementById('stat-applied').innerText = gc.Applied;
+            document.getElementById('stat-progress').innerText = gc.Progress;
+            document.getElementById('stat-rejected').innerText = gc.Rejected;
+            document.getElementById('stat-offers').innerText = gc.Offer;
 
-            // Pipeline bar
-            const t = globalCounts.Total || 1;
-            document.getElementById('bar-applied').style.width = (globalCounts.Applied / t * 100) + '%';
-            document.getElementById('bar-progress').style.width = (globalCounts.Progress / t * 100) + '%';
-            document.getElementById('bar-rejected').style.width = (globalCounts.Rejected / t * 100) + '%';
-            document.getElementById('bar-offer').style.width = (globalCounts.Offer / t * 100) + '%';
+            const t = gc.Total || 1;
+            document.getElementById('bar-applied').style.width = (gc.Applied / t * 100) + '%';
+            document.getElementById('bar-progress').style.width = (gc.Progress / t * 100) + '%';
+            document.getElementById('bar-rejected').style.width = (gc.Rejected / t * 100) + '%';
+            document.getElementById('bar-offer').style.width = (gc.Offer / t * 100) + '%';
         }
 
         function toggleForm() {
@@ -841,9 +1136,13 @@
 
         function openEdit(idx) {
             selectedJob = allJobs[idx];
-            document.getElementById('edit-company').value = selectedJob.Company;
-            document.getElementById('edit-role').value = selectedJob.Role;
+            document.getElementById('edit-company').value = selectedJob.Company || '';
+            document.getElementById('edit-role').value = selectedJob.Role || '';
             document.getElementById('edit-status').value = selectedJob.Status || 'Applied';
+            document.getElementById('edit-tier').value = selectedJob.Tier || '';
+            document.getElementById('edit-base').value = selectedJob.Base || '';
+            document.getElementById('edit-sector').value = selectedJob.Sector || '';
+            document.getElementById('edit-notes').value = selectedJob.Notes || '';
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
@@ -851,6 +1150,10 @@
             selectedJob.Company = document.getElementById('edit-company').value;
             selectedJob.Role = document.getElementById('edit-role').value;
             selectedJob.Status = document.getElementById('edit-status').value;
+            selectedJob.Tier = document.getElementById('edit-tier').value;
+            selectedJob.Base = document.getElementById('edit-base').value;
+            selectedJob.Sector = document.getElementById('edit-sector').value;
+            selectedJob.Notes = document.getElementById('edit-notes').value;
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(selectedJob) });
             closeModal();
             showToast('✓ Entry updated');
@@ -860,17 +1163,21 @@
         async function handleSyncJob() {
             const co = document.getElementById('company').value.trim();
             const rl = document.getElementById('role').value.trim();
-            if (!co || !rl) { showToast('⚠ Please fill all fields'); return; }
+            if (!co || !rl) { showToast('⚠ Please fill company and role'); return; }
             const newJob = {
                 Date: new Date().toISOString(),
                 Company: co,
                 Role: rl,
                 Status: document.getElementById('status').value,
-                Notes: ""
+                Tier: document.getElementById('tier').value,
+                Base: document.getElementById('base').value,
+                Sector: document.getElementById('sector').value,
+                Notes: document.getElementById('notes').value.trim()
             };
             await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
             document.getElementById('company').value = '';
             document.getElementById('role').value = '';
+            document.getElementById('notes').value = '';
             toggleForm();
             showToast('✓ Application added');
             loadJobs();
