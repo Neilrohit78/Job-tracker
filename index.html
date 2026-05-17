@@ -16,1322 +16,564 @@
             --border: #e8e6df;
             --text-main: #1a1a2e;
             --text-sub: #7c7b82;
-
-            --applied-bg: #dbeafe;
-            --applied-txt: #1d4ed8;
-            --applied-dot: #3b82f6;
-
-            --progress-bg: #fef9c3;
-            --progress-txt: #854d0e;
-            --progress-dot: #eab308;
-
-            --rejected-bg: #ffe4e6;
-            --rejected-txt: #9f1239;
-            --rejected-dot: #f43f5e;
-
-            --offer-bg: #dcfce7;
-            --offer-txt: #15803d;
-            --offer-dot: #22c55e;
-
-            --tier-a-bg: #fce7f3;
-            --tier-a-txt: #9d174d;
-            --tier-b-bg: #e0f2fe;
-            --tier-b-txt: #075985;
-            --tier-c-bg: #f3f4f6;
-            --tier-c-txt: #374151;
+            --applied-bg: #dbeafe; --applied-txt: #1d4ed8; --applied-dot: #3b82f6;
+            --progress-bg: #fef9c3; --progress-txt: #854d0e; --progress-dot: #eab308;
+            --rejected-bg: #ffe4e6; --rejected-txt: #9f1239; --rejected-dot: #f43f5e;
+            --offer-bg: #dcfce7; --offer-txt: #15803d; --offer-dot: #22c55e;
         }
-
         * { box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; }
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
+        /* HEADER */
+        .page-header { background: var(--primary); padding: 24px 30px; position: relative; overflow: hidden; }
+        .page-header::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(79,70,229,.4) 0%,transparent 70%); pointer-events:none; }
+        .header-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:1; }
+        .header-eyebrow { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,.45); margin-bottom:4px; }
+        h1 { font-family:'Syne',sans-serif; font-size:2rem; font-weight:900; margin:0; color:#fff; letter-spacing:-.5px; }
+        h1 span { color:#818cf8; }
+        .header-right { display:flex; align-items:center; gap:12px; }
+        .summary-pills { display:flex; gap:8px; }
+        .sum-pill { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); border-radius:8px; padding:6px 14px; font-size:12px; font-weight:600; color:rgba(255,255,255,.8); white-space:nowrap; }
+        .sum-pill span { font-size:15px; font-weight:700; color:#fff; margin-right:4px; }
+        .btn-new { background:#4f46e5; color:#fff; border:none; padding:11px 22px; border-radius:10px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:600; font-size:14px; display:flex; align-items:center; gap:6px; transition:background .2s,transform .15s; white-space:nowrap; }
+        .btn-new:hover { background:#4338ca; transform:translateY(-1px); }
 
-        /* ─── HEADER ─────────────────────────────── */
-        .page-header {
-            background: var(--primary);
-            padding: 28px 30px 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -60px; right: -60px;
-            width: 200px; height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(79,70,229,0.4) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .page-header::after {
-            content: '';
-            position: absolute;
-            bottom: -40px; left: 30%;
-            width: 160px; height: 160px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        .header-eyebrow {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.45);
-            margin-bottom: 4px;
-        }
-        h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            margin: 0;
-            color: #ffffff;
-            letter-spacing: -0.5px;
-        }
-        h1 span { color: #818cf8; }
+        /* CONTAINER */
+        .container { max-width:1200px; margin:0 auto; padding:20px; }
 
-        .btn-new {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 11px 22px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background 0.2s, transform 0.15s;
-        }
-        .btn-new:hover { background: #4338ca; transform: translateY(-1px); }
+        /* CONTROLS */
+        .control-panel { background:var(--card-bg); border:1px solid var(--border); padding:12px 16px; border-radius:14px; margin-bottom:16px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+        .search-wrap { flex:2; min-width:160px; position:relative; }
+        .search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-sub); font-size:14px; pointer-events:none; }
+        .search-input { width:100%; padding:9px 12px 9px 34px; border-radius:10px; border:1.5px solid var(--border); font-size:14px; font-family:'DM Sans',sans-serif; outline:none; background:#fafaf8; color:var(--text-main); transition:border-color .2s; }
+        .search-input:focus{border-color:var(--accent);background:#fff;}
+        .filter-select { flex:1; min-width:110px; padding:9px 12px; border-radius:10px; border:1.5px solid var(--border); font-size:13px; font-family:'DM Sans',sans-serif; outline:none; background:#fafaf8; color:var(--text-main); cursor:pointer; }
+        .filter-select:focus{border-color:var(--accent);}
+        .btn-sync { background:var(--primary); color:#fff; border:none; padding:9px 16px; border-radius:10px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:600; font-size:13px; transition:background .2s; white-space:nowrap; }
+        .btn-sync:hover{background:#2d2b52;}
+        .btn-sync.syncing{opacity:.6;pointer-events:none;}
 
-        /* ─── MAIN CONTENT ───────────────────────── */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 24px 20px;
-        }
+        /* ADD FORM */
+        #add-form-container { display:none; background:var(--card-bg); border:2px dashed #c7c4bc; border-radius:14px; padding:20px; margin-bottom:16px; animation:slideDown .2s ease; }
+        @keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+        .form-row { display:grid; gap:10px; margin-bottom:10px; }
+        .form-row.r5 { grid-template-columns:1fr 1fr 1fr 1fr 1fr; }
+        .form-row.r3 { grid-template-columns:1fr 1fr auto; }
+        @media(max-width:900px){.form-row.r5{grid-template-columns:1fr 1fr;}.form-row.r3{grid-template-columns:1fr;}}
+        @media(max-width:560px){.form-row.r5{grid-template-columns:1fr;}}
+        .form-group label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--text-sub); margin-bottom:5px; }
+        .form-input { width:100%; padding:9px 12px; border-radius:10px; border:1.5px solid var(--border); font-size:14px; font-family:'DM Sans',sans-serif; background:#fafaf8; outline:none; transition:border-color .2s; }
+        .form-input:focus{border-color:var(--accent);background:#fff;}
+        .form-textarea { width:100%; padding:9px 12px; border-radius:10px; border:1.5px solid var(--border); font-size:14px; font-family:'DM Sans',sans-serif; background:#fafaf8; outline:none; transition:border-color .2s; resize:vertical; min-height:40px; }
+        .form-textarea:focus{border-color:var(--accent);background:#fff;}
+        .btn-submit { background:var(--accent); color:#fff; border:none; padding:9px 20px; border-radius:10px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:600; font-size:14px; transition:background .2s; white-space:nowrap; height:40px; }
+        .btn-submit:hover{background:#4338ca;}
 
-        /* ─── STATS GRID ─────────────────────────── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 560px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        /* TIER / BASE PILLS */
+        .tier-pill { display:inline-flex; align-items:center; padding:3px 9px; border-radius:99px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+        .tier-A{background:#fce7f3;color:#9d174d;}
+        .tier-B{background:#e0f2fe;color:#075985;}
+        .tier-C{background:#f3f4f6;color:#374151;}
+        .tier-none{background:#f3f4f6;color:#9ca3af;}
+        .base-badge { display:inline-flex; align-items:center; padding:2px 7px; border-radius:5px; font-size:10px; font-weight:700; background:#f3f4f6; color:#6b7280; margin-top:3px; }
 
-        .stat-card {
-            background: var(--card-bg);
-            padding: 18px 20px;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-        .stat-card:hover { transform: translateY(-2px); }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 4px;
-            border-radius: 4px 0 0 4px;
-        }
-        .stat-card.total::before { background: var(--primary); }
-        .stat-card.applied::before { background: var(--applied-dot); }
-        .stat-card.progress::before { background: var(--progress-dot); }
-        .stat-card.rejected::before { background: var(--rejected-dot); }
-        .stat-card.offers::before { background: var(--offer-dot); }
+        /* TABLE */
+        .table-wrapper { background:var(--card-bg); border-radius:16px; border:1px solid var(--border); overflow:hidden; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+        table { width:100%; border-collapse:collapse; min-width:800px; }
+        thead tr{background:var(--primary);}
+        th { text-align:left; padding:13px 16px; font-family:'DM Sans',sans-serif; font-size:10px; color:rgba(255,255,255,.5); text-transform:uppercase; font-weight:700; letter-spacing:1.2px; white-space:nowrap; }
+        tbody tr { border-bottom:1px solid #f3f1eb; transition:background .15s; }
+        tbody tr:last-child{border-bottom:none;}
+        tbody tr:hover{background:#faf9f6;}
+        td { padding:11px 16px; vertical-align:middle; }
+        .date-text { font-size:12px; color:var(--text-sub); font-weight:500; white-space:nowrap; }
+        .co-name { font-weight:700; font-size:14px; color:var(--text-main); display:block; margin-bottom:1px; }
+        .role-name { font-size:12px; color:var(--text-sub); }
+        .sector-text { font-size:11px; color:#a0aec0; margin-top:2px; }
+        .notes-preview { font-size:11px; color:var(--text-sub); max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; }
+        .notes-empty { font-size:11px; color:#d1d5db; }
 
-        .stat-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-sub);
-            display: block;
-            margin-bottom: 8px;
-        }
-        .stat-value {
-            font-family: 'Syne', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1;
-        }
-        .stat-card.applied .stat-value { color: var(--applied-txt); }
-        .stat-card.progress .stat-value { color: var(--progress-txt); }
-        .stat-card.rejected .stat-value { color: var(--rejected-txt); }
-        .stat-card.offers .stat-value { color: var(--offer-txt); }
+        /* STATUS PILLS */
+        .pill { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+        .pill-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+        .status-applied{background:var(--applied-bg);color:var(--applied-txt);}
+        .status-applied .pill-dot{background:var(--applied-dot);}
+        .status-in-progress{background:var(--progress-bg);color:var(--progress-txt);}
+        .status-in-progress .pill-dot{background:var(--progress-dot);}
+        .status-rejected{background:var(--rejected-bg);color:var(--rejected-txt);}
+        .status-rejected .pill-dot{background:var(--rejected-dot);}
+        .status-offer{background:var(--offer-bg);color:var(--offer-txt);}
+        .status-offer .pill-dot{background:var(--offer-dot);}
 
-        /* ─── PROGRESS BAR ───────────────────────── */
-        .pipeline-bar {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .pipeline-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-sub);
-            white-space: nowrap;
-        }
-        .bar-track {
-            flex: 1;
-            height: 8px;
-            background: #f0ede6;
-            border-radius: 99px;
-            overflow: hidden;
-            display: flex;
-        }
-        .bar-segment { height: 100%; transition: width 0.5s ease; }
-        .bar-segment.applied { background: var(--applied-dot); }
-        .bar-segment.progress { background: var(--progress-dot); }
-        .bar-segment.rejected { background: var(--rejected-dot); }
-        .bar-segment.offer { background: var(--offer-dot); }
+        /* BUTTONS */
+        .btn-modify { background:transparent; color:var(--text-sub); border:1.5px solid var(--border); padding:5px 12px; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; transition:all .15s; white-space:nowrap; }
+        .btn-modify:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+        .btn-del { background:transparent; color:#f43f5e; border:1.5px solid #fecdd3; padding:5px 12px; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; transition:all .15s; white-space:nowrap; margin-left:5px; }
+        .btn-del:hover{background:#ffe4e6;border-color:#f43f5e;}
 
-        .bar-legend { display: flex; gap: 14px; flex-shrink: 0; }
-        .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-sub); }
-        .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+        /* EMPTY STATE */
+        .empty-state{text-align:center;padding:60px 20px;}
+        .empty-icon{font-size:36px;margin-bottom:12px;}
+        .empty-state h3{font-family:'Syne',sans-serif;font-size:16px;margin:0 0 6px;}
+        .empty-state p{font-size:13px;color:var(--text-sub);margin:0;}
 
-        @media (max-width: 640px) {
-            .pipeline-bar { flex-wrap: wrap; }
-            .bar-legend { display: none; }
-        }
+        /* MODAL */
+        .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,15,30,.65); backdrop-filter:blur(4px); display:none; justify-content:center; align-items:center; z-index:1000; padding:20px; }
+        .modal-content { background:#fff; padding:28px; border-radius:20px; width:100%; max-width:520px; animation:popIn .2s ease; max-height:90vh; overflow-y:auto; }
+        @keyframes popIn{from{opacity:0;transform:scale(.95) translateY(8px);}to{opacity:1;transform:scale(1) translateY(0);}}
+        .modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin:0 0 20px;}
+        .modal-field{margin-bottom:14px;}
+        .modal-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-sub);margin-bottom:5px;}
+        .modal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+        @media(max-width:480px){.modal-row{grid-template-columns:1fr;}}
+        .modal-actions{display:flex;gap:8px;margin-top:20px;}
+        .btn-cancel{flex:1;background:#f5f4f0;color:var(--text-sub);border:none;padding:11px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;}
+        .btn-cancel:hover{background:#e9e7e0;}
+        .btn-save{flex:2;background:var(--accent);color:#fff;border:none;padding:11px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;}
+        .btn-save:hover{background:#4338ca;}
+        .btn-delete-modal{flex:1;background:transparent;color:#f43f5e;border:1.5px solid #fecdd3;padding:11px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;}
+        .btn-delete-modal:hover{background:#ffe4e6;border-color:#f43f5e;}
 
-        /* ─── CONTROLS ───────────────────────────── */
-        .control-panel {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 14px 16px;
-            border-radius: 14px;
-            margin-bottom: 16px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+        /* CONFIRM MODAL */
+        .confirm-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,15,30,.7);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:2000;padding:20px;}
+        .confirm-content{background:#fff;padding:28px;border-radius:20px;width:100%;max-width:360px;animation:popIn .2s ease;text-align:center;}
+        .confirm-icon{font-size:32px;margin-bottom:12px;}
+        .confirm-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin:0 0 8px;}
+        .confirm-sub{font-size:13px;color:var(--text-sub);margin:0 0 24px;}
+        .confirm-actions{display:flex;gap:10px;}
+        .btn-cc{flex:1;background:#f5f4f0;color:var(--text-sub);border:none;padding:12px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;}
+        .btn-cc:hover{background:#e9e7e0;}
+        .btn-cd{flex:2;background:#f43f5e;color:#fff;border:none;padding:12px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;}
+        .btn-cd:hover{background:#e11d48;}
 
-        .search-wrap {
-            flex: 2;
-            min-width: 180px;
-            position: relative;
-        }
-        .search-icon {
-            position: absolute;
-            left: 12px; top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-sub);
-            font-size: 14px;
-            pointer-events: none;
-        }
-        .search-input {
-            width: 100%;
-            padding: 10px 12px 10px 34px;
-            border-radius: 10px;
-            border: 1.5px solid var(--border);
-            font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            outline: none;
-            background: #fafaf8;
-            color: var(--text-main);
-            transition: border-color 0.2s;
-        }
-        .search-input:focus { border-color: var(--accent); background: white; }
-
-        .filter-select {
-            flex: 1;
-            min-width: 120px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1.5px solid var(--border);
-            font-size: 13px;
-            font-family: 'DM Sans', sans-serif;
-            outline: none;
-            background: #fafaf8;
-            color: var(--text-main);
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        .filter-select:focus { border-color: var(--accent); }
-
-        .btn-sync {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 13px;
-            transition: background 0.2s;
-            white-space: nowrap;
-        }
-        .btn-sync:hover { background: #2d2b52; }
-        .btn-sync.syncing { opacity: 0.6; pointer-events: none; }
-
-        /* ─── ADD FORM ───────────────────────────── */
-        #add-form-container {
-            display: none;
-            background: var(--card-bg);
-            border: 2px dashed #c7c4bc;
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 16px;
-            animation: slideDown 0.2s ease;
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            gap: 10px;
-            align-items: end;
-            margin-bottom: 10px;
-        }
-        .form-grid-row2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-            align-items: end;
-        }
-        @media (max-width: 900px) {
-            .form-grid { grid-template-columns: 1fr 1fr; }
-            .form-grid-row2 { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 560px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-sub);
-            margin-bottom: 5px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1.5px solid var(--border);
-            font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            background: #fafaf8;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .form-input:focus { border-color: var(--accent); background: white; }
-        .form-textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1.5px solid var(--border);
-            font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            background: #fafaf8;
-            outline: none;
-            transition: border-color 0.2s;
-            resize: vertical;
-            min-height: 42px;
-        }
-        .form-textarea:focus { border-color: var(--accent); background: white; }
-        .btn-submit {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background 0.2s;
-            white-space: nowrap;
-            height: 42px;
-        }
-        .btn-submit:hover { background: #4338ca; }
-
-        /* ─── TIER PILLS ─────────────────────────── */
-        .tier-pill {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 10px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        .tier-A { background: var(--tier-a-bg); color: var(--tier-a-txt); }
-        .tier-B { background: var(--tier-b-bg); color: var(--tier-b-txt); }
-        .tier-C { background: var(--tier-c-bg); color: var(--tier-c-txt); }
-        .tier-none { background: #f3f4f6; color: #9ca3af; }
-
-        /* ─── BASE BADGE ─────────────────────────── */
-        .base-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            background: #f3f4f6;
-            color: #6b7280;
-            white-space: nowrap;
-        }
-
-        /* ─── TABLE ──────────────────────────────── */
-        .table-wrapper {
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-
-        thead tr { background: var(--primary); }
-        th {
-            text-align: left;
-            padding: 14px 18px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 10px;
-            color: rgba(255,255,255,0.5);
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            white-space: nowrap;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #f3f1eb;
-            transition: background 0.15s;
-        }
-        tbody tr:last-child { border-bottom: none; }
-        tbody tr:hover { background: #faf9f6; }
-
-        td { padding: 12px 18px; vertical-align: middle; }
-
-        .date-text {
-            font-size: 13px;
-            color: var(--text-sub);
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        .co-name {
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--text-main);
-            display: block;
-            margin-bottom: 2px;
-        }
-        .role-name { font-size: 12px; color: var(--text-sub); }
-
-        .sector-text {
-            font-size: 11px;
-            color: var(--text-sub);
-            margin-top: 3px;
-        }
-
-        .notes-preview {
-            font-size: 11px;
-            color: var(--text-sub);
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .notes-empty { font-size: 11px; color: #d1d5db; font-style: italic; }
-
-        /* ─── STATUS PILLS ───────────────────────── */
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 11px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        .pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-        .status-applied { background: var(--applied-bg); color: var(--applied-txt); }
-        .status-applied .pill-dot { background: var(--applied-dot); }
-        .status-in-progress { background: var(--progress-bg); color: var(--progress-txt); }
-        .status-in-progress .pill-dot { background: var(--progress-dot); }
-        .status-rejected { background: var(--rejected-bg); color: var(--rejected-txt); }
-        .status-rejected .pill-dot { background: var(--rejected-dot); }
-        .status-offer { background: var(--offer-bg); color: var(--offer-txt); }
-        .status-offer .pill-dot { background: var(--offer-dot); }
-
-        /* ─── ACTION BUTTON ──────────────────────── */
-        .btn-modify {
-            background: transparent;
-            color: var(--text-sub);
-            border: 1.5px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.15s;
-            white-space: nowrap;
-        }
-        .btn-modify:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-soft);
-        }
-
-        /* ─── BULK ASSIGN BANNER ─────────────────── */
-        .bulk-banner {
-            background: #fffbeb;
-            border: 1.5px solid #fcd34d;
-            border-radius: 12px;
-            padding: 14px 18px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .bulk-banner-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: #92400e;
-            flex: 1;
-            min-width: 200px;
-        }
-        .bulk-banner-text span { font-weight: 400; color: #b45309; }
-        .bulk-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .bulk-select {
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1.5px solid #fcd34d;
-            font-size: 13px;
-            font-family: 'DM Sans', sans-serif;
-            background: white;
-            color: var(--text-main);
-            outline: none;
-            cursor: pointer;
-        }
-        .btn-bulk-apply {
-            background: #f59e0b;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 13px;
-            transition: background 0.15s;
-            white-space: nowrap;
-        }
-        .btn-bulk-apply:hover { background: #d97706; }
-        .btn-bulk-dismiss {
-            background: transparent;
-            color: #b45309;
-            border: none;
-            font-size: 13px;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            padding: 8px;
-            text-decoration: underline;
-        }
-
-        /* ─── EMPTY STATE ────────────────────────── */
-        .empty-state { text-align: center; padding: 60px 20px; }
-        .empty-icon { font-size: 36px; margin-bottom: 12px; }
-        .empty-state h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 16px;
-            margin: 0 0 6px;
-            color: var(--text-main);
-        }
-        .empty-state p { font-size: 13px; color: var(--text-sub); margin: 0; }
-
-        /* ─── MODAL ──────────────────────────────── */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(15, 15, 30, 0.65);
-            backdrop-filter: blur(4px);
-            display: none; justify-content: center; align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-        .modal-content {
-            background: white;
-            padding: 28px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 520px;
-            animation: popIn 0.2s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.95) translateY(8px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .modal-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 18px;
-            font-weight: 800;
-            margin: 0 0 20px;
-        }
-        .modal-field { margin-bottom: 14px; }
-        .modal-field label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-sub);
-            margin-bottom: 5px;
-        }
-        .modal-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-        @media (max-width: 480px) { .modal-row { grid-template-columns: 1fr; } }
-        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-cancel {
-            flex: 1;
-            background: #f5f4f0;
-            color: var(--text-sub);
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background 0.15s;
-        }
-        .btn-cancel:hover { background: #e9e7e0; }
-        .btn-save {
-            flex: 2;
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            transition: background 0.15s;
-        }
-        .btn-save:hover { background: #4338ca; }
-        .btn-delete {
-            flex: 1;
-            background: transparent;
-            color: #f43f5e;
-            border: 1.5px solid #fecdd3;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.15s;
-        }
-        .btn-delete:hover { background: #ffe4e6; border-color: #f43f5e; }
-        .btn-delete-row {
-            background: transparent;
-            color: #f43f5e;
-            border: 1.5px solid #fecdd3;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.15s;
-            white-space: nowrap;
-            margin-left: 6px;
-        }
-        .btn-delete-row:hover { background: #ffe4e6; border-color: #f43f5e; }
-
-        /* ─── CONFIRM MODAL ──────────────────────── */
-        .confirm-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(15, 15, 30, 0.7);
-            backdrop-filter: blur(4px);
-            display: none; justify-content: center; align-items: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-        .confirm-content {
-            background: white;
-            padding: 28px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 380px;
-            animation: popIn 0.2s ease;
-            text-align: center;
-        }
-        .confirm-icon { font-size: 32px; margin-bottom: 12px; }
-        .confirm-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 17px;
-            font-weight: 800;
-            margin: 0 0 8px;
-            color: var(--text-main);
-        }
-        .confirm-sub { font-size: 13px; color: var(--text-sub); margin: 0 0 24px; }
-        .confirm-actions { display: flex; gap: 10px; }
-        .btn-confirm-cancel {
-            flex: 1;
-            background: #f5f4f0;
-            color: var(--text-sub);
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .btn-confirm-cancel:hover { background: #e9e7e0; }
-        .btn-confirm-delete {
-            flex: 2;
-            background: #f43f5e;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-        }
-        .btn-confirm-delete:hover { background: #e11d48; }
-
-        /* ─── TOAST ──────────────────────────────── */
-        .toast {
-            position: fixed;
-            bottom: 24px; right: 24px;
-            background: var(--primary);
-            color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s;
-            z-index: 9999;
-            pointer-events: none;
-        }
-        .toast.show { opacity: 1; transform: translateY(0); }
+        /* TOAST */
+        .toast{position:fixed;bottom:24px;right:24px;background:var(--primary);color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transform:translateY(10px);transition:all .3s;z-index:9999;pointer-events:none;}
+        .toast.show{opacity:1;transform:translateY(0);}
     </style>
 </head>
 <body>
 
-    <div class="page-header">
-        <div class="header-inner">
-            <div>
-                <div class="header-eyebrow">Neil's Dashboard</div>
-                <h1>Career <span>Hub</span></h1>
+<div class="page-header">
+    <div class="header-inner">
+        <div>
+            <div class="header-eyebrow">Neil's Dashboard</div>
+            <h1>Career <span>Hub</span></h1>
+        </div>
+        <div class="header-right">
+            <div class="summary-pills">
+                <div class="sum-pill"><span id="hdr-total">—</span>Total</div>
+                <div class="sum-pill"><span id="hdr-applied">—</span>Applied</div>
+                <div class="sum-pill"><span id="hdr-progress">—</span>In Progress</div>
+                <div class="sum-pill"><span id="hdr-rejected">—</span>Rejected</div>
+                <div class="sum-pill"><span id="hdr-offers">—</span>Offers</div>
             </div>
             <button class="btn-new" onclick="toggleForm()">
-                <span style="font-size:16px; line-height:1;">+</span> New Application
+                <span style="font-size:16px;line-height:1;">+</span> New Application
             </button>
         </div>
     </div>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card total">
-                <span class="stat-label">Total</span>
-                <div class="stat-value" id="stat-total">0</div>
-            </div>
-            <div class="stat-card applied">
-                <span class="stat-label">Applied</span>
-                <div class="stat-value" id="stat-applied">0</div>
-            </div>
-            <div class="stat-card progress">
-                <span class="stat-label">In Progress</span>
-                <div class="stat-value" id="stat-progress">0</div>
-            </div>
-            <div class="stat-card rejected">
-                <span class="stat-label">Rejected</span>
-                <div class="stat-value" id="stat-rejected">0</div>
-            </div>
-            <div class="stat-card offers">
-                <span class="stat-label">Offers</span>
-                <div class="stat-value" id="stat-offers">0</div>
-            </div>
+    <!-- Controls -->
+    <div class="control-panel">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-box" class="search-input" placeholder="Search company or role…" oninput="renderUI()">
         </div>
-
-        <!-- Pipeline bar -->
-        <div class="pipeline-bar">
-            <span class="pipeline-label">Pipeline</span>
-            <div class="bar-track" id="pipeline-track">
-                <div class="bar-segment applied" id="bar-applied" style="width:0%"></div>
-                <div class="bar-segment progress" id="bar-progress" style="width:0%"></div>
-                <div class="bar-segment rejected" id="bar-rejected" style="width:0%"></div>
-                <div class="bar-segment offer" id="bar-offer" style="width:0%"></div>
-            </div>
-            <div class="bar-legend">
-                <div class="legend-item"><div class="legend-dot" style="background:var(--applied-dot)"></div>Applied</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--progress-dot)"></div>In Progress</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--rejected-dot)"></div>Rejected</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--offer-dot)"></div>Offer</div>
-            </div>
-        </div>
-
-        <!-- Bulk assign banner — shown when entries exist without a tier -->
-        <div class="bulk-banner" id="bulk-banner" style="display:none">
-            <div class="bulk-banner-text">
-                ⚡ <span id="bulk-count">0</span> existing entries have no tier assigned.
-                <span>Assign tiers to track which roles got full tailoring treatment.</span>
-            </div>
-            <div class="bulk-controls">
-                <select class="bulk-select" id="bulk-tier-select">
-                    <option value="">— Select tier —</option>
-                    <option value="A">Tier A — Full tailoring</option>
-                    <option value="B">Tier B — Light tailoring</option>
-                    <option value="C">Tier C — Base send</option>
-                </select>
-                <button class="btn-bulk-apply" onclick="bulkAssignTier()">Assign to all untiered</button>
-                <button class="btn-bulk-dismiss" onclick="dismissBulk()">Dismiss</button>
-            </div>
-        </div>
-
-        <!-- Controls -->
-        <div class="control-panel">
-            <div class="search-wrap">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="search-box" class="search-input" placeholder="Search company or role…" onkeyup="renderUI()">
-            </div>
-            <select id="filter-status" class="filter-select" onchange="renderUI()">
-                <option value="all">All Statuses</option>
-                <option>Applied</option>
-                <option>In Progress</option>
-                <option>Offer</option>
-                <option>Rejected</option>
-            </select>
-            <select id="filter-tier" class="filter-select" onchange="renderUI()">
-                <option value="all">All Tiers</option>
-                <option value="A">Tier A</option>
-                <option value="B">Tier B</option>
-                <option value="C">Tier C</option>
-                <option value="">Unassigned</option>
-            </select>
-            <select id="filter-sector" class="filter-select" onchange="renderUI()">
-                <option value="all">All Sectors</option>
-                <option>Government</option>
-                <option>Engineering</option>
-                <option>Private Sector</option>
-                <option>Utilities</option>
-                <option>Real Estate</option>
-                <option>Technology</option>
-                <option>Other</option>
-            </select>
-            <select id="filter-month" class="filter-select" onchange="renderUI()">
-                <option value="all">All Months</option>
-                <option value="0">January</option><option value="1">February</option>
-                <option value="2">March</option><option value="3">April</option>
-                <option value="4">May</option><option value="5">June</option>
-                <option value="6">July</option><option value="7">August</option>
-                <option value="8">September</option><option value="9">October</option>
-                <option value="10">November</option><option value="11">December</option>
-            </select>
-            <select id="filter-year" class="filter-select" onchange="renderUI()">
-                <option value="all">All Years</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
-            <button class="btn-sync" id="sync-btn" onclick="loadJobs()">↻ Sync</button>
-        </div>
-
-        <!-- Add Form -->
-        <div id="add-form-container">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Company</label>
-                    <input type="text" id="company" class="form-input" placeholder="e.g. Metrolinx">
-                </div>
-                <div class="form-group">
-                    <label>Role</label>
-                    <input type="text" id="role" class="form-input" placeholder="e.g. Project Coordinator">
-                </div>
-                <div class="form-group">
-                    <label>Status</label>
-                    <select id="status" class="form-input">
-                        <option>Applied</option>
-                        <option>In Progress</option>
-                        <option>Offer</option>
-                        <option>Rejected</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tier</label>
-                    <select id="tier" class="form-input">
-                        <option value="">— Unassigned —</option>
-                        <option value="A">Tier A — Full tailoring</option>
-                        <option value="B">Tier B — Light tailoring</option>
-                        <option value="C">Tier C — Base send</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Base Version</label>
-                    <select id="base" class="form-input">
-                        <option value="">— None —</option>
-                        <option value="A">Base A — Coordinator</option>
-                        <option value="B">Base B — Controls</option>
-                        <option value="C">Base C — Government</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-grid-row2">
-                <div class="form-group">
-                    <label>Sector</label>
-                    <select id="sector" class="form-input">
-                        <option value="">— Select sector —</option>
-                        <option>Government</option>
-                        <option>Engineering</option>
-                        <option>Private Sector</option>
-                        <option>Utilities</option>
-                        <option>Real Estate</option>
-                        <option>Technology</option>
-                        <option>Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Notes</label>
-                    <textarea id="notes" class="form-textarea" placeholder="JD keywords, summary swap, anything relevant…"></textarea>
-                </div>
-                <div class="form-group">
-                    <label style="opacity:0">_</label>
-                    <button class="btn-submit" onclick="handleSyncJob()">Add Entry</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Table -->
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date Applied</th>
-                        <th>Company & Role</th>
-                        <th>Tier / Base</th>
-                        <th>Status</th>
-                        <th>Notes</th>
-                        <th style="text-align:right">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="job-table-body"></tbody>
-            </table>
-        </div>
-
+        <select id="filter-status" class="filter-select" onchange="renderUI()">
+            <option value="all">All Statuses</option>
+            <option>Applied</option>
+            <option>In Progress</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+        </select>
+        <select id="filter-tier" class="filter-select" onchange="renderUI()">
+            <option value="all">All Tiers</option>
+            <option value="A">Tier A</option>
+            <option value="B">Tier B</option>
+            <option value="C">Tier C</option>
+            <option value="">Unassigned</option>
+        </select>
+        <select id="filter-month" class="filter-select" onchange="renderUI()">
+            <option value="all">All Months</option>
+            <option value="0">January</option><option value="1">February</option>
+            <option value="2">March</option><option value="3">April</option>
+            <option value="4">May</option><option value="5">June</option>
+            <option value="6">July</option><option value="7">August</option>
+            <option value="8">September</option><option value="9">October</option>
+            <option value="10">November</option><option value="11">December</option>
+        </select>
+        <select id="filter-year" class="filter-select" onchange="renderUI()">
+            <option value="all">All Years</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+        </select>
+        <button class="btn-sync" id="sync-btn" onclick="loadJobs()">↻ Sync</button>
     </div>
 
-    <!-- Edit Modal -->
-    <div class="modal-overlay" id="edit-modal">
-        <div class="modal-content">
-            <div class="modal-title">Update Application</div>
-            <div class="modal-row">
-                <div class="modal-field">
-                    <label>Company</label>
-                    <input type="text" id="edit-company" class="form-input" style="width:100%">
-                </div>
-                <div class="modal-field">
-                    <label>Role</label>
-                    <input type="text" id="edit-role" class="form-input" style="width:100%">
-                </div>
+    <!-- Add Form -->
+    <div id="add-form-container">
+        <div class="form-row r5">
+            <div class="form-group">
+                <label>Company</label>
+                <input type="text" id="company" class="form-input" placeholder="e.g. Metrolinx">
             </div>
-            <div class="modal-row">
-                <div class="modal-field">
-                    <label>Status</label>
-                    <select id="edit-status" class="form-input" style="width:100%">
-                        <option>Applied</option>
-                        <option>In Progress</option>
-                        <option>Offer</option>
-                        <option>Rejected</option>
-                    </select>
-                </div>
-                <div class="modal-field">
-                    <label>Tier</label>
-                    <select id="edit-tier" class="form-input" style="width:100%">
-                        <option value="">— Unassigned —</option>
-                        <option value="A">Tier A — Full tailoring</option>
-                        <option value="B">Tier B — Light tailoring</option>
-                        <option value="C">Tier C — Base send</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>Role</label>
+                <input type="text" id="role" class="form-input" placeholder="e.g. Project Coordinator">
             </div>
-            <div class="modal-row">
-                <div class="modal-field">
-                    <label>Base Version</label>
-                    <select id="edit-base" class="form-input" style="width:100%">
-                        <option value="">— None —</option>
-                        <option value="A">Base A — Coordinator</option>
-                        <option value="B">Base B — Controls</option>
-                        <option value="C">Base C — Government</option>
-                    </select>
-                </div>
-                <div class="modal-field">
-                    <label>Sector</label>
-                    <select id="edit-sector" class="form-input" style="width:100%">
-                        <option value="">— Select sector —</option>
-                        <option>Government</option>
-                        <option>Engineering</option>
-                        <option>Private Sector</option>
-                        <option>Utilities</option>
-                        <option>Real Estate</option>
-                        <option>Technology</option>
-                        <option>Other</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="status" class="form-input">
+                    <option>Applied</option><option>In Progress</option><option>Offer</option><option>Rejected</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tier</label>
+                <select id="tier" class="form-input">
+                    <option value="">— Unassigned —</option>
+                    <option value="A">Tier A</option>
+                    <option value="B">Tier B</option>
+                    <option value="C">Tier C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Base</label>
+                <select id="base" class="form-input">
+                    <option value="">— None —</option>
+                    <option value="A">Base A</option>
+                    <option value="B">Base B</option>
+                    <option value="C">Base C</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row r3">
+            <div class="form-group">
+                <label>Sector</label>
+                <select id="sector" class="form-input">
+                    <option value="">— Select —</option>
+                    <option>Government</option><option>Engineering</option><option>Private Sector</option>
+                    <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="notes" class="form-textarea" placeholder="JD keywords, summary swap details…"></textarea>
+            </div>
+            <div class="form-group">
+                <label style="opacity:0">_</label>
+                <button class="btn-submit" onclick="addJob()">Add Entry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date Applied</th>
+                    <th>Company & Role</th>
+                    <th>Tier / Base</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                    <th style="text-align:right">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="job-table-body"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal-content">
+        <div class="modal-title">Update Application</div>
+        <div class="modal-row">
+            <div class="modal-field">
+                <label>Company</label>
+                <input type="text" id="edit-company" class="form-input" style="width:100%">
             </div>
             <div class="modal-field">
-                <label>Notes</label>
-                <textarea id="edit-notes" class="form-textarea" style="width:100%" placeholder="JD keywords, summary swap, anything relevant…"></textarea>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-delete" onclick="confirmDeleteFromModal()">Delete</button>
-                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn-save" onclick="saveSyncEdit()">Save Changes</button>
+                <label>Role</label>
+                <input type="text" id="edit-role" class="form-input" style="width:100%">
             </div>
         </div>
-    </div>
-
-    <!-- Confirm Delete Modal -->
-    <div class="confirm-overlay" id="confirm-modal">
-        <div class="confirm-content">
-            <div class="confirm-icon">🗑️</div>
-            <div class="confirm-title">Delete this entry?</div>
-            <div class="confirm-sub" id="confirm-sub-text">This cannot be undone.</div>
-            <div class="confirm-actions">
-                <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancel</button>
-                <button class="btn-confirm-delete" onclick="executeDelete()">Yes, Delete</button>
+        <div class="modal-row">
+            <div class="modal-field">
+                <label>Status</label>
+                <select id="edit-status" class="form-input" style="width:100%">
+                    <option>Applied</option><option>In Progress</option><option>Offer</option><option>Rejected</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Tier</label>
+                <select id="edit-tier" class="form-input" style="width:100%">
+                    <option value="">— Unassigned —</option>
+                    <option value="A">Tier A</option>
+                    <option value="B">Tier B</option>
+                    <option value="C">Tier C</option>
+                </select>
             </div>
         </div>
+        <div class="modal-row">
+            <div class="modal-field">
+                <label>Base Version</label>
+                <select id="edit-base" class="form-input" style="width:100%">
+                    <option value="">— None —</option>
+                    <option value="A">Base A — Coordinator</option>
+                    <option value="B">Base B — Controls</option>
+                    <option value="C">Base C — Government</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Sector</label>
+                <select id="edit-sector" class="form-input" style="width:100%">
+                    <option value="">— Select —</option>
+                    <option>Government</option><option>Engineering</option><option>Private Sector</option>
+                    <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-field">
+            <label>Notes</label>
+            <textarea id="edit-notes" class="form-textarea" style="width:100%" placeholder="JD keywords, summary swap details…"></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-delete-modal" onclick="confirmDelete()">Delete</button>
+            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn-save" onclick="saveEdit()">Save Changes</button>
+        </div>
     </div>
+</div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
+<!-- Confirm Delete Modal -->
+<div class="confirm-overlay" id="confirm-modal">
+    <div class="confirm-content">
+        <div class="confirm-icon">🗑️</div>
+        <div class="confirm-title">Delete this entry?</div>
+        <div class="confirm-sub" id="confirm-text">This cannot be undone.</div>
+        <div class="confirm-actions">
+            <button class="btn-cc" onclick="closeConfirm()">Cancel</button>
+            <button class="btn-cd" onclick="executeDelete()">Yes, Delete</button>
+        </div>
+    </div>
+</div>
 
-    <script>
-        const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
-        let allJobs = [];
-        let selectedJob = null;
-        let bulkDismissed = false;
+<div class="toast" id="toast"></div>
 
-        window.onload = loadJobs;
+<script>
+    const G_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
+    let allJobs = [];
+    let selectedJob = null;
+    let selectedIdx = null;
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
-        }
+    window.onload = loadJobs;
 
-        async function loadJobs() {
-            const btn = document.getElementById('sync-btn');
-            btn.textContent = '⟳ Syncing…';
-            btn.classList.add('syncing');
-            try {
-                const res = await fetch(G_SCRIPT_URL + "?v=" + Date.now());
-                const raw = await res.json();
-                // Normalize fields — handle case mismatches and blank keys
-                allJobs = raw
-                  .filter(j => j.Company || j.Role) // drop blank rows
-                  .map(j => ({
-                    Date:        j.Date || j.date || '',
-                    Company:     j.Company || j.company || '',
-                    Role:        j.Role || j.role || '',
-                    Location:    j.Location || j.location || '',
-                    Status:      j.Status || j.status || 'Applied',
-                    Notes:       j.Notes || j.notes || '',
-                    SalaryRange: j['Salary Range'] || j['Salary range'] || j['salary range'] || '',
-                    Tier:        j.Tier || j.tier || '',
-                    Base:        j.Base || j.base || '',
-                    Sector:      j.Sector || j.sector || '',
-                  }));
-                allJobs.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-                renderUI();
-                checkBulkBanner();
-                showToast('✓ Synced successfully');
-            } catch (e) {
-                showToast('⚠ Sync failed');
-                console.error("Sync Error", e);
-            }
-            btn.textContent = '↻ Sync';
-            btn.classList.remove('syncing');
-        }
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
 
-        function checkBulkBanner() {
-            if (bulkDismissed) return;
-            const untiered = allJobs.filter(j => !j.Tier || j.Tier === '').length;
-            const banner = document.getElementById('bulk-banner');
-            if (untiered > 0) {
-                document.getElementById('bulk-count').textContent = untiered;
-                banner.style.display = 'flex';
-            } else {
-                banner.style.display = 'none';
-            }
-        }
-
-        async function bulkAssignTier() {
-            const tier = document.getElementById('bulk-tier-select').value;
-            if (!tier) { showToast('⚠ Select a tier first'); return; }
-            const untiered = allJobs.filter(j => !j.Tier || j.Tier === '');
-            if (untiered.length === 0) { showToast('✓ No untiered entries'); return; }
-
-            showToast(`⟳ Assigning Tier ${tier} to ${untiered.length} entries…`);
-            for (const job of untiered) {
-                job.Tier = tier;
-                await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(job) });
-            }
-            showToast(`✓ Tier ${tier} assigned to ${untiered.length} entries`);
-            document.getElementById('bulk-banner').style.display = 'none';
+    async function loadJobs() {
+        const btn = document.getElementById('sync-btn');
+        btn.textContent = '⟳ Syncing…';
+        btn.classList.add('syncing');
+        try {
+            const res = await fetch(G_SCRIPT_URL + "?v=" + Date.now());
+            const raw = await res.json();
+            allJobs = raw.filter(j => j.Company || j.Role);
+            allJobs.sort((a, b) => new Date(b.Date) - new Date(a.Date));
             renderUI();
+            showToast('✓ Synced — ' + allJobs.length + ' entries');
+        } catch(e) {
+            showToast('⚠ Sync failed');
+            console.error(e);
+        }
+        btn.textContent = '↻ Sync';
+        btn.classList.remove('syncing');
+    }
+
+    function updateStats() {
+        let gc = {Total:0, Applied:0, Progress:0, Rejected:0, Offer:0};
+        allJobs.forEach(job => {
+            const s = String(job.Status || 'Applied').trim();
+            gc.Total++;
+            if (s === 'Applied') gc.Applied++;
+            else if (s === 'In Progress') gc.Progress++;
+            else if (s === 'Rejected') gc.Rejected++;
+            else if (s === 'Offer') gc.Offer++;
+        });
+        document.getElementById('hdr-total').textContent = gc.Total;
+        document.getElementById('hdr-applied').textContent = gc.Applied;
+        document.getElementById('hdr-progress').textContent = gc.Progress;
+        document.getElementById('hdr-rejected').textContent = gc.Rejected;
+        document.getElementById('hdr-offers').textContent = gc.Offer;
+    }
+
+    function renderUI() {
+        updateStats();
+        const tbody = document.getElementById('job-table-body');
+        const searchQ = document.getElementById('search-box').value.toLowerCase();
+        const sFilter = document.getElementById('filter-status').value;
+        const tFilter = document.getElementById('filter-tier').value;
+        const mFilter = document.getElementById('filter-month').value;
+        const yFilter = document.getElementById('filter-year').value;
+
+        const filtered = allJobs.filter(job => {
+            const jDate = new Date(job.Date);
+            const status = String(job.Status || 'Applied').trim();
+            const tier = String(job.Tier || '').trim();
+            const matchSearch = String(job.Company || '').toLowerCase().includes(searchQ)
+                             || String(job.Role || '').toLowerCase().includes(searchQ);
+            if (!matchSearch) return false;
+            if (sFilter !== 'all' && status !== sFilter) return false;
+            if (tFilter !== 'all' && tier !== tFilter) return false;
+            if (mFilter !== 'all' && !isNaN(jDate) && jDate.getMonth().toString() !== mFilter) return false;
+            if (yFilter !== 'all' && !isNaN(jDate) && jDate.getFullYear().toString() !== yFilter) return false;
+            return true;
+        });
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6">
+                <div class="empty-state">
+                    <div class="empty-icon">📂</div>
+                    <h3>No applications found</h3>
+                    <p>Try adjusting your filters or add a new entry.</p>
+                </div>
+            </td></tr>`;
+            return;
         }
 
-        function dismissBulk() {
-            bulkDismissed = true;
-            document.getElementById('bulk-banner').style.display = 'none';
-        }
+        tbody.innerHTML = filtered.map(job => {
+            const idx = allJobs.indexOf(job);
+            const jDate = new Date(job.Date);
+            const dateStr = isNaN(jDate) ? String(job.Date) : jDate.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+            const status = String(job.Status || 'Applied').trim();
+            const tier = String(job.Tier || '').trim();
+            const base = String(job.Base || '').trim();
+            const sector = String(job.Sector || '').trim();
+            const notes = String(job.Notes || '').trim();
+            const pillClass = 'status-' + status.toLowerCase().replace(/\s+/g,'-');
+            const tierClass = tier ? 'tier-' + tier : 'tier-none';
+            const tierLabel = tier ? 'Tier ' + tier : '—';
+            return `<tr>
+                <td><span class="date-text">${dateStr}</span></td>
+                <td>
+                    <span class="co-name">${job.Company || ''}</span>
+                    <span class="role-name">${job.Role || ''}</span>
+                    ${sector ? '<div class="sector-text">' + sector + '</div>' : ''}
+                </td>
+                <td>
+                    <span class="tier-pill ${tierClass}">${tierLabel}</span>
+                    ${base ? '<div><span class="base-badge">Base ' + base + '</span></div>' : ''}
+                </td>
+                <td><span class="pill ${pillClass}"><span class="pill-dot"></span>${status}</span></td>
+                <td>${notes ? '<span class="notes-preview" title="' + notes.replace(/"/g,'&quot;') + '">' + notes + '</span>' : '<span class="notes-empty">—</span>'}</td>
+                <td style="text-align:right;white-space:nowrap">
+                    <button class="btn-modify" onclick="openEdit(${idx})">Modify</button>
+                    <button class="btn-del" onclick="confirmDeleteRow(${idx})">Delete</button>
+                </td>
+            </tr>`;
+        }).join('');
+    }
 
-        function renderUI() {
-            const tbody = document.getElementById('job-table-body');
-            const searchQ = document.getElementById('search-box').value.toLowerCase();
-            const sFilter = document.getElementById('filter-status').value;
-            const tFilter = document.getElementById('filter-tier').value;
-            const secFilter = document.getElementById('filter-sector').value;
-            const mFilter = document.getElementById('filter-month').value;
-            const yFilter = document.getElementById('filter-year').value;
+    function toggleForm() {
+        const f = document.getElementById('add-form-container');
+        f.style.display = f.style.display === 'block' ? 'none' : 'block';
+    }
 
-            tbody.innerHTML = '';
+    function openEdit(idx) {
+        selectedJob = allJobs[idx];
+        selectedIdx = idx;
+        document.getElementById('edit-company').value = selectedJob.Company || '';
+        document.getElementById('edit-role').value = selectedJob.Role || '';
+        document.getElementById('edit-status').value = selectedJob.Status || 'Applied';
+        document.getElementById('edit-tier').value = selectedJob.Tier || '';
+        document.getElementById('edit-base').value = selectedJob.Base || '';
+        document.getElementById('edit-sector').value = selectedJob.Sector || '';
+        document.getElementById('edit-notes').value = selectedJob.Notes || '';
+        document.getElementById('edit-modal').style.display = 'flex';
+    }
 
-            const filtered = allJobs.filter(job => {
-                const jDate = new Date(job.Date);
-                const status = (job.Status || 'Applied').toString().trim();
-                const tier = (job.Tier || '').toString().trim();
-                const sector = (job.Sector || '').toString().trim();
-                const matchSearch = (job.Company || "").toLowerCase().includes(searchQ) || (job.Role || "").toLowerCase().includes(searchQ);
-                if (!matchSearch) return false;
-                if (sFilter !== "all" && status !== sFilter) return false;
-                if (tFilter !== "all" && tier !== tFilter) return false;
-                if (secFilter !== "all" && sector !== secFilter) return false;
-                if (mFilter !== "all" && jDate.getMonth().toString() !== mFilter) return false;
-                if (yFilter !== "all" && jDate.getFullYear().toString() !== yFilter) return false;
-                return true;
-            });
+    async function saveEdit() {
+        selectedJob.Company = document.getElementById('edit-company').value;
+        selectedJob.Role = document.getElementById('edit-role').value;
+        selectedJob.Status = document.getElementById('edit-status').value;
+        selectedJob.Tier = document.getElementById('edit-tier').value;
+        selectedJob.Base = document.getElementById('edit-base').value;
+        selectedJob.Sector = document.getElementById('edit-sector').value;
+        selectedJob.Notes = document.getElementById('edit-notes').value;
+        await fetch(G_SCRIPT_URL, {method:'POST', mode:'no-cors', body:JSON.stringify(selectedJob)});
+        closeModal();
+        showToast('✓ Entry updated');
+        loadJobs();
+    }
 
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6">
-                    <div class="empty-state">
-                        <div class="empty-icon">📂</div>
-                        <h3>No applications found</h3>
-                        <p>Try adjusting your filters or add a new entry.</p>
-                    </div>
-                </td></tr>`;
-            } else {
-                filtered.forEach((job) => {
-                    const originalIdx = allJobs.indexOf(job);
-                    const jDate = new Date(job.Date);
-                    const status = (job.Status || 'Applied').trim();
-                    const tier = (job.Tier || '').trim();
-                    const base = (job.Base || '').trim();
-                    const sector = (job.Sector || '').trim();
-                    const notes = (job.Notes || '').trim();
+    async function addJob() {
+        const co = document.getElementById('company').value.trim();
+        const rl = document.getElementById('role').value.trim();
+        if (!co || !rl) { showToast('⚠ Company and role are required'); return; }
+        const newJob = {
+            Date: new Date().toISOString(),
+            Company: co,
+            Role: rl,
+            Status: document.getElementById('status').value,
+            Tier: document.getElementById('tier').value,
+            Base: document.getElementById('base').value,
+            Sector: document.getElementById('sector').value,
+            Notes: document.getElementById('notes').value.trim()
+        };
+        await fetch(G_SCRIPT_URL, {method:'POST', mode:'no-cors', body:JSON.stringify(newJob)});
+        document.getElementById('company').value = '';
+        document.getElementById('role').value = '';
+        document.getElementById('notes').value = '';
+        toggleForm();
+        showToast('✓ Application added');
+        loadJobs();
+    }
 
-                    const pillClass = 'status-' + status.toLowerCase().replace(/\s+/g, '-');
-                    const tierClass = tier ? `tier-${tier}` : 'tier-none';
-                    const tierLabel = tier ? `Tier ${tier}` : '—';
-                    const baseLabel = base ? `Base ${base}` : '';
+    function closeModal() {
+        document.getElementById('edit-modal').style.display = 'none';
+        selectedJob = null;
+        selectedIdx = null;
+    }
 
-                    const row = `<tr>
-                        <td><span class="date-text">${jDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span></td>
-                        <td>
-                            <span class="co-name">${job.Company}</span>
-                            <span class="role-name">${job.Role}</span>
-                            ${sector ? `<div class="sector-text">${sector}</div>` : ''}
-                        </td>
-                        <td>
-                            <span class="tier-pill ${tierClass}">${tierLabel}</span>
-                            ${baseLabel ? `<div style="margin-top:4px"><span class="base-badge">${baseLabel}</span></div>` : ''}
-                        </td>
-                        <td>
-                            <span class="pill ${pillClass}">
-                                <span class="pill-dot"></span>${status}
-                            </span>
-                        </td>
-                        <td>
-                            ${notes
-                                ? `<span class="notes-preview" title="${notes.replace(/"/g, '&quot;')}">${notes}</span>`
-                                : `<span class="notes-empty">No notes</span>`}
-                        </td>
-                        <td style="text-align:right">
-                            <button class="btn-modify" onclick="openEdit(${originalIdx})">Modify</button>
-                            <button class="btn-delete-row" onclick="confirmDelete(${originalIdx})">Delete</button>
-                        </td>
-                    </tr>`;
-                    tbody.innerHTML += row;
-                });
-            }
+    function confirmDeleteRow(idx) {
+        selectedJob = allJobs[idx];
+        selectedIdx = idx;
+        document.getElementById('confirm-text').textContent =
+            String(selectedJob.Company || '') + ' — ' + String(selectedJob.Role || '') + '. This cannot be undone.';
+        document.getElementById('confirm-modal').style.display = 'flex';
+    }
 
-            // Global counts
-            let gc = { Total: 0, Applied: 0, Progress: 0, Rejected: 0, Offer: 0 };
-            allJobs.forEach(job => {
-                const s = (job.Status || 'Applied').toString().trim();
-                gc.Total++;
-                if (s === 'Applied') gc.Applied++;
-                else if (s === 'In Progress') gc.Progress++;
-                else if (s === 'Rejected') gc.Rejected++;
-                else if (s === 'Offer') gc.Offer++;
-            });
+    function confirmDelete() {
+        if (!selectedJob) return;
+        document.getElementById('confirm-text').textContent =
+            String(selectedJob.Company || '') + ' — ' + String(selectedJob.Role || '') + '. This cannot be undone.';
+        document.getElementById('edit-modal').style.display = 'none';
+        document.getElementById('confirm-modal').style.display = 'flex';
+    }
 
-            document.getElementById('stat-total').innerText = gc.Total;
-            document.getElementById('stat-applied').innerText = gc.Applied;
-            document.getElementById('stat-progress').innerText = gc.Progress;
-            document.getElementById('stat-rejected').innerText = gc.Rejected;
-            document.getElementById('stat-offers').innerText = gc.Offer;
+    function closeConfirm() {
+        document.getElementById('confirm-modal').style.display = 'none';
+    }
 
-            const t = gc.Total || 1;
-            document.getElementById('bar-applied').style.width = (gc.Applied / t * 100) + '%';
-            document.getElementById('bar-progress').style.width = (gc.Progress / t * 100) + '%';
-            document.getElementById('bar-rejected').style.width = (gc.Rejected / t * 100) + '%';
-            document.getElementById('bar-offer').style.width = (gc.Offer / t * 100) + '%';
-        }
-
-        function toggleForm() {
-            const f = document.getElementById('add-form-container');
-            f.style.display = f.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function openEdit(idx) {
-            selectedJob = allJobs[idx];
-            document.getElementById('edit-company').value = selectedJob.Company || '';
-            document.getElementById('edit-role').value = selectedJob.Role || '';
-            document.getElementById('edit-status').value = selectedJob.Status || 'Applied';
-            document.getElementById('edit-tier').value = selectedJob.Tier || '';
-            document.getElementById('edit-base').value = selectedJob.Base || '';
-            document.getElementById('edit-sector').value = selectedJob.Sector || '';
-            document.getElementById('edit-notes').value = selectedJob.Notes || '';
-            document.getElementById('edit-modal').style.display = 'flex';
-        }
-
-        async function saveSyncEdit() {
-            selectedJob.Company = document.getElementById('edit-company').value;
-            selectedJob.Role = document.getElementById('edit-role').value;
-            selectedJob.Status = document.getElementById('edit-status').value;
-            selectedJob.Tier = document.getElementById('edit-tier').value;
-            selectedJob.Base = document.getElementById('edit-base').value;
-            selectedJob.Sector = document.getElementById('edit-sector').value;
-            selectedJob.Notes = document.getElementById('edit-notes').value;
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(selectedJob) });
-            closeModal();
-            showToast('✓ Entry updated');
-            loadJobs();
-        }
-
-        async function handleSyncJob() {
-            const co = document.getElementById('company').value.trim();
-            const rl = document.getElementById('role').value.trim();
-            if (!co || !rl) { showToast('⚠ Please fill company and role'); return; }
-            const newJob = {
-                Date: new Date().toISOString(),
-                Company: co,
-                Role: rl,
-                Status: document.getElementById('status').value,
-                Tier: document.getElementById('tier').value,
-                Base: document.getElementById('base').value,
-                Sector: document.getElementById('sector').value,
-                Notes: document.getElementById('notes').value.trim()
-            };
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(newJob) });
-            document.getElementById('company').value = '';
-            document.getElementById('role').value = '';
-            document.getElementById('notes').value = '';
-            toggleForm();
-            showToast('✓ Application added');
-            loadJobs();
-        }
-
-        let jobToDeleteIdx = null;
-
-        function confirmDelete(idx) {
-            jobToDeleteIdx = idx;
-            const job = allJobs[idx];
-            document.getElementById('confirm-sub-text').textContent =
-                job.Company + ' — ' + job.Role + '. This cannot be undone.';
-            document.getElementById('confirm-modal').style.display = 'flex';
-        }
-
-        function confirmDeleteFromModal() {
-            const idx = allJobs.indexOf(selectedJob);
-            closeModal();
-            confirmDelete(idx);
-        }
-
-        function closeConfirm() {
-            jobToDeleteIdx = null;
-            document.getElementById('confirm-modal').style.display = 'none';
-        }
-
-        async function executeDelete() {
-            if (jobToDeleteIdx === null) return;
-            const job = allJobs[jobToDeleteIdx];
-            job._delete = true;
-            await fetch(G_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(job) });
-            allJobs.splice(jobToDeleteIdx, 1);
-            closeConfirm();
-            showToast('✓ Entry deleted');
-            renderUI();
-            checkBulkBanner();
-        }
-
-        function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
-    </script>
+    async function executeDelete() {
+        if (!selectedJob) return;
+        const jobToDelete = Object.assign({}, selectedJob, {_delete: true});
+        await fetch(G_SCRIPT_URL, {method:'POST', mode:'no-cors', body:JSON.stringify(jobToDelete)});
+        if (selectedIdx !== null) allJobs.splice(selectedIdx, 1);
+        closeConfirm();
+        selectedJob = null;
+        selectedIdx = null;
+        showToast('✓ Entry deleted');
+        renderUI();
+    }
+</script>
 </body>
 </html>
