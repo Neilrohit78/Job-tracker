@@ -8,74 +8,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f5f4f0;
-            --card: #ffffff;
-            --primary: #1a1a2e;
-            --accent: #4f46e5;
-            --accent-soft: #eef2ff;
-            --border: #e8e6df;
-            --text: #1a1a2e;
-            --sub: #7c7b82;
+            --bg: #f5f4f0; --card: #ffffff; --primary: #1a1a2e;
+            --accent: #4f46e5; --accent-soft: #eef2ff;
+            --border: #e8e6df; --text: #1a1a2e; --sub: #7c7b82;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-        /* ── HEADER ── */
+        /* HEADER */
         .header { background: var(--primary); padding: 20px 24px; }
         .header-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-        .header h1 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: -.5px; }
-        .header h1 span { color: #818cf8; }
         .eyebrow { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,.4); margin-bottom: 3px; }
-
-        /* ── STATS ── */
+        h1 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: -.5px; }
+        h1 span { color: #818cf8; }
         .stats { display: flex; gap: 8px; flex-wrap: wrap; }
-        .stat { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 8px 16px; text-align: center; min-width: 72px; }
+        .stat { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 8px 14px; text-align: center; min-width: 68px; }
         .stat-num { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #fff; line-height: 1; }
         .stat-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,.45); margin-top: 3px; }
         .stat.s-applied .stat-num { color: #60a5fa; }
         .stat.s-progress .stat-num { color: #fbbf24; }
         .stat.s-rejected .stat-num { color: #f87171; }
         .stat.s-offer .stat-num { color: #4ade80; }
+        .btn-new { background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; white-space: nowrap; }
+        .btn-new:hover { background: #4338ca; }
 
-        /* ── CONTAINER ── */
+        /* CONTAINER */
         .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
 
-        /* ── CONTROLS ── */
+        /* CONTROLS */
         .controls { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .search-wrap { flex: 2; min-width: 160px; position: relative; }
         .search-wrap input { width: 100%; padding: 9px 12px 9px 32px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fafaf8; outline: none; color: var(--text); }
         .search-wrap input:focus { border-color: var(--accent); background: #fff; }
-        .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 13px; pointer-events: none; }
-        select { flex: 1; min-width: 110px; padding: 9px 10px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fafaf8; color: var(--text); outline: none; cursor: pointer; }
+        .si { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 13px; pointer-events: none; }
+        select { flex: 1; min-width: 108px; padding: 9px 10px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fafaf8; color: var(--text); outline: none; cursor: pointer; }
         select:focus { border-color: var(--accent); }
         .btn-sync { background: var(--primary); color: #fff; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; white-space: nowrap; }
         .btn-sync:hover { background: #2d2b52; }
         .btn-sync.syncing { opacity: .6; pointer-events: none; }
-        .btn-new { background: var(--accent); color: #fff; border: none; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; white-space: nowrap; }
-        .btn-new:hover { background: #4338ca; }
 
-        /* ── ADD FORM ── */
+        /* ADD FORM */
         .add-form { display: none; background: var(--card); border: 2px dashed #c7c4bc; border-radius: 12px; padding: 18px; margin-bottom: 14px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .form-grid2 { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; }
-        @media(max-width:800px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid2 { grid-template-columns: 1fr; } }
+        .fg { }
         .fg label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--sub); margin-bottom: 4px; }
-        .fi { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fafaf8; outline: none; }
+        .fi { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fafaf8; outline: none; color: var(--text); }
         .fi:focus { border-color: var(--accent); background: #fff; }
         textarea.fi { resize: vertical; min-height: 38px; }
+        .fg-row { display: grid; gap: 10px; margin-bottom: 10px; }
+        .fg-row.c5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+        .fg-row.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+        .fg-row.c3 { grid-template-columns: 1fr 1fr 1fr; }
+        .fg-row.c2 { grid-template-columns: 1fr 1fr; }
+        .fg-row.submit { grid-template-columns: 1fr 1fr auto; }
+        @media(max-width:900px) { .fg-row.c5,.fg-row.c4 { grid-template-columns: 1fr 1fr; } .fg-row.c3 { grid-template-columns: 1fr 1fr; } .fg-row.submit { grid-template-columns: 1fr; } }
+        @media(max-width:560px) { .fg-row.c5,.fg-row.c4,.fg-row.c3,.fg-row.c2 { grid-template-columns: 1fr; } }
         .btn-add { background: var(--accent); color: #fff; border: none; padding: 9px 20px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; height: 38px; white-space: nowrap; align-self: end; }
         .btn-add:hover { background: #4338ca; }
 
-        /* ── TABLE ── */
+        /* TABLE */
         .tbl-wrap { background: var(--card); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        table { width: 100%; border-collapse: collapse; min-width: 750px; }
         thead tr { background: var(--primary); }
-        th { padding: 12px 16px; text-align: left; font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+        th { padding: 12px 14px; text-align: left; font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
         tbody tr { border-bottom: 1px solid #f0ede8; cursor: pointer; transition: background .12s; }
         tbody tr:last-child { border-bottom: none; }
-
-        /* ── ROW COLOUR CODING ── */
-        tbody tr.row-applied   { background: #fff; }
+        tbody tr.row-applied   { background: #ffffff; }
         tbody tr.row-progress  { background: #fffdf0; }
         tbody tr.row-rejected  { background: #fff5f5; }
         tbody tr.row-offer     { background: #f0fdf4; }
@@ -83,14 +80,14 @@
         tbody tr.row-progress:hover { background: #fef9e0; }
         tbody tr.row-rejected:hover { background: #ffe8e8; }
         tbody tr.row-offer:hover    { background: #dcfce7; }
-
-        td { padding: 11px 16px; font-size: 13px; vertical-align: middle; }
+        td { padding: 10px 14px; font-size: 13px; vertical-align: middle; }
         .date-cell { font-size: 12px; color: var(--sub); white-space: nowrap; }
         .co { font-weight: 700; font-size: 14px; display: block; }
         .ro { font-size: 12px; color: var(--sub); }
         .sec { font-size: 11px; color: #aaa; margin-top: 2px; }
+        .sal { font-size: 11px; color: #6b7280; margin-top: 2px; }
 
-        /* ── STATUS PILL ── */
+        /* STATUS PILL */
         .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
         .pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
         .p-applied  { background: #dbeafe; color: #1d4ed8; } .p-applied .pill-dot  { background: #3b82f6; }
@@ -98,7 +95,7 @@
         .p-rejected { background: #ffe4e6; color: #9f1239; } .p-rejected .pill-dot { background: #f43f5e; }
         .p-offer    { background: #dcfce7; color: #15803d; } .p-offer .pill-dot    { background: #22c55e; }
 
-        /* ── TIER PILL ── */
+        /* TIER / BASE */
         .tier { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
         .t-A { background: #fce7f3; color: #9d174d; }
         .t-B { background: #e0f2fe; color: #075985; }
@@ -106,19 +103,25 @@
         .t-x { background: #f3f4f6; color: #9ca3af; }
         .base-tag { display: inline-block; background: #f3f4f6; color: #6b7280; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px; margin-top: 3px; }
 
-        /* ── EMPTY ── */
+        /* JD LINK */
+        .jd-link { font-size: 11px; color: var(--accent); text-decoration: none; display: inline-block; margin-top: 2px; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .jd-link:hover { text-decoration: underline; }
+
+        /* EMPTY */
         .empty { text-align: center; padding: 60px 20px; color: var(--sub); }
         .empty-icon { font-size: 32px; margin-bottom: 10px; }
 
-        /* ── MODAL ── */
+        /* MODAL */
         .overlay { position: fixed; inset: 0; background: rgba(10,10,25,.65); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-        .modal { background: #fff; padding: 26px; border-radius: 18px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; animation: pop .2s ease; }
+        .modal { background: #fff; padding: 26px; border-radius: 18px; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; animation: pop .2s ease; }
         @keyframes pop { from { opacity:0; transform:scale(.95) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
-        .modal h2 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 18px; }
+        .modal h2 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 16px; }
         .mf { margin-bottom: 12px; }
         .mf label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--sub); margin-bottom: 4px; }
         .mr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-        @media(max-width:460px) { .mr { grid-template-columns: 1fr; } }
+        .mr3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        @media(max-width:460px) { .mr,.mr3 { grid-template-columns: 1fr; } }
+        .section-divider { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 16px 0 12px; }
         .mac { display: flex; gap: 8px; margin-top: 18px; }
         .btn-cancel { flex: 1; background: #f5f4f0; color: var(--sub); border: none; padding: 11px; border-radius: 9px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; }
         .btn-cancel:hover { background: #e9e7e0; }
@@ -127,7 +130,7 @@
         .btn-del { flex: 1; background: transparent; color: #f43f5e; border: 1.5px solid #fecdd3; padding: 11px; border-radius: 9px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; }
         .btn-del:hover { background: #ffe4e6; border-color: #f43f5e; }
 
-        /* ── CONFIRM ── */
+        /* CONFIRM */
         .cov { position: fixed; inset: 0; background: rgba(10,10,25,.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
         .cbox { background: #fff; padding: 28px; border-radius: 18px; width: 100%; max-width: 340px; text-align: center; animation: pop .2s ease; }
         .cbox .ci { font-size: 30px; margin-bottom: 10px; }
@@ -139,7 +142,7 @@
         .btn-cd { flex: 2; background: #f43f5e; color: #fff; border: none; padding: 11px; border-radius: 9px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 14px; }
         .btn-cd:hover { background: #e11d48; }
 
-        /* ── TOAST ── */
+        /* TOAST */
         .toast { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff; padding: 11px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transform: translateY(8px); transition: all .3s; z-index: 9999; pointer-events: none; }
         .toast.show { opacity: 1; transform: translateY(0); }
     </style>
@@ -169,44 +172,37 @@
     <!-- CONTROLS -->
     <div class="controls">
         <div class="search-wrap">
-            <span class="search-icon">🔍</span>
+            <span class="si">🔍</span>
             <input type="text" id="search" placeholder="Search company or role…" oninput="renderUI()">
         </div>
         <select id="f-status" onchange="renderUI()">
             <option value="all">All Statuses</option>
-            <option>Applied</option>
-            <option>In Progress</option>
-            <option>Offer</option>
-            <option>Rejected</option>
+            <option>Applied</option><option>In Progress</option><option>Offer</option><option>Rejected</option>
         </select>
         <select id="f-tier" onchange="renderUI()">
             <option value="all">All Tiers</option>
-            <option value="A">Tier A</option>
-            <option value="B">Tier B</option>
-            <option value="C">Tier C</option>
+            <option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option>
             <option value="">Unassigned</option>
         </select>
         <select id="f-month" onchange="renderUI()">
             <option value="all">All Months</option>
-            <option value="0">January</option><option value="1">February</option>
-            <option value="2">March</option><option value="3">April</option>
-            <option value="4">May</option><option value="5">June</option>
-            <option value="6">July</option><option value="7">August</option>
-            <option value="8">September</option><option value="9">October</option>
-            <option value="10">November</option><option value="11">December</option>
+            <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+            <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+            <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+            <option value="9">October</option><option value="10">November</option><option value="11">December</option>
         </select>
         <select id="f-year" onchange="renderUI()">
             <option value="all">All Years</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
+            <option value="2025">2025</option><option value="2026">2026</option>
         </select>
         <button class="btn-sync" id="sync-btn" onclick="loadJobs()">↻ Sync</button>
     </div>
 
     <!-- ADD FORM -->
     <div class="add-form" id="add-form">
-        <div class="form-grid">
-            <div class="fg"><label>Company</label><input type="text" id="a-company" class="fi" placeholder="e.g. Metrolinx"></div>
+        <!-- Row 1: Core fields -->
+        <div class="fg-row c5">
+            <div class="fg"><label>Company</label><input type="text" id="a-co" class="fi" placeholder="e.g. Metrolinx"></div>
             <div class="fg"><label>Role</label><input type="text" id="a-role" class="fi" placeholder="e.g. Project Coordinator"></div>
             <div class="fg"><label>Status</label>
                 <select id="a-status" class="fi">
@@ -226,7 +222,8 @@
                 </select>
             </div>
         </div>
-        <div class="form-grid2">
+        <!-- Row 2: Sector + Salary -->
+        <div class="fg-row c4">
             <div class="fg"><label>Sector</label>
                 <select id="a-sector" class="fi">
                     <option value="">— Select —</option>
@@ -234,7 +231,14 @@
                     <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
                 </select>
             </div>
-            <div class="fg"><label>Notes</label><textarea id="a-notes" class="fi" placeholder="JD keywords, summary details…"></textarea></div>
+            <div class="fg"><label>Salary Min ($)</label><input type="number" id="a-sal-min" class="fi" placeholder="e.g. 65000"></div>
+            <div class="fg"><label>Salary Max ($)</label><input type="number" id="a-sal-max" class="fi" placeholder="e.g. 85000"></div>
+            <div class="fg"><label>JD Link</label><input type="url" id="a-jdlink" class="fi" placeholder="https://…"></div>
+        </div>
+        <!-- Row 3: Notes + Submit -->
+        <div class="fg-row submit">
+            <div class="fg"><label>JD Notes</label><textarea id="a-jdnotes" class="fi" placeholder="Key requirements, must-haves…"></textarea></div>
+            <div class="fg"><label>Resume Notes</label><textarea id="a-resnotes" class="fi" placeholder="Summary swap, keywords used…"></textarea></div>
             <button class="btn-add" onclick="addJob()">Add Entry</button>
         </div>
     </div>
@@ -248,7 +252,8 @@
                     <th>Company & Role</th>
                     <th>Tier / Base</th>
                     <th>Status</th>
-                    <th>Notes</th>
+                    <th>Salary</th>
+                    <th>JD / Notes</th>
                 </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -260,11 +265,13 @@
 <div class="overlay" id="edit-overlay">
     <div class="modal">
         <h2>Update Application</h2>
+
         <div class="mr">
-            <div class="mf"><label>Company</label><input type="text" id="e-company" class="fi" style="width:100%"></div>
+            <div class="mf"><label>Company</label><input type="text" id="e-co" class="fi" style="width:100%"></div>
             <div class="mf"><label>Role</label><input type="text" id="e-role" class="fi" style="width:100%"></div>
         </div>
-        <div class="mr">
+
+        <div class="mr3">
             <div class="mf"><label>Status</label>
                 <select id="e-status" class="fi" style="width:100%">
                     <option>Applied</option><option>In Progress</option><option>Offer</option><option>Rejected</option>
@@ -276,9 +283,7 @@
                     <option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option>
                 </select>
             </div>
-        </div>
-        <div class="mr">
-            <div class="mf"><label>Base Version</label>
+            <div class="mf"><label>Base</label>
                 <select id="e-base" class="fi" style="width:100%">
                     <option value="">— None —</option>
                     <option value="A">Base A — Coordinator</option>
@@ -286,6 +291,9 @@
                     <option value="C">Base C — Government</option>
                 </select>
             </div>
+        </div>
+
+        <div class="mr">
             <div class="mf"><label>Sector</label>
                 <select id="e-sector" class="fi" style="width:100%">
                     <option value="">— Select —</option>
@@ -293,8 +301,18 @@
                     <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
                 </select>
             </div>
+            <div class="mf"><label>JD Link</label><input type="url" id="e-jdlink" class="fi" style="width:100%" placeholder="https://…"></div>
         </div>
-        <div class="mf"><label>Notes</label><textarea id="e-notes" class="fi" style="width:100%" placeholder="JD keywords, summary details…"></textarea></div>
+
+        <div class="mr">
+            <div class="mf"><label>Salary Min ($)</label><input type="number" id="e-sal-min" class="fi" style="width:100%" placeholder="e.g. 65000"></div>
+            <div class="mf"><label>Salary Max ($)</label><input type="number" id="e-sal-max" class="fi" style="width:100%" placeholder="e.g. 85000"></div>
+        </div>
+
+        <div class="section-divider">Notes</div>
+        <div class="mf"><label>JD Notes</label><textarea id="e-jdnotes" class="fi" style="width:100%" placeholder="Key requirements, must-haves…"></textarea></div>
+        <div class="mf"><label>Resume Notes</label><textarea id="e-resnotes" class="fi" style="width:100%" placeholder="Summary swap, keywords used…"></textarea></div>
+
         <div class="mac">
             <button class="btn-del" onclick="confirmDelete()">Delete</button>
             <button class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -320,9 +338,7 @@
 
 <script>
 const GURL = "https://script.google.com/macros/s/AKfycbwuw06PywCJ16BNvwBzCq0dZ_6LklAO1DmJEDwDFRp_yubMc_O8lFZYyXx9m0-LGh8L2Q/exec";
-let allJobs = [];
-let selJob = null;
-let selIdx = null;
+let allJobs = [], selJob = null, selIdx = null;
 
 window.onload = loadJobs;
 
@@ -352,7 +368,7 @@ async function loadJobs() {
     btn.classList.remove('syncing');
 }
 
-function statusKey(s) {
+function sk(s) {
     s = String(s || 'Applied').trim();
     if (s === 'In Progress') return 'progress';
     if (s === 'Rejected') return 'rejected';
@@ -360,11 +376,20 @@ function statusKey(s) {
     return 'applied';
 }
 
+function fmtSalary(min, max) {
+    const fmt = v => v ? '$' + Number(v).toLocaleString() : null;
+    const a = fmt(min), b = fmt(max);
+    if (a && b) return a + ' – ' + b;
+    if (a) return a + '+';
+    if (b) return 'Up to ' + b;
+    return '';
+}
+
 function updateStats() {
-    let t=0, a=0, p=0, r=0, o=0;
+    let t=0,a=0,p=0,r=0,o=0;
     allJobs.forEach(j => {
         t++;
-        const k = statusKey(j.Status);
+        const k = sk(j.Status);
         if (k==='applied') a++;
         else if (k==='progress') p++;
         else if (k==='rejected') r++;
@@ -379,7 +404,7 @@ function updateStats() {
 
 function renderUI() {
     updateStats();
-    const q = document.getElementById('search').value.toLowerCase();
+    const q  = document.getElementById('search').value.toLowerCase();
     const fs = document.getElementById('f-status').value;
     const ft = document.getElementById('f-tier').value;
     const fm = document.getElementById('f-month').value;
@@ -387,11 +412,10 @@ function renderUI() {
 
     const filtered = allJobs.filter(j => {
         const d = new Date(j.Date);
-        const sk = statusKey(j.Status);
         const status = String(j.Status || 'Applied').trim();
         const tier = String(j.Tier || '').trim();
-        const matchQ = String(j.Company||'').toLowerCase().includes(q) || String(j.Role||'').toLowerCase().includes(q);
-        if (!matchQ) return false;
+        const mQ = String(j.Company||'').toLowerCase().includes(q) || String(j.Role||'').toLowerCase().includes(q);
+        if (!mQ) return false;
         if (fs !== 'all' && status !== fs) return false;
         if (ft !== 'all' && tier !== ft) return false;
         if (fm !== 'all' && !isNaN(d) && d.getMonth().toString() !== fm) return false;
@@ -400,38 +424,45 @@ function renderUI() {
     });
 
     const tbody = document.getElementById('tbody');
-    if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5"><div class="empty"><div class="empty-icon">📂</div><div>No applications found</div></div></td></tr>`;
+    if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="empty-icon">📂</div><div>No applications found</div></div></td></tr>`;
         return;
     }
 
     tbody.innerHTML = filtered.map(j => {
         const idx = allJobs.indexOf(j);
         const d = new Date(j.Date);
-        const dateStr = isNaN(d) ? String(j.Date) : d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
-        const sk = statusKey(j.Status);
+        const dateStr = isNaN(d) ? String(j.Date) : d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+        const key = sk(j.Status);
         const status = String(j.Status || 'Applied').trim();
         const tier = String(j.Tier || '').trim();
         const base = String(j.Base || '').trim();
         const sector = String(j.Sector || '').trim();
-        const notes = String(j.Notes || '').trim();
-        const tierClass = tier ? 't-' + tier : 't-x';
-        const tierLabel = tier ? 'Tier ' + tier : '—';
-        const pillClass = 'p-' + sk;
+        const sal = fmtSalary(j.SalaryMin, j.SalaryMax) || fmtSalary(j['Salary Min'], j['Salary Max']) || String(j['Salary Range']||j['Salary range']||'');
+        const jdlink = String(j.JDLink || j['JD Link'] || '').trim();
+        const jdnotes = String(j.JDNotes || j['JD Notes'] || j.Notes || '').trim();
+        const resnotes = String(j.ResumeNotes || j['Resume Notes'] || '').trim();
+        const tierClass = tier ? 't-'+tier : 't-x';
+        const tierLabel = tier ? 'Tier '+tier : '—';
+        const notesPreview = [jdnotes, resnotes].filter(Boolean).join(' · ').substring(0, 60);
 
-        return `<tr class="row-${sk}" onclick="openEdit(${idx})">
+        return `<tr class="row-${key}" onclick="openEdit(${idx})">
             <td><span class="date-cell">${dateStr}</span></td>
             <td>
-                <span class="co">${j.Company || ''}</span>
-                <span class="ro">${j.Role || ''}</span>
+                <span class="co">${j.Company||''}</span>
+                <span class="ro">${j.Role||''}</span>
                 ${sector ? `<div class="sec">${sector}</div>` : ''}
             </td>
             <td>
                 <span class="tier ${tierClass}">${tierLabel}</span>
                 ${base ? `<div><span class="base-tag">Base ${base}</span></div>` : ''}
             </td>
-            <td><span class="pill ${pillClass}"><span class="pill-dot"></span>${status}</span></td>
-            <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--sub)">${notes || '<span style="color:#ccc">—</span>'}</td>
+            <td><span class="pill p-${key}"><span class="pill-dot"></span>${status}</span></td>
+            <td><span class="sal">${sal || '<span style="color:#ccc">—</span>'}</span></td>
+            <td>
+                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" onclick="event.stopPropagation()">🔗 View JD</a>` : ''}
+                ${notesPreview ? `<div style="font-size:11px;color:var(--sub);margin-top:2px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${notesPreview}</div>` : (!jdlink ? '<span style="color:#ccc;font-size:11px">—</span>' : '')}
+            </td>
         </tr>`;
     }).join('');
 }
@@ -442,26 +473,33 @@ function toggleForm() {
 }
 
 function openEdit(idx) {
-    selJob = allJobs[idx];
-    selIdx = idx;
-    document.getElementById('e-company').value = selJob.Company || '';
-    document.getElementById('e-role').value = selJob.Role || '';
-    document.getElementById('e-status').value = selJob.Status || 'Applied';
-    document.getElementById('e-tier').value = selJob.Tier || '';
-    document.getElementById('e-base').value = selJob.Base || '';
-    document.getElementById('e-sector').value = selJob.Sector || '';
-    document.getElementById('e-notes').value = selJob.Notes || '';
+    selJob = allJobs[idx]; selIdx = idx;
+    document.getElementById('e-co').value       = selJob.Company || '';
+    document.getElementById('e-role').value     = selJob.Role || '';
+    document.getElementById('e-status').value   = selJob.Status || 'Applied';
+    document.getElementById('e-tier').value     = selJob.Tier || '';
+    document.getElementById('e-base').value     = selJob.Base || '';
+    document.getElementById('e-sector').value   = selJob.Sector || '';
+    document.getElementById('e-jdlink').value   = selJob.JDLink || selJob['JD Link'] || '';
+    document.getElementById('e-sal-min').value  = selJob.SalaryMin || selJob['Salary Min'] || '';
+    document.getElementById('e-sal-max').value  = selJob.SalaryMax || selJob['Salary Max'] || '';
+    document.getElementById('e-jdnotes').value  = selJob.JDNotes || selJob['JD Notes'] || selJob.Notes || '';
+    document.getElementById('e-resnotes').value = selJob.ResumeNotes || selJob['Resume Notes'] || '';
     document.getElementById('edit-overlay').style.display = 'flex';
 }
 
 async function saveEdit() {
-    selJob.Company = document.getElementById('e-company').value;
-    selJob.Role    = document.getElementById('e-role').value;
-    selJob.Status  = document.getElementById('e-status').value;
-    selJob.Tier    = document.getElementById('e-tier').value;
-    selJob.Base    = document.getElementById('e-base').value;
-    selJob.Sector  = document.getElementById('e-sector').value;
-    selJob.Notes   = document.getElementById('e-notes').value;
+    selJob.Company     = document.getElementById('e-co').value;
+    selJob.Role        = document.getElementById('e-role').value;
+    selJob.Status      = document.getElementById('e-status').value;
+    selJob.Tier        = document.getElementById('e-tier').value;
+    selJob.Base        = document.getElementById('e-base').value;
+    selJob.Sector      = document.getElementById('e-sector').value;
+    selJob.JDLink      = document.getElementById('e-jdlink').value;
+    selJob.SalaryMin   = document.getElementById('e-sal-min').value;
+    selJob.SalaryMax   = document.getElementById('e-sal-max').value;
+    selJob.JDNotes     = document.getElementById('e-jdnotes').value;
+    selJob.ResumeNotes = document.getElementById('e-resnotes').value;
     await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(selJob)});
     closeModal();
     toast('✓ Entry updated');
@@ -469,22 +507,25 @@ async function saveEdit() {
 }
 
 async function addJob() {
-    const co = document.getElementById('a-company').value.trim();
+    const co = document.getElementById('a-co').value.trim();
     const rl = document.getElementById('a-role').value.trim();
     if (!co || !rl) { toast('⚠ Company and role required'); return; }
     const job = {
         Date: new Date().toISOString(),
-        Company: co, Role: rl,
-        Status: document.getElementById('a-status').value,
-        Tier: document.getElementById('a-tier').value,
-        Base: document.getElementById('a-base').value,
-        Sector: document.getElementById('a-sector').value,
-        Notes: document.getElementById('a-notes').value.trim()
+        Company:     co,
+        Role:        rl,
+        Status:      document.getElementById('a-status').value,
+        Tier:        document.getElementById('a-tier').value,
+        Base:        document.getElementById('a-base').value,
+        Sector:      document.getElementById('a-sector').value,
+        JDLink:      document.getElementById('a-jdlink').value.trim(),
+        SalaryMin:   document.getElementById('a-sal-min').value,
+        SalaryMax:   document.getElementById('a-sal-max').value,
+        JDNotes:     document.getElementById('a-jdnotes').value.trim(),
+        ResumeNotes: document.getElementById('a-resnotes').value.trim()
     };
     await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(job)});
-    document.getElementById('a-company').value = '';
-    document.getElementById('a-role').value = '';
-    document.getElementById('a-notes').value = '';
+    ['a-co','a-role','a-jdlink','a-sal-min','a-sal-max','a-jdnotes','a-resnotes'].forEach(id => document.getElementById(id).value = '');
     toggleForm();
     toast('✓ Application added');
     loadJobs();
