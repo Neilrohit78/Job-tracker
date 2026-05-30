@@ -49,25 +49,22 @@
 
         /* ADD FORM */
         .add-form { display: none; background: var(--card); border: 2px dashed #c7c4bc; border-radius: 12px; padding: 18px; margin-bottom: 14px; }
-        .fg { }
         .fg label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--sub); margin-bottom: 4px; }
         .fi { width: 100%; padding: 9px 10px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fafaf8; outline: none; color: var(--text); }
         .fi:focus { border-color: var(--accent); background: #fff; }
-        textarea.fi { resize: vertical; min-height: 38px; }
+        textarea.fi { resize: vertical; min-height: 60px; }
         .fg-row { display: grid; gap: 10px; margin-bottom: 10px; }
         .fg-row.c5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
-        .fg-row.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
         .fg-row.c3 { grid-template-columns: 1fr 1fr 1fr; }
-        .fg-row.c2 { grid-template-columns: 1fr 1fr; }
-        .fg-row.submit { grid-template-columns: 1fr 1fr auto; }
-        @media(max-width:900px) { .fg-row.c5,.fg-row.c4 { grid-template-columns: 1fr 1fr; } .fg-row.c3 { grid-template-columns: 1fr 1fr; } .fg-row.submit { grid-template-columns: 1fr; } }
-        @media(max-width:560px) { .fg-row.c5,.fg-row.c4,.fg-row.c3,.fg-row.c2 { grid-template-columns: 1fr; } }
+        .fg-row.c2b { grid-template-columns: 1fr 1fr auto; }
+        @media(max-width:900px) { .fg-row.c5 { grid-template-columns: 1fr 1fr; } .fg-row.c3 { grid-template-columns: 1fr 1fr; } .fg-row.c2b { grid-template-columns: 1fr; } }
+        @media(max-width:560px) { .fg-row.c5,.fg-row.c3 { grid-template-columns: 1fr; } }
         .btn-add { background: var(--accent); color: #fff; border: none; padding: 9px 20px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; height: 38px; white-space: nowrap; align-self: end; }
         .btn-add:hover { background: #4338ca; }
 
         /* TABLE */
         .tbl-wrap { background: var(--card); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 750px; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
         thead tr { background: var(--primary); }
         th { padding: 12px 14px; text-align: left; font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
         tbody tr { border-bottom: 1px solid #f0ede8; cursor: pointer; transition: background .12s; }
@@ -76,16 +73,15 @@
         tbody tr.row-progress  { background: #fffdf0; }
         tbody tr.row-rejected  { background: #fff5f5; }
         tbody tr.row-offer     { background: #f0fdf4; }
-        tbody tr.row-applied:hover  { background: #f8f9ff; }
-        tbody tr.row-progress:hover { background: #fef9e0; }
-        tbody tr.row-rejected:hover { background: #ffe8e8; }
-        tbody tr.row-offer:hover    { background: #dcfce7; }
+        tbody tr.row-applied:hover   { background: #f8f9ff; }
+        tbody tr.row-progress:hover  { background: #fef9e0; }
+        tbody tr.row-rejected:hover  { background: #ffe8e8; }
+        tbody tr.row-offer:hover     { background: #dcfce7; }
         td { padding: 10px 14px; font-size: 13px; vertical-align: middle; }
         .date-cell { font-size: 12px; color: var(--sub); white-space: nowrap; }
         .co { font-weight: 700; font-size: 14px; display: block; }
         .ro { font-size: 12px; color: var(--sub); }
         .sec { font-size: 11px; color: #aaa; margin-top: 2px; }
-        .sal { font-size: 11px; color: #6b7280; margin-top: 2px; }
 
         /* STATUS PILL */
         .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
@@ -104,7 +100,7 @@
         .base-tag { display: inline-block; background: #f3f4f6; color: #6b7280; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px; margin-top: 3px; }
 
         /* JD LINK */
-        .jd-link { font-size: 11px; color: var(--accent); text-decoration: none; display: inline-block; margin-top: 2px; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .jd-link { font-size: 11px; color: var(--accent); text-decoration: none; display: inline-block; margin-top: 2px; }
         .jd-link:hover { text-decoration: underline; }
 
         /* EMPTY */
@@ -113,7 +109,7 @@
 
         /* MODAL */
         .overlay { position: fixed; inset: 0; background: rgba(10,10,25,.65); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-        .modal { background: #fff; padding: 26px; border-radius: 18px; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; animation: pop .2s ease; }
+        .modal { background: #fff; padding: 26px; border-radius: 18px; width: 100%; max-width: 540px; max-height: 92vh; overflow-y: auto; animation: pop .2s ease; }
         @keyframes pop { from { opacity:0; transform:scale(.95) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
         .modal h2 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 16px; }
         .mf { margin-bottom: 12px; }
@@ -121,7 +117,7 @@
         .mr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
         .mr3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
         @media(max-width:460px) { .mr,.mr3 { grid-template-columns: 1fr; } }
-        .section-divider { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 16px 0 12px; }
+        .divider { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 14px 0 12px; }
         .mac { display: flex; gap: 8px; margin-top: 18px; }
         .btn-cancel { flex: 1; background: #f5f4f0; color: var(--sub); border: none; padding: 11px; border-radius: 9px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; }
         .btn-cancel:hover { background: #e9e7e0; }
@@ -222,8 +218,8 @@
                 </select>
             </div>
         </div>
-        <!-- Row 2: Sector + Salary -->
-        <div class="fg-row c4">
+        <!-- Row 2: Sector + Salary + JD Link -->
+        <div class="fg-row c3">
             <div class="fg"><label>Sector</label>
                 <select id="a-sector" class="fi">
                     <option value="">— Select —</option>
@@ -231,14 +227,12 @@
                     <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
                 </select>
             </div>
-            <div class="fg"><label>Salary Min ($)</label><input type="number" id="a-sal-min" class="fi" placeholder="e.g. 65000"></div>
-            <div class="fg"><label>Salary Max ($)</label><input type="number" id="a-sal-max" class="fi" placeholder="e.g. 85000"></div>
+            <div class="fg"><label>Salary Expectation</label><input type="text" id="a-salary" class="fi" placeholder="e.g. $70,000–$85,000"></div>
             <div class="fg"><label>JD Link</label><input type="url" id="a-jdlink" class="fi" placeholder="https://…"></div>
         </div>
         <!-- Row 3: Notes + Submit -->
-        <div class="fg-row submit">
-            <div class="fg"><label>JD Notes</label><textarea id="a-jdnotes" class="fi" placeholder="Key requirements, must-haves…"></textarea></div>
-            <div class="fg"><label>Resume Notes</label><textarea id="a-resnotes" class="fi" placeholder="Summary swap, keywords used…"></textarea></div>
+        <div class="fg-row c2b">
+            <div class="fg" style="grid-column: 1 / 3"><label>Notes</label><textarea id="a-notes" class="fi" placeholder="JD keywords, resume swap, anything relevant…"></textarea></div>
             <button class="btn-add" onclick="addJob()">Add Entry</button>
         </div>
     </div>
@@ -253,7 +247,7 @@
                     <th>Tier / Base</th>
                     <th>Status</th>
                     <th>Salary</th>
-                    <th>JD / Notes</th>
+                    <th>Notes / JD</th>
                 </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -286,9 +280,9 @@
             <div class="mf"><label>Base</label>
                 <select id="e-base" class="fi" style="width:100%">
                     <option value="">— None —</option>
-                    <option value="A">Base A — Coordinator</option>
-                    <option value="B">Base B — Controls</option>
-                    <option value="C">Base C — Government</option>
+                    <option value="A">Base A</option>
+                    <option value="B">Base B</option>
+                    <option value="C">Base C</option>
                 </select>
             </div>
         </div>
@@ -301,17 +295,13 @@
                     <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
                 </select>
             </div>
-            <div class="mf"><label>JD Link</label><input type="url" id="e-jdlink" class="fi" style="width:100%" placeholder="https://…"></div>
+            <div class="mf"><label>Salary Expectation</label>
+                <input type="text" id="e-salary" class="fi" style="width:100%" placeholder="e.g. $70,000–$85,000">
+            </div>
         </div>
 
-        <div class="mr">
-            <div class="mf"><label>Salary Min ($)</label><input type="number" id="e-sal-min" class="fi" style="width:100%" placeholder="e.g. 65000"></div>
-            <div class="mf"><label>Salary Max ($)</label><input type="number" id="e-sal-max" class="fi" style="width:100%" placeholder="e.g. 85000"></div>
-        </div>
-
-        <div class="section-divider">Notes</div>
-        <div class="mf"><label>JD Notes</label><textarea id="e-jdnotes" class="fi" style="width:100%" placeholder="Key requirements, must-haves…"></textarea></div>
-        <div class="mf"><label>Resume Notes</label><textarea id="e-resnotes" class="fi" style="width:100%" placeholder="Summary swap, keywords used…"></textarea></div>
+        <div class="mf"><label>JD Link</label><input type="url" id="e-jdlink" class="fi" style="width:100%" placeholder="https://…"></div>
+        <div class="mf"><label>Notes</label><textarea id="e-notes" class="fi" style="width:100%;min-height:80px" placeholder="JD keywords, resume swap, anything relevant…"></textarea></div>
 
         <div class="mac">
             <button class="btn-del" onclick="confirmDelete()">Delete</button>
@@ -376,17 +366,8 @@ function sk(s) {
     return 'applied';
 }
 
-function fmtSalary(min, max) {
-    const fmt = v => v ? '$' + Number(v).toLocaleString() : null;
-    const a = fmt(min), b = fmt(max);
-    if (a && b) return a + ' – ' + b;
-    if (a) return a + '+';
-    if (b) return 'Up to ' + b;
-    return '';
-}
-
 function updateStats() {
-    let t=0,a=0,p=0,r=0,o=0;
+    let t=0, a=0, p=0, r=0, o=0;
     allJobs.forEach(j => {
         t++;
         const k = sk(j.Status);
@@ -413,7 +394,7 @@ function renderUI() {
     const filtered = allJobs.filter(j => {
         const d = new Date(j.Date);
         const status = String(j.Status || 'Applied').trim();
-        const tier = String(j.Tier || '').trim();
+        const tier   = String(j.Tier || '').trim();
         const mQ = String(j.Company||'').toLowerCase().includes(q) || String(j.Role||'').toLowerCase().includes(q);
         if (!mQ) return false;
         if (fs !== 'all' && status !== fs) return false;
@@ -430,21 +411,19 @@ function renderUI() {
     }
 
     tbody.innerHTML = filtered.map(j => {
-        const idx = allJobs.indexOf(j);
-        const d = new Date(j.Date);
+        const idx    = allJobs.indexOf(j);
+        const d      = new Date(j.Date);
         const dateStr = isNaN(d) ? String(j.Date) : d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-        const key = sk(j.Status);
+        const key    = sk(j.Status);
         const status = String(j.Status || 'Applied').trim();
-        const tier = String(j.Tier || '').trim();
-        const base = String(j.Base || '').trim();
+        const tier   = String(j.Tier || '').trim();
+        const base   = String(j.Base || '').trim();
         const sector = String(j.Sector || '').trim();
-        const sal = fmtSalary(j.SalaryMin, j.SalaryMax) || fmtSalary(j['Salary Min'], j['Salary Max']) || String(j['Salary Range']||j['Salary range']||'');
-        const jdlink = String(j.JDLink || j['JD Link'] || '').trim();
-        const jdnotes = String(j.JDNotes || j['JD Notes'] || j.Notes || '').trim();
-        const resnotes = String(j.ResumeNotes || j['Resume Notes'] || '').trim();
-        const tierClass = tier ? 't-'+tier : 't-x';
-        const tierLabel = tier ? 'Tier '+tier : '—';
-        const notesPreview = [jdnotes, resnotes].filter(Boolean).join(' · ').substring(0, 60);
+        const salary = String(j.Salary || '').trim();
+        const jdlink = String(j.JDLink || '').trim();
+        const notes  = String(j.Notes || '').trim();
+        const tierClass  = tier ? 't-'+tier : 't-x';
+        const tierLabel  = tier ? 'Tier '+tier : '—';
 
         return `<tr class="row-${key}" onclick="openEdit(${idx})">
             <td><span class="date-cell">${dateStr}</span></td>
@@ -458,10 +437,10 @@ function renderUI() {
                 ${base ? `<div><span class="base-tag">Base ${base}</span></div>` : ''}
             </td>
             <td><span class="pill p-${key}"><span class="pill-dot"></span>${status}</span></td>
-            <td><span class="sal">${sal || '<span style="color:#ccc">—</span>'}</span></td>
+            <td style="font-size:12px;color:var(--sub)">${salary || '<span style="color:#ccc">—</span>'}</td>
             <td>
-                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" onclick="event.stopPropagation()">🔗 View JD</a>` : ''}
-                ${notesPreview ? `<div style="font-size:11px;color:var(--sub);margin-top:2px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${notesPreview}</div>` : (!jdlink ? '<span style="color:#ccc;font-size:11px">—</span>' : '')}
+                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" onclick="event.stopPropagation()">🔗 JD</a>` : ''}
+                ${notes ? `<div style="font-size:11px;color:var(--sub);margin-top:2px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${notes.replace(/"/g,'&quot;')}">${notes}</div>` : (!jdlink ? '<span style="color:#ccc;font-size:11px">—</span>' : '')}
             </td>
         </tr>`;
     }).join('');
@@ -474,32 +453,28 @@ function toggleForm() {
 
 function openEdit(idx) {
     selJob = allJobs[idx]; selIdx = idx;
-    document.getElementById('e-co').value       = selJob.Company || '';
-    document.getElementById('e-role').value     = selJob.Role || '';
-    document.getElementById('e-status').value   = selJob.Status || 'Applied';
-    document.getElementById('e-tier').value     = selJob.Tier || '';
-    document.getElementById('e-base').value     = selJob.Base || '';
-    document.getElementById('e-sector').value   = selJob.Sector || '';
-    document.getElementById('e-jdlink').value   = selJob.JDLink || selJob['JD Link'] || '';
-    document.getElementById('e-sal-min').value  = selJob.SalaryMin || selJob['Salary Min'] || '';
-    document.getElementById('e-sal-max').value  = selJob.SalaryMax || selJob['Salary Max'] || '';
-    document.getElementById('e-jdnotes').value  = selJob.JDNotes || selJob['JD Notes'] || selJob.Notes || '';
-    document.getElementById('e-resnotes').value = selJob.ResumeNotes || selJob['Resume Notes'] || '';
+    document.getElementById('e-co').value     = selJob.Company || '';
+    document.getElementById('e-role').value   = selJob.Role || '';
+    document.getElementById('e-status').value = selJob.Status || 'Applied';
+    document.getElementById('e-tier').value   = selJob.Tier || '';
+    document.getElementById('e-base').value   = selJob.Base || '';
+    document.getElementById('e-sector').value = selJob.Sector || '';
+    document.getElementById('e-salary').value = selJob.Salary || '';
+    document.getElementById('e-jdlink').value = selJob.JDLink || '';
+    document.getElementById('e-notes').value  = selJob.Notes || '';
     document.getElementById('edit-overlay').style.display = 'flex';
 }
 
 async function saveEdit() {
-    selJob.Company     = document.getElementById('e-co').value;
-    selJob.Role        = document.getElementById('e-role').value;
-    selJob.Status      = document.getElementById('e-status').value;
-    selJob.Tier        = document.getElementById('e-tier').value;
-    selJob.Base        = document.getElementById('e-base').value;
-    selJob.Sector      = document.getElementById('e-sector').value;
-    selJob.JDLink      = document.getElementById('e-jdlink').value;
-    selJob.SalaryMin   = document.getElementById('e-sal-min').value;
-    selJob.SalaryMax   = document.getElementById('e-sal-max').value;
-    selJob.JDNotes     = document.getElementById('e-jdnotes').value;
-    selJob.ResumeNotes = document.getElementById('e-resnotes').value;
+    selJob.Company = document.getElementById('e-co').value;
+    selJob.Role    = document.getElementById('e-role').value;
+    selJob.Status  = document.getElementById('e-status').value;
+    selJob.Tier    = document.getElementById('e-tier').value;
+    selJob.Base    = document.getElementById('e-base').value;
+    selJob.Sector  = document.getElementById('e-sector').value;
+    selJob.Salary  = document.getElementById('e-salary').value;
+    selJob.JDLink  = document.getElementById('e-jdlink').value;
+    selJob.Notes   = document.getElementById('e-notes').value;
     await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(selJob)});
     closeModal();
     toast('✓ Entry updated');
@@ -511,21 +486,19 @@ async function addJob() {
     const rl = document.getElementById('a-role').value.trim();
     if (!co || !rl) { toast('⚠ Company and role required'); return; }
     const job = {
-        Date: new Date().toISOString(),
-        Company:     co,
-        Role:        rl,
-        Status:      document.getElementById('a-status').value,
-        Tier:        document.getElementById('a-tier').value,
-        Base:        document.getElementById('a-base').value,
-        Sector:      document.getElementById('a-sector').value,
-        JDLink:      document.getElementById('a-jdlink').value.trim(),
-        SalaryMin:   document.getElementById('a-sal-min').value,
-        SalaryMax:   document.getElementById('a-sal-max').value,
-        JDNotes:     document.getElementById('a-jdnotes').value.trim(),
-        ResumeNotes: document.getElementById('a-resnotes').value.trim()
+        Date:   new Date().toISOString(),
+        Company: co,
+        Role:    rl,
+        Status:  document.getElementById('a-status').value,
+        Tier:    document.getElementById('a-tier').value,
+        Base:    document.getElementById('a-base').value,
+        Sector:  document.getElementById('a-sector').value,
+        Salary:  document.getElementById('a-salary').value.trim(),
+        JDLink:  document.getElementById('a-jdlink').value.trim(),
+        Notes:   document.getElementById('a-notes').value.trim()
     };
     await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(job)});
-    ['a-co','a-role','a-jdlink','a-sal-min','a-sal-max','a-jdnotes','a-resnotes'].forEach(id => document.getElementById(id).value = '');
+    ['a-co','a-role','a-salary','a-jdlink','a-notes'].forEach(id => document.getElementById(id).value = '');
     toggleForm();
     toast('✓ Application added');
     loadJobs();
