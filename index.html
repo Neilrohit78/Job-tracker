@@ -29,6 +29,7 @@
         .stat.s-progress .stat-num { color: #fbbf24; }
         .stat.s-rejected .stat-num { color: #f87171; }
         .stat.s-offer .stat-num { color: #4ade80; }
+        .ro-note { color: rgba(255,255,255,.55); font-size: 12px; font-weight: 600; }
         .btn-new { background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; white-space: nowrap; }
         .btn-new:hover { background: #4338ca; }
 
@@ -67,7 +68,7 @@
         table { width: 100%; border-collapse: collapse; min-width: 700px; }
         thead tr { background: var(--primary); }
         th { padding: 12px 14px; text-align: left; font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
-        tbody tr { border-bottom: 1px solid #f0ede8; cursor: pointer; transition: background .12s; }
+        tbody tr { border-bottom: 1px solid #f0ede8; transition: background .12s; }
         tbody tr:last-child { border-bottom: none; }
         tbody tr.row-applied   { background: #ffffff; }
         tbody tr.row-progress  { background: #fffdf0; }
@@ -159,7 +160,7 @@
             <div class="stat s-rejected"><div class="stat-num" id="s-rejected">—</div><div class="stat-lbl">Rejected</div></div>
             <div class="stat s-offer"><div class="stat-num" id="s-offer">—</div><div class="stat-lbl">Offers</div></div>
         </div>
-        <button class="btn-new" onclick="toggleForm()">+ New Application</button>
+        <div class="ro-note">Read-only · updated automatically</div>
     </div>
 </div>
 
@@ -194,49 +195,6 @@
         <button class="btn-sync" id="sync-btn" onclick="loadJobs()">↻ Sync</button>
     </div>
 
-    <!-- ADD FORM -->
-    <div class="add-form" id="add-form">
-        <!-- Row 1: Core fields -->
-        <div class="fg-row c5">
-            <div class="fg"><label>Company</label><input type="text" id="a-co" class="fi" placeholder="e.g. Metrolinx"></div>
-            <div class="fg"><label>Role</label><input type="text" id="a-role" class="fi" placeholder="e.g. Project Coordinator"></div>
-            <div class="fg"><label>Status</label>
-                <select id="a-status" class="fi">
-                    <option>Applied</option><option>In Progress</option><option>Offer</option><option>Rejected</option>
-                </select>
-            </div>
-            <div class="fg"><label>Tier</label>
-                <select id="a-tier" class="fi">
-                    <option value="">— Unassigned —</option>
-                    <option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option>
-                </select>
-            </div>
-            <div class="fg"><label>Base</label>
-                <select id="a-base" class="fi">
-                    <option value="">— None —</option>
-                    <option value="A">Base A</option><option value="B">Base B</option><option value="C">Base C</option>
-                </select>
-            </div>
-        </div>
-        <!-- Row 2: Sector + Salary + JD Link -->
-        <div class="fg-row c3">
-            <div class="fg"><label>Sector</label>
-                <select id="a-sector" class="fi">
-                    <option value="">— Select —</option>
-                    <option>Government</option><option>Engineering</option><option>Private Sector</option>
-                    <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
-                </select>
-            </div>
-            <div class="fg"><label>Salary Expectation</label><input type="text" id="a-salary" class="fi" placeholder="e.g. $70,000–$85,000"></div>
-            <div class="fg"><label>JD Link</label><input type="url" id="a-jdlink" class="fi" placeholder="https://…"></div>
-        </div>
-        <!-- Row 3: Notes + Submit -->
-        <div class="fg-row c2b">
-            <div class="fg" style="grid-column: 1 / 3"><label>Notes</label><textarea id="a-notes" class="fi" placeholder="JD keywords, resume swap, anything relevant…"></textarea></div>
-            <button class="btn-add" onclick="addJob()">Add Entry</button>
-        </div>
-    </div>
-
     <!-- TABLE -->
     <div class="tbl-wrap">
         <table>
@@ -252,75 +210,6 @@
             </thead>
             <tbody id="tbody"></tbody>
         </table>
-    </div>
-</div>
-
-<!-- EDIT MODAL -->
-<div class="overlay" id="edit-overlay">
-    <div class="modal">
-        <h2>Update Application</h2>
-
-        <div class="mr">
-            <div class="mf"><label>Company</label><input type="text" id="e-co" class="fi" style="width:100%"></div>
-            <div class="mf"><label>Role</label><input type="text" id="e-role" class="fi" style="width:100%"></div>
-        </div>
-
-        <div class="mr3">
-            <div class="mf"><label>Status</label>
-                <select id="e-status" class="fi" style="width:100%">
-                    <option>Applied</option><option>In Progress</option><option>Offer</option><option>Rejected</option>
-                </select>
-            </div>
-            <div class="mf"><label>Tier</label>
-                <select id="e-tier" class="fi" style="width:100%">
-                    <option value="">— Unassigned —</option>
-                    <option value="A">Tier A</option><option value="B">Tier B</option><option value="C">Tier C</option>
-                </select>
-            </div>
-            <div class="mf"><label>Base</label>
-                <select id="e-base" class="fi" style="width:100%">
-                    <option value="">— None —</option>
-                    <option value="A">Base A</option>
-                    <option value="B">Base B</option>
-                    <option value="C">Base C</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="mr">
-            <div class="mf"><label>Sector</label>
-                <select id="e-sector" class="fi" style="width:100%">
-                    <option value="">— Select —</option>
-                    <option>Government</option><option>Engineering</option><option>Private Sector</option>
-                    <option>Utilities</option><option>Real Estate</option><option>Technology</option><option>Other</option>
-                </select>
-            </div>
-            <div class="mf"><label>Salary Expectation</label>
-                <input type="text" id="e-salary" class="fi" style="width:100%" placeholder="e.g. $70,000–$85,000">
-            </div>
-        </div>
-
-        <div class="mf"><label>JD Link</label><input type="url" id="e-jdlink" class="fi" style="width:100%" placeholder="https://…"></div>
-        <div class="mf"><label>Notes</label><textarea id="e-notes" class="fi" style="width:100%;min-height:80px" placeholder="JD keywords, resume swap, anything relevant…"></textarea></div>
-
-        <div class="mac">
-            <button class="btn-del" onclick="confirmDelete()">Delete</button>
-            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-            <button class="btn-save" onclick="saveEdit()">Save Changes</button>
-        </div>
-    </div>
-</div>
-
-<!-- CONFIRM DELETE -->
-<div class="cov" id="confirm-overlay">
-    <div class="cbox">
-        <div class="ci">🗑️</div>
-        <h3>Delete this entry?</h3>
-        <p id="confirm-text">This cannot be undone.</p>
-        <div class="cac">
-            <button class="btn-cc" onclick="closeConfirm()">Cancel</button>
-            <button class="btn-cd" onclick="executeDelete()">Yes, Delete</button>
-        </div>
     </div>
 </div>
 
@@ -411,7 +300,6 @@ function renderUI() {
     }
 
     tbody.innerHTML = filtered.map(j => {
-        const idx    = allJobs.indexOf(j);
         const d      = new Date(j.Date);
         const dateStr = isNaN(d) ? String(j.Date) : d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
         const key    = sk(j.Status);
@@ -425,7 +313,7 @@ function renderUI() {
         const tierClass  = tier ? 't-'+tier : 't-x';
         const tierLabel  = tier ? 'Tier '+tier : '—';
 
-        return `<tr class="row-${key}" onclick="openEdit(${idx})">
+        return `<tr class="row-${key}">
             <td><span class="date-cell">${dateStr}</span></td>
             <td>
                 <span class="co">${j.Company||''}</span>
@@ -439,97 +327,13 @@ function renderUI() {
             <td><span class="pill p-${key}"><span class="pill-dot"></span>${status}</span></td>
             <td style="font-size:12px;color:var(--sub)">${salary || '<span style="color:#ccc">—</span>'}</td>
             <td>
-                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" onclick="event.stopPropagation()">🔗 JD</a>` : ''}
+                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" rel="noopener">🔗 JD</a>` : ''}
                 ${notes ? `<div style="font-size:11px;color:var(--sub);margin-top:2px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${notes.replace(/"/g,'&quot;')}">${notes}</div>` : (!jdlink ? '<span style="color:#ccc;font-size:11px">—</span>' : '')}
             </td>
         </tr>`;
     }).join('');
 }
 
-function toggleForm() {
-    const f = document.getElementById('add-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
-}
-
-function openEdit(idx) {
-    selJob = allJobs[idx]; selIdx = idx;
-    document.getElementById('e-co').value     = selJob.Company || '';
-    document.getElementById('e-role').value   = selJob.Role || '';
-    document.getElementById('e-status').value = selJob.Status || 'Applied';
-    document.getElementById('e-tier').value   = selJob.Tier || '';
-    document.getElementById('e-base').value   = selJob.Base || '';
-    document.getElementById('e-sector').value = selJob.Sector || '';
-    document.getElementById('e-salary').value = selJob.Salary || '';
-    document.getElementById('e-jdlink').value = selJob.JDLink || '';
-    document.getElementById('e-notes').value  = selJob.Notes || '';
-    document.getElementById('edit-overlay').style.display = 'flex';
-}
-
-async function saveEdit() {
-    selJob.Company = document.getElementById('e-co').value;
-    selJob.Role    = document.getElementById('e-role').value;
-    selJob.Status  = document.getElementById('e-status').value;
-    selJob.Tier    = document.getElementById('e-tier').value;
-    selJob.Base    = document.getElementById('e-base').value;
-    selJob.Sector  = document.getElementById('e-sector').value;
-    selJob.Salary  = document.getElementById('e-salary').value;
-    selJob.JDLink  = document.getElementById('e-jdlink').value;
-    selJob.Notes   = document.getElementById('e-notes').value;
-    await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(selJob)});
-    closeModal();
-    toast('✓ Entry updated');
-    loadJobs();
-}
-
-async function addJob() {
-    const co = document.getElementById('a-co').value.trim();
-    const rl = document.getElementById('a-role').value.trim();
-    if (!co || !rl) { toast('⚠ Company and role required'); return; }
-    const job = {
-        Date:   new Date().toISOString(),
-        Company: co,
-        Role:    rl,
-        Status:  document.getElementById('a-status').value,
-        Tier:    document.getElementById('a-tier').value,
-        Base:    document.getElementById('a-base').value,
-        Sector:  document.getElementById('a-sector').value,
-        Salary:  document.getElementById('a-salary').value.trim(),
-        JDLink:  document.getElementById('a-jdlink').value.trim(),
-        Notes:   document.getElementById('a-notes').value.trim()
-    };
-    await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(job)});
-    ['a-co','a-role','a-salary','a-jdlink','a-notes'].forEach(id => document.getElementById(id).value = '');
-    toggleForm();
-    toast('✓ Application added');
-    loadJobs();
-}
-
-function closeModal() {
-    document.getElementById('edit-overlay').style.display = 'none';
-    selJob = null; selIdx = null;
-}
-
-function confirmDelete() {
-    if (!selJob) return;
-    document.getElementById('confirm-text').textContent =
-        String(selJob.Company||'') + ' — ' + String(selJob.Role||'') + '. This cannot be undone.';
-    document.getElementById('edit-overlay').style.display = 'none';
-    document.getElementById('confirm-overlay').style.display = 'flex';
-}
-
-function closeConfirm() {
-    document.getElementById('confirm-overlay').style.display = 'none';
-}
-
-async function executeDelete() {
-    if (!selJob) return;
-    await fetch(GURL, {method:'POST', mode:'no-cors', body:JSON.stringify(Object.assign({}, selJob, {_delete:true}))});
-    if (selIdx !== null) allJobs.splice(selIdx, 1);
-    closeConfirm();
-    selJob = null; selIdx = null;
-    toast('✓ Entry deleted');
-    renderUI();
-}
 </script>
 </body>
 </html>
