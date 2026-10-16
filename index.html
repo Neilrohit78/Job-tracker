@@ -68,7 +68,7 @@
         table { width: 100%; border-collapse: collapse; min-width: 700px; }
         thead tr { background: var(--primary); }
         th { padding: 12px 14px; text-align: left; font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
-        tbody tr { border-bottom: 1px solid #f0ede8; transition: background .12s; }
+        tbody tr { border-bottom: 1px solid #f0ede8; transition: background .12s; cursor: pointer; }
         tbody tr:last-child { border-bottom: none; }
         tbody tr.row-applied   { background: #ffffff; }
         tbody tr.row-progress  { background: #fffdf0; }
@@ -142,6 +142,16 @@
         /* TOAST */
         .toast { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff; padding: 11px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transform: translateY(8px); transition: all .3s; z-index: 9999; pointer-events: none; }
         .toast.show { opacity: 1; transform: translateY(0); }
+        .loc { font-size: 11px; color: var(--sub); margin-top: 2px; }
+        .overlay { position: fixed; inset: 0; background: rgba(10,10,25,.65); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 16px; }
+        .modal { background: #fff; padding: 24px; border-radius: 18px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+        .modal h2 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; margin-bottom: 2px; }
+        .modal .sub { color: var(--sub); font-size: 13px; margin-bottom: 14px; }
+        .dl { display: grid; grid-template-columns: 110px 1fr; gap: 8px 12px; font-size: 13px; }
+        .dl dt { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--sub); padding-top: 2px; }
+        .dl dd { word-break: break-word; white-space: pre-wrap; }
+        .btn-close { margin-top: 18px; width: 100%; background: var(--accent); color: #fff; border: none; padding: 11px; border-radius: 9px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 14px; }
+        @media(max-width:460px) { .dl { grid-template-columns: 1fr; gap: 2px; } .dl dd { margin-bottom: 8px; } }
     </style>
 </head>
 <body>
@@ -210,6 +220,15 @@
             </thead>
             <tbody id="tbody"></tbody>
         </table>
+    </div>
+</div>
+
+<div class="overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+    <div class="modal">
+        <h2 id="d-co"></h2>
+        <div class="sub" id="d-role"></div>
+        <dl class="dl" id="d-list"></dl>
+        <button class="btn-close" onclick="closeDetail()">Close</button>
     </div>
 </div>
 
@@ -313,11 +332,12 @@ function renderUI() {
         const tierClass  = tier ? 't-'+tier : 't-x';
         const tierLabel  = tier ? 'Tier '+tier : '—';
 
-        return `<tr class="row-${key}">
+        return `<tr class="row-${key}" onclick="openDetail(${allJobs.indexOf(j)})">
             <td><span class="date-cell">${dateStr}</span></td>
             <td>
                 <span class="co">${j.Company||''}</span>
                 <span class="ro">${j.Role||''}</span>
+                ${j.Location ? `<div class="loc">${esc(j.Location)}</div>` : ''}
                 ${sector ? `<div class="sec">${sector}</div>` : ''}
             </td>
             <td>
@@ -327,13 +347,43 @@ function renderUI() {
             <td><span class="pill p-${key}"><span class="pill-dot"></span>${status}</span></td>
             <td style="font-size:12px;color:var(--sub)">${salary || '<span style="color:#ccc">—</span>'}</td>
             <td>
-                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" rel="noopener">🔗 JD</a>` : ''}
+                ${jdlink ? `<a class="jd-link" href="${jdlink}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🔗 JD</a>` : ''}
                 ${notes ? `<div style="font-size:11px;color:var(--sub);margin-top:2px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${notes.replace(/"/g,'&quot;')}">${notes}</div>` : (!jdlink ? '<span style="color:#ccc;font-size:11px">—</span>' : '')}
             </td>
         </tr>`;
     }).join('');
 }
 
+
+function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function openDetail(idx) {
+    const j = allJobs[idx]; if (!j) return;
+    const d = new Date(j.Date);
+    const dateStr = isNaN(d) ? String(j.Date || '') : d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    document.getElementById('d-co').textContent = j.Company || '';
+    document.getElementById('d-role').textContent = j.Role || '';
+    const link = String(j.JDLink || '').trim();
+    const rows = [
+        ['Date', esc(dateStr)],
+        ['Status', esc(j.Status || 'Applied')],
+        ['Location', esc(j.Location)],
+        ['Sector', esc(j.Sector)],
+        ['Salary', esc(j.Salary)],
+        ['Tier / Base', esc([j.Tier ? 'Tier ' + j.Tier : '', j.Base ? 'Base ' + j.Base : ''].filter(Boolean).join(' / '))],
+        ['JD', link ? `<a class="jd-link" href="${esc(link)}" target="_blank" rel="noopener">Open saved JD</a>` : ''],
+        ['Notes', esc(j.Notes)]
+    ].filter(r => r[1]);
+    document.getElementById('d-list').innerHTML = rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
+    document.getElementById('detail-overlay').style.display = 'flex';
+}
+
+function closeDetail() {
+    document.getElementById('detail-overlay').style.display = 'none';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
 </script>
 </body>
 </html>
